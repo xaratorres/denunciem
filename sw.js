@@ -11,9 +11,7 @@ const CORE = [
 
 // Assets: fitxers estables → cache-first
 const ASSETS = [
-  './favicon.svg',
-  './imatges/icon-192.png',
-  './imatges/icon-512.png'
+  './favicon.svg'
 ];
 
 self.addEventListener('install', e => {
