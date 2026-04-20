@@ -338,9 +338,9 @@
     /* ─── OVERLAYS (modals) ─────────────────────────── */
     .overlay {
       position: fixed; inset: 0; z-index: 100;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       display: flex; align-items: center; justify-content: center;
       opacity: 0; visibility: hidden;
       transition: opacity 0.25s, visibility 0.25s;
@@ -769,7 +769,7 @@
     html.dark .dd-count { background: rgba(255,255,255,0.06); }
     html.dark .mesh { color: rgba(255,255,255,0.10); }
     html.dark .nom { background: rgba(28,28,30,0.96); color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
-    html.dark .overlay { background: rgba(10,10,11,0.88); }
+    html.dark .overlay { background: rgba(10,10,11,0.55); }
     html.dark .modal { background: #1c1c1e; border-color: rgba(255,255,255,0.07); }
     html.dark .modal-close { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.65); }
     html.dark .modal-close:hover { background: rgba(255,255,255,0.1); color: #fff; }
