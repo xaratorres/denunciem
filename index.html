@@ -131,7 +131,7 @@
     html.dark .chip-revisio::before { background: #34d399; box-shadow: 0 0 0 3px rgba(52,211,153,0.22); }
     @media (max-width: 560px) {
       .brand { gap: 7px; }
-      .chip-revisio { font-size: 0.56rem; padding: 2px 8px 2px 6px; }
+      .chip-revisio { display: none; } /* a mòbil l'amaguem per guanyar espai; ja surt a l'onboarding i al Sobre */
     }
     .nav-btns { display: flex; gap: 0.4rem; align-items: center; }
     .nav-btn {
@@ -144,9 +144,27 @@
       border-radius: 100px;
       padding: 5px 14px;
       transition: color 0.15s, border-color 0.15s, background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     .nav-btn:hover { color: var(--ink); border-color: rgba(0,0,0,0.4); }
     .nav-btn.icon { padding: 5px 10px; font-size: 0.95rem; letter-spacing: 0; }
+    .nav-btn .nav-icon {
+      width: 15px; height: 15px;
+      flex-shrink: 0;
+      display: none;
+    }
+    /* A mòbil, mostra només la icona */
+    @media (max-width: 560px) {
+      .nav-btns { gap: 5px; }
+      .nav-btn .nav-icon { display: inline-block; }
+      .nav-btn .nav-label { display: none; }
+      .nav-btn { padding: 6px 7px; letter-spacing: 0; gap: 0; }
+      .nav-btn.dd { padding: 6px 7px; }
+      .nav-btn.dd svg.chev { display: none; } /* chevron fora perquè és compacte */
+      .nav-btn.active-filter { color: var(--red); border-color: var(--red); }
+    }
 
     /* ── Dropdown tipus ── */
     .nav-dropdown { position: relative; }
@@ -807,22 +825,24 @@
     <div class="brand"><span class="brand-name">Denunci<span class="em">em</span></span><span class="chip-revisio">En revisió</span></div>
     <div class="nav-btns">
       <div class="nav-dropdown">
-        <button class="nav-btn dd" id="btn-tipus">
-          Tipus
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5 6 7.5 9 4.5"/></svg>
-        </button>
+        <button class="nav-btn dd" id="btn-tipus" title="Filtrar per tipus" aria-label="Tipus"></button>
         <div class="dd-panel" id="dd-tipus"></div>
       </div>
       <div class="nav-dropdown">
-        <button class="nav-btn dd" id="btn-territori">
-          Territori
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5 6 7.5 9 4.5"/></svg>
-        </button>
+        <button class="nav-btn dd" id="btn-territori" title="Filtrar per territori" aria-label="Territori"></button>
         <div class="dd-panel" id="dd-territori"></div>
       </div>
-      <button class="nav-btn" id="btn-entitats">Entitats</button>
-      <button class="nav-btn" id="btn-sobre">Sobre</button>
-      <button class="nav-btn icon" id="btn-config" title="Configuració" aria-label="Configuració">⚙</button>
+      <button class="nav-btn" id="btn-entitats" title="Veure totes les entitats" aria-label="Entitats">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+        <span class="nav-label">Entitats</span>
+      </button>
+      <button class="nav-btn" id="btn-sobre" title="Sobre Denunciem" aria-label="Sobre">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span class="nav-label">Sobre</span>
+      </button>
+      <button class="nav-btn icon" id="btn-config" title="Configuració" aria-label="Configuració">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
     </div>
   </nav>
 
@@ -1324,7 +1344,7 @@
 
   // ─── Generador de dropdowns reutilitzable ─────────
   const _dropdowns = [];
-  function makeFilterDropdown({ btnId, panelId, meta, defaultLabel, getValue, otherMatches, setActive, getActive, chevron }) {
+  function makeFilterDropdown({ btnId, panelId, meta, defaultLabel, getValue, otherMatches, setActive, getActive, chevron, navIcon }) {
     const btn = $(btnId), panel = $(panelId);
     function build() {
       const activeKey = getActive();
@@ -1364,7 +1384,8 @@
     }
     function refreshLabel(key) {
       const label = key === null ? defaultLabel : meta[key].nom;
-      btn.innerHTML = `${label} ${chevron}`;
+      btn.innerHTML = `${navIcon}<span class="nav-label">${label}</span>${chevron}`;
+      btn.classList.toggle('active-filter', key !== null);
     }
     let open = false;
     function toggle() { open ? close() : openFn(); }
@@ -1374,13 +1395,16 @@
     document.addEventListener('click', e => {
       if (open && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) close();
     });
+    refreshLabel(null);
     build();
     const api = { refresh: build };
     _dropdowns.push(api);
     return api;
   }
 
-  const CHEVRON = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5 6 7.5 9 4.5"/></svg>`;
+  const CHEVRON = `<svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5 6 7.5 9 4.5"/></svg>`;
+  const ICON_TIPUS = `<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></svg>`;
+  const ICON_TERRITORI = `<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
 
   makeFilterDropdown({
     btnId: 'btn-tipus',
@@ -1392,6 +1416,7 @@
     getActive: () => activeTipus,
     otherMatches: e => activeTerritori === null || e.territori === activeTerritori,
     chevron: CHEVRON,
+    navIcon: ICON_TIPUS,
   });
 
   makeFilterDropdown({
@@ -1404,6 +1429,7 @@
     getActive: () => activeTerritori,
     otherMatches: e => activeTipus === null || e.tipus === activeTipus,
     chevron: CHEVRON,
+    navIcon: ICON_TERRITORI,
   });
 
   applyFilters();
