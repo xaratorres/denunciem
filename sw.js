@@ -1,6 +1,6 @@
 // Denunciem.cat — Service Worker
 // Versió: puja-la a cada release
-const CACHE = 'denunciem-v2';
+const CACHE = 'denunciem-v3';
 
 // Core: fitxers que canvien sovint → network-first
 const CORE = [
@@ -11,7 +11,10 @@ const CORE = [
 
 // Assets: fitxers estables → cache-first
 const ASSETS = [
-  './favicon.svg'
+  './favicon.svg',
+  './imatges/icon-192.png',
+  './imatges/icon-512.png',
+  './imatges/icon-maskable-512.png'
 ];
 
 self.addEventListener('install', e => {
