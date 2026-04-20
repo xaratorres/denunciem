@@ -141,7 +141,7 @@ const ENTITATS = [
     limitacions: ['No resol directament', 'Pot tardar a arribar al destí correcte'],
     resultat_habitual: 'La sol·licitud es deriva i rebràs resposta del departament que correspongui.',
     temps: 'Setmanes',
-    enllac: 'https://tramits.gencat.cat/ca/tramits/tramits-temes/Peticio-generica',
+    enllac: 'https://ovt.gencat.cat/gsitfc/AppJava/generic/conqxsGeneric.do?webFormId=31&topicLevel1.id=500&topicLevel2.id=624',
     pos:       [0.933, 0.375],
     pos_mobil: [0.83, 0.20],
   },
