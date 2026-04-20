@@ -1142,23 +1142,44 @@
         ring.appendChild(nom);
 
         cell.appendChild(ring);
-        cell.addEventListener('click', () => openFitxa(ent.id));
+        // Click: obre la fitxa. Doble clic: obre l'enllaç directament.
+        let clickTimer = null;
+        cell.addEventListener('click', () => {
+          if (clickTimer) return;
+          clickTimer = setTimeout(() => {
+            clickTimer = null;
+            openFitxa(ent.id);
+          }, 230);
+        });
+        cell.addEventListener('dblclick', () => {
+          if (clickTimer) { clearTimeout(clickTimer); clickTimer = null; }
+          if (ent.enllac && !ent.enllac_inactiu) {
+            window.open(ent.enllac, '_blank', 'noopener,noreferrer');
+          } else {
+            openFitxa(ent.id);
+          }
+        });
 
         cell.addEventListener('mouseenter', () => positionNom(cell, ring));
 
         if (IS_MOBILE) {
-          cell.addEventListener('touchstart', e => {
-            e.preventDefault();
-            if (activeMobileCell === cell) {
-              openFitxa(ent.id);
-              deactivateMobile();
+          // Un tap = click (obre fitxa). Dos taps ràpids = obre l'enllaç directament.
+          let lastTap = 0;
+          cell.addEventListener('touchend', e => {
+            const now = Date.now();
+            if (now - lastTap < 350) {
+              e.preventDefault();
+              if (clickTimer) { clearTimeout(clickTimer); clickTimer = null; }
+              if (ent.enllac && !ent.enllac_inactiu) {
+                window.open(ent.enllac, '_blank', 'noopener,noreferrer');
+              } else {
+                openFitxa(ent.id);
+              }
+              lastTap = 0;
             } else {
-              deactivateMobile();
-              positionNom(cell, ring);
-              cell.classList.add('eina-activa');
-              activeMobileCell = cell;
+              lastTap = now;
             }
-          }, { passive: false });
+          });
         }
 
         toolData.push({
