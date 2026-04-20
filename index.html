@@ -1035,7 +1035,10 @@
   sizeGrid();
 
   // ─── POSICIONS ─────────────────────────────────────
-  const POSICIONS_EINES = ENTITATS.map(e => {
+  // Entitats visibles al grid (les amb `hidden:true` queden fora del mapa i dels filtres UI,
+  // però segueixen accessibles via deep-link #id)
+  const ENTITATS_V = ENTITATS.filter(e => !e.hidden);
+  const POSICIONS_EINES = ENTITATS_V.map(e => {
     const [rc, rr] = IS_MOBILE ? e.pos_mobil : e.pos;
     const col = Math.min(COLS - 1, Math.round(rc * COLS));
     const row = Math.min(ROWS - 1, Math.round(rr * ROWS));
@@ -1106,7 +1109,7 @@
       cell.className = 'cell';
 
       if (einesPosMap.has(i)) {
-        const ent = ENTITATS[einesPosMap.get(i)];
+        const ent = ENTITATS_V[einesPosMap.get(i)];
         const color = TIPUS_COLOR[ent.tipus];
         cell.classList.add('eina');
         cell.dataset.tipus = ent.tipus;
@@ -1378,8 +1381,8 @@
       ];
       panel.innerHTML = '';
       items.forEach(it => {
-        // Compte: només entitats que també compleixen l'altre filtre actiu
-        const count = ENTITATS.filter(e => {
+        // Compte: només entitats visibles que també compleixen l'altre filtre actiu
+        const count = ENTITATS_V.filter(e => {
           const thisMatch = it.key === null || getValue(e) === it.key;
           return thisMatch && otherMatches(e);
         }).length;
@@ -1554,7 +1557,7 @@
   function buildEntitatsLlista() {
     entitatsLlista.innerHTML = '';
     Object.entries(TIPUS_META).forEach(([key, meta]) => {
-      const llista = ENTITATS.filter(e => e.tipus === key);
+      const llista = ENTITATS_V.filter(e => e.tipus === key);
       if (!llista.length) return;
       const grup = document.createElement('details');
       grup.className = 'entitat-grup';
