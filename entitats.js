@@ -1817,6 +1817,17 @@ ENTITATS.forEach(e => {
   if (!e.email && _EMAIL_BY_ID[e.id]) e.email = _EMAIL_BY_ID[e.id];
 });
 
+// ─── Abast "Més enllà dels PPCC" ───
+// Entitats que poden ajudar persones que estan fora dels Països Catalans
+// (diàspora, residents a l'estranger, consumidors UE, etc.).
+const _MESENLLA_IDS = new Set([
+  'justicia-i-pau',      // xarxa internacional de drets humans i pau
+  'facua',               // via BEUC cobreix consumidors a tota la UE
+  'plataforma-llengua',  // atenció a la diàspora en temes lingüístics
+  'omnium',              // vincle amb la diàspora catalana
+]);
+ENTITATS.forEach(e => { if (_MESENLLA_IDS.has(e.id)) e.mesenlla = true; });
+
 // ─── Sigles per mostrar a les icones (prioritza les oficials quan existeixen) ───
 const _SIGLES_BY_ID = {
   // Catalunya

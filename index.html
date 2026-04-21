@@ -1706,6 +1706,18 @@
       if (t - lastTick < FRAME_MS) return;
       lastTick = t;
       toolData.forEach(td => {
+        // Si la cel·la està filtrada (dim), aturem aura i ones i sortim.
+        // Estalvia paint i deixa clar visualment que no és activa.
+        const dimmed = td.cell.classList.contains('dim');
+        if (dimmed) {
+          if (!td.wasDimmed) {
+            td.ring.style.boxShadow = 'none';
+            td.wasDimmed = true;
+          }
+          td.wasGrowing = false; // evita spawn d'ona quan recuperi l'estat
+          return;
+        }
+        td.wasDimmed = false;
         const raw = (1 + Math.sin(t * td.speed + td.phase)) * 0.5;
         const raw2 = (1 + Math.sin(t * td.speed * 2.4 + td.phase + 1.8)) * 0.5;
         // Radis d'ombra reduïts (abans 34/12/90/34 → ara 20/7/48/18).
