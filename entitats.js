@@ -70,6 +70,7 @@ const TEMATIQUES_META = {
   tramits:       { nom: 'Tràmits administratius',       descripcio: 'Sol·licituds, certificats, documentació, ajudes, padró.' },
   immigracio:    { nom: 'Immigració i estrangeria',     descripcio: 'NIE, residència, nacionalitat, drets de persones migrants.' },
   animals:       { nom: 'Protecció animal',             descripcio: 'Maltractament animal, colònies, animals abandonats, tinença responsable.' },
+  pobresa:       { nom: 'Pobresa i exclusió social',    descripcio: 'Sensellarisme, pobresa energètica, inserció, drets bàsics.' },
   qualsevol:     { nom: 'Qualsevol tema',               descripcio: 'Canals genèrics que poden tractar qualsevol assumpte (pressió mediàtica, etc).' },
 };
 
@@ -1579,6 +1580,179 @@ const ENTITATS = [
     pos:       [0.267, 0.50],
     pos_mobil: [0.83, 0.90],
   },
+
+  // ══════════════════════════════════════════
+  //  POBRESA / IMMIGRACIÓ / ANIMALS (nous)
+  // ══════════════════════════════════════════
+  {
+    id: 'arrels',
+    nom: 'Arrels Fundació',
+    tipus: 'social',
+    ambit: 'Sensellarisme i pobresa',
+    descripcio_breu: 'Fundació que atén persones sense llar i defensa els seus drets a Catalunya.',
+    per_a_que: 'Buscar ajuda, suport o denunciar vulneracions de drets de persones sense llar.',
+    quan_usar: [
+      'Persona sense llar necessita suport',
+      'Vulneració de drets per manca d\'habitatge',
+      'Vols reportar una situació de sensellarisme',
+    ],
+    que_esperar: [
+      'Atenció i acompanyament social',
+      'Acció de defensa de drets si escau',
+    ],
+    punts_forts: ['Referent a Catalunya', 'Treball jurídic i social combinat'],
+    limitacions: ['Àmbit català', 'Focalitzat en sensellarisme'],
+    resultat_habitual: 'Atenció directa i/o incidència institucional.',
+    temps: 'Dies / setmanes',
+    enllac: 'https://www.arrelsfundacio.org/que-fem/defensem-drets/',
+    pos:       [0.15, 0.40],
+    pos_mobil: [0.17, 0.50],
+  },
+  {
+    id: 'valencia-acull',
+    nom: 'València Acull',
+    tipus: 'social',
+    ambit: 'Immigració i refugi (PV)',
+    descripcio_breu: 'Entitat del País Valencià dedicada a la defensa de drets de persones migrants i refugiades.',
+    per_a_que: 'Rebre suport, assessorament o denunciar discriminacions en temes d\'immigració al País Valencià.',
+    quan_usar: [
+      'Discriminació per origen o estatus migratori al PV',
+      'Necessites assessorament en estrangeria',
+      'Vulneració de drets de persones migrants',
+    ],
+    que_esperar: [
+      'Assessorament legal i social',
+      'Acompanyament en denúncies',
+    ],
+    punts_forts: ['Especialització en migracions al PV', 'Part de la xarxa Acoge'],
+    limitacions: ['Àmbit País Valencià'],
+    resultat_habitual: 'Assessorament, mediació o suport legal.',
+    temps: 'Dies / setmanes',
+    enllac: 'https://valencia-acoge.org/contacto/',
+    pos:       [0.65, 0.40],
+    pos_mobil: [0.50, 0.40],
+  },
+  {
+    id: 'ccar',
+    nom: 'Comissió Catalana d\'Ajuda al Refugiat (CCAR)',
+    tipus: 'social',
+    ambit: 'Refugi i asil',
+    descripcio_breu: 'Entitat catalana de referència en defensa dels drets de les persones refugiades.',
+    per_a_que: 'Rebre assessorament legal i acompanyament social en processos d\'asil i refugi.',
+    quan_usar: [
+      'Procés de sol·licitud d\'asil',
+      'Vulneració de drets de persones refugiades',
+      'Necessites suport jurídic en estrangeria',
+    ],
+    que_esperar: [
+      'Assessorament legal especialitzat',
+      'Acompanyament social i denúncia de vulneracions',
+    ],
+    punts_forts: ['Experiència jurídica', 'Xarxa estatal d\'asil'],
+    limitacions: ['Específic en refugi i asil'],
+    resultat_habitual: 'Assessorament, suport legal i/o derivació.',
+    temps: 'Setmanes / mesos',
+    enllac: 'https://www.ccar.cat/contacte/',
+    pos:       [0.30, 0.70],
+    pos_mobil: [0.33, 0.70],
+  },
+  {
+    id: 'cites-bcn',
+    nom: 'CITES Barcelona',
+    tipus: 'administratiu',
+    ambit: 'Comerç d\'espècies amenaçades (CAT)',
+    descripcio_breu: 'Canal oficial per denunciar comerç il·legal d\'animals i plantes protegides pel conveni CITES a Catalunya.',
+    per_a_que: 'Denunciar venda, tinença o trànsit il·legal d\'espècies protegides.',
+    quan_usar: [
+      'Venda il·legal d\'animals protegits',
+      'Tràfic de fauna o flora amenaçada',
+      'Productes fets amb espècies CITES',
+    ],
+    que_esperar: [
+      'Investigació administrativa',
+      'Possible sanció o trasllat a fiscalia',
+    ],
+    punts_forts: ['Canal oficial', 'Cooperació internacional'],
+    limitacions: ['Només espècies CITES', 'No tracta maltractament d\'animals domèstics'],
+    resultat_habitual: 'Inspecció i sanció si procedeix.',
+    temps: 'Setmanes / mesos',
+    enllac: 'https://cites.comercio.gob.es/ca-es/Paginas/contacto.aspx',
+    pos:       [0.45, 0.15],
+    pos_mobil: [0.33, 0.15],
+  },
+  {
+    id: 'cites-val',
+    nom: 'CITES València',
+    tipus: 'administratiu',
+    ambit: 'Comerç d\'espècies amenaçades (PV)',
+    descripcio_breu: 'Seu valenciana del canal oficial CITES per a denúncies de comerç il·legal d\'espècies protegides.',
+    per_a_que: 'Denunciar venda, tinença o trànsit il·legal d\'espècies protegides al País Valencià.',
+    quan_usar: [
+      'Venda il·legal d\'animals protegits',
+      'Tràfic de fauna o flora amenaçada',
+      'Productes fets amb espècies CITES',
+    ],
+    que_esperar: [
+      'Investigació administrativa',
+      'Possible sanció o trasllat a fiscalia',
+    ],
+    punts_forts: ['Canal oficial', 'Cooperació internacional'],
+    limitacions: ['Només espècies CITES', 'No tracta maltractament d\'animals domèstics'],
+    resultat_habitual: 'Inspecció i sanció si procedeix.',
+    temps: 'Setmanes / mesos',
+    enllac: 'https://cites.comercio.gob.es/ca-es/Paginas/contacto.aspx',
+    pos:       [0.55, 0.15],
+    pos_mobil: [0.50, 0.15],
+  },
+  {
+    id: 'cites-ib',
+    nom: 'CITES Mallorca',
+    tipus: 'administratiu',
+    ambit: 'Comerç d\'espècies amenaçades (IB)',
+    descripcio_breu: 'Seu balear del canal oficial CITES per a denúncies de comerç il·legal d\'espècies protegides.',
+    per_a_que: 'Denunciar venda, tinença o trànsit il·legal d\'espècies protegides a les Illes Balears.',
+    quan_usar: [
+      'Venda il·legal d\'animals protegits',
+      'Tràfic de fauna o flora amenaçada',
+      'Productes fets amb espècies CITES',
+    ],
+    que_esperar: [
+      'Investigació administrativa',
+      'Possible sanció o trasllat a fiscalia',
+    ],
+    punts_forts: ['Canal oficial', 'Cooperació internacional'],
+    limitacions: ['Només espècies CITES', 'No tracta maltractament d\'animals domèstics'],
+    resultat_habitual: 'Inspecció i sanció si procedeix.',
+    temps: 'Setmanes / mesos',
+    enllac: 'https://cites.comercio.gob.es/ca-es/Paginas/contacto.aspx',
+    pos:       [0.65, 0.15],
+    pos_mobil: [0.67, 0.15],
+  },
+  {
+    id: 'faada',
+    nom: 'FAADA — Fundació per a l\'Adopció, Apadrinament i Defensa dels Animals',
+    tipus: 'social',
+    ambit: 'Protecció animal',
+    descripcio_breu: 'Fundació referent en defensa dels drets dels animals amb canal de denúncies i pressió institucional.',
+    per_a_que: 'Denunciar maltractament animal i obtenir assessorament o pressió institucional.',
+    quan_usar: [
+      'Maltractament o abandonament d\'animals',
+      'Condicions inadequades en zoos, circs o espectacles',
+      'Dubtes legals sobre tinença i protecció animal',
+    ],
+    que_esperar: [
+      'Canal de denúncies',
+      'Assessorament legal',
+      'Pressió institucional i mediàtica',
+    ],
+    punts_forts: ['Especialització en protecció animal', 'Capacitat d\'incidència'],
+    limitacions: ['No és autoritat sancionadora', 'Prioritza casos d\'interès col·lectiu'],
+    resultat_habitual: 'Denúncia, mediació o acció pública.',
+    temps: 'Setmanes / mesos',
+    enllac: 'https://faada.org/contacte',
+    pos:       [0.85, 0.40],
+    pos_mobil: [0.83, 0.40],
+  },
 ];
 
 // ─── Assignació de territori per a cada entitat ────────
@@ -1656,6 +1830,15 @@ const _TERRITORI_BY_ID = {
   'plataforma-llengua':     'paisos',
   'accio-cassandra':        'paisos',
   'accio-pel-catala':       'paisos',
+
+  // Nous: pobresa / immigració / animals
+  'arrels':                 'cat',
+  'valencia-acull':         'val',
+  'ccar':                   'cat',
+  'cites-bcn':              'cat',
+  'cites-val':              'val',
+  'cites-ib':               'bal',
+  'faada':                  'paisos',
 };
 ENTITATS.forEach(e => { e.territori = _TERRITORI_BY_ID[e.id] || 'cat'; });
 
@@ -1722,6 +1905,15 @@ const _CONTACTE_BY_ID = {
   'consum-ib':              { adreca: '',                                                 telefon: '971 17 65 58' },
   'tib-transports-ib':      { adreca: '',                                                 telefon: '971 17 77 77' },
   'accessibilitat-ib':      { adreca: '',                                                 telefon: '012' },
+
+  // Nous: pobresa / immigració / animals
+  'arrels':                 { adreca: '',                                                 telefon: '93 441 29 90' },
+  'valencia-acull':         { adreca: '',                                                 telefon: '963 66 01 68' },
+  'ccar':                   { adreca: '',                                                 telefon: '93 595 55 39' },
+  'cites-bcn':              { adreca: 'Barcelona',                                        telefon: '93 202 71 71' },
+  'cites-val':              { adreca: 'València',                                         telefon: '96 350 90 45' },
+  'cites-ib':               { adreca: 'Palma',                                            telefon: '971 21 45 25' },
+  'faada':                  { adreca: '',                                                 telefon: '' },
 };
 ENTITATS.forEach(e => {
   const c = _CONTACTE_BY_ID[e.id] || {};
@@ -1780,6 +1972,13 @@ const _EMAIL_BY_ID = {
   'ibavi':                       'altresconsultes.mca@ibavi.caib.es',
   'ibdona':                      'ibdona@ibdona.caib.es',
   'consum-ib':                   'secretaria@dgconsum.caib.es',
+  // Nous: pobresa / immigració / animals
+  'arrels':                      'info@arrelsfundacio.org',
+  'valencia-acull':              'valencia.acull@redacoge.org',
+  'ccar':                        'ccar@ccarefugi.org',
+  'cites-bcn':                   'barcelona.cice@comercio.mineco.es',
+  'cites-val':                   'valencia.cice@comercio.mineco.es',
+  'cites-ib':                    'mallorca.cice@comercio.mineco.es',
 };
 ENTITATS.forEach(e => {
   if (!e.email && _EMAIL_BY_ID[e.id]) e.email = _EMAIL_BY_ID[e.id];
@@ -1866,6 +2065,15 @@ const _SIGLES_BY_ID = {
 
   // Andorra
   'raonador-andorra':       'Raonador\nAndorra',
+
+  // Nous: pobresa / immigració / animals
+  'arrels':                 'Arrels',
+  'valencia-acull':         'València\nAcull',
+  'ccar':                   'CCAR',
+  'cites-bcn':              'CITES\nBCN',
+  'cites-val':              'CITES\nVAL',
+  'cites-ib':               'CITES\nPalma',
+  'faada':                  'FAADA',
 };
 // ─── PROVA: sigles auto-generades amb regla uniforme ─────────
 // Regla:
@@ -1951,7 +2159,7 @@ const _TEMATIQUES_BY_ID = {
   'escola-valenciana':      ['llengua', 'ensenyament'],
   'aplec':                  ['llengua', 'ensenyament'],
   // Drets humans / civils
-  'iridia':                 ['drets_humans'],
+  'iridia':                 ['drets_humans', 'immigracio'],
   'justicia-i-pau':         ['drets_humans'],
   'omnium':                 ['drets_humans', 'llengua'],
   // Nació / catalanofòbia (Acció Cassandra)
@@ -1993,5 +2201,13 @@ const _TEMATIQUES_BY_ID = {
   'accessibilitat-ib':      ['accessibilitat'],
   // Racisme
   'sos-racisme':            ['racisme', 'catalanofobia', 'delicte_odi', 'immigracio'],
+  // Nous: pobresa / immigració / animals
+  'arrels':                 ['pobresa', 'drets_humans', 'habitatge'],
+  'valencia-acull':         ['immigracio', 'racisme'],
+  'ccar':                   ['immigracio', 'drets_humans'],
+  'cites-bcn':              ['animals'],
+  'cites-val':              ['animals'],
+  'cites-ib':               ['animals'],
+  'faada':                  ['animals'],
 };
 ENTITATS.forEach(e => { e.tematiques = _TEMATIQUES_BY_ID[e.id] || []; });
