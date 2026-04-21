@@ -71,7 +71,7 @@
     #splash-title .part2 { color: var(--red); font-weight: 300; }
     #splash-sub {
       margin-top: 0.7rem;
-      padding-left: 0.12em; /* compensa el side-bearing de la D vs la F */
+      padding-left: 0.3em; /* compensa el side-bearing de la D vs la F */
       font-size: clamp(0.75rem, 1.8vw, 1rem);
       font-weight: 400;
       color: rgba(0,0,0,0.42);
@@ -192,66 +192,6 @@
     }
 
     /* ── Dropdown tipus ── */
-    .nav-dropdown { position: relative; }
-    .nav-btn.dd { display: inline-flex; align-items: center; gap: 5px; }
-    .nav-btn.dd svg { width: 10px; height: 10px; transition: transform 0.18s; }
-    .nav-btn.dd.open svg { transform: rotate(180deg); }
-    .dd-panel {
-      position: fixed;
-      top: calc(var(--nav-h) + 6px);
-      right: 10px;
-      width: 340px;
-      max-width: calc(100vw - 20px);
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.14);
-      padding: 6px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-6px);
-      transition: opacity 0.18s, visibility 0.18s, transform 0.18s;
-      z-index: 60;
-    }
-    .dd-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
-    .dd-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 11px 12px;
-      border-radius: 10px;
-      text-align: left; width: 100%;
-      transition: background 0.12s;
-    }
-    .dd-item:hover { background: rgba(0,0,0,0.04); }
-    .dd-item.active { background: rgba(220,38,38,0.06); }
-    .dd-dot {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--tipcolor, var(--ink));
-      margin-top: 6px;
-      flex-shrink: 0;
-    }
-    .dd-body { flex: 1; min-width: 0; }
-    .dd-title {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-    .dd-desc {
-      font-size: 0.72rem;
-      color: var(--ink-3);
-      margin-top: 3px;
-      line-height: 1.4;
-    }
-    .dd-count {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--tipcolor);
-      background: rgba(0,0,0,0.04);
-      border-radius: 100px;
-      padding: 2px 8px;
-      margin-top: 5px;
-      display: inline-block;
-    }
 
     /* ─── GRID PANOTS ────────────────────────────── */
     #grid {
@@ -713,34 +653,6 @@
     html.dark .ajudam-opt { border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.65); }
     html.dark .ajudam-opt:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
     html.dark .ajudam-opt.selected { background: var(--red); border-color: var(--red); color: #fff; }
-    .ajudam-actions {
-      display: flex;
-      justify-content: flex-end;
-      padding-top: 1.1rem;
-      border-top: 1px solid var(--border);
-      margin-top: 1.3rem;
-    }
-    html.dark .ajudam-actions { border-top-color: rgba(255,255,255,0.08); }
-    .ajudam-btn {
-      padding: 10px 20px;
-      border-radius: 100px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      transition: background 0.15s, color 0.15s;
-    }
-    .ajudam-btn-clear {
-      background: rgba(0,0,0,0.06);
-      color: var(--ink-2);
-    }
-    .ajudam-btn-clear:hover { background: rgba(0,0,0,0.12); color: var(--ink); }
-    html.dark .ajudam-btn-clear { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.7); }
-    html.dark .ajudam-btn-clear:hover { background: rgba(255,255,255,0.16); color: #fff; }
-    .ajudam-btn-apply {
-      background: var(--red);
-      color: #fff;
-      min-width: 120px;
-    }
-    .ajudam-btn-apply:hover { background: var(--red-dark); }
 
     /* ── Onboarding ── */
     #overlay-onboarding .modal {
@@ -1155,11 +1067,6 @@
     html.dark nav { background: var(--bg); border-bottom-color: rgba(255,255,255,0.07); }
     html.dark .nav-btn { color: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.14); }
     html.dark .nav-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
-    html.dark .dd-panel { background: #1c1c1e; border-color: rgba(255,255,255,0.08); }
-    html.dark .dd-item:hover { background: rgba(255,255,255,0.05); }
-    html.dark .dd-item.active { background: rgba(220,38,38,0.15); }
-    html.dark .dd-title { color: var(--ink); }
-    html.dark .dd-count { background: rgba(255,255,255,0.06); }
     html.dark .mesh { color: rgba(255,255,255,0.10); }
     html.dark .nom { background: rgba(28,28,30,0.96); color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
     html.dark .overlay { background: rgba(10,10,11,0.55); }
@@ -1647,15 +1554,12 @@
     }
   })();
 
-  // Reajustar layout al resize
+  // Reajustar layout al resize (amb debounce)
   {
     let rTimer = null;
     const onResize = () => {
       clearTimeout(rTimer);
-      rTimer = setTimeout(() => {
-        sizeGrid();
-        if (window.__invalidateGridRect) window.__invalidateGridRect();
-      }, 120);
+      rTimer = setTimeout(sizeGrid, 120);
     };
     window.addEventListener('resize', onResize);
     window.addEventListener('orientationchange', () => setTimeout(onResize, 250));
@@ -1668,8 +1572,6 @@
     const waveLayer = document.createElement('div');
     waveLayer.id = 'wave-layer';
     gridEl.appendChild(waveLayer);
-    // Compatibilitat: altres crides poden invalidar-la però ja no la fem servir
-    window.__invalidateGridRect = () => {};
 
     function spawnWave(td) {
       // offsetLeft/Top són relatius a l'offsetParent (#grid té position:relative),
@@ -1691,15 +1593,22 @@
       ring.addEventListener('animationend', () => ring.remove(), { once: true });
     }
 
+    // Precomputa els RGB de cada tool (evita parsejar hex en cada frame)
+    toolData.forEach(td => {
+      const c = td.color;
+      td.r = parseInt(c.slice(1,3),16);
+      td.g = parseInt(c.slice(3,5),16);
+      td.b = parseInt(c.slice(5,7),16);
+    });
+
+    let rafId = null;
     function tick(t) {
       toolData.forEach(td => {
         const raw = (1 + Math.sin(t * td.speed + td.phase)) * 0.5;
         const raw2 = (1 + Math.sin(t * td.speed * 2.4 + td.phase + 1.8)) * 0.5;
-        const c = td.color;
-        const r = parseInt(c.slice(1,3),16), g = parseInt(c.slice(3,5),16), b = parseInt(c.slice(5,7),16);
         const sh =
-          `0 0 ${(raw2 * 34).toFixed(1)}px ${(raw2 * 12).toFixed(1)}px rgba(${r},${g},${b},${(0.30 + raw2 * 0.40).toFixed(2)}),` +
-          `0 0 ${(raw  * 90).toFixed(1)}px ${(raw  * 34).toFixed(1)}px rgba(${r},${g},${b},${(0.10 + raw  * 0.22).toFixed(2)})`;
+          `0 0 ${(raw2 * 34).toFixed(1)}px ${(raw2 * 12).toFixed(1)}px rgba(${td.r},${td.g},${td.b},${(0.30 + raw2 * 0.40).toFixed(2)}),` +
+          `0 0 ${(raw  * 90).toFixed(1)}px ${(raw  * 34).toFixed(1)}px rgba(${td.r},${td.g},${td.b},${(0.10 + raw  * 0.22).toFixed(2)})`;
         td.ring.style.boxShadow = sh;
         // Emet ona quan l'aura passa de decreixent a creixent
         const growing = Math.cos(t * td.speed + td.phase) > 0;
@@ -1716,9 +1625,26 @@
         const ty = g.dir === 'up'   ? -g.offset : g.dir === 'down'  ? (g.offset - g.maxOffset) : 0;
         g.pre.style.transform = `translate(${tx}px,${ty}px)`;
       });
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
+    function startAnim() {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(tick);
+    }
+    function stopAnim() {
+      if (rafId === null) return;
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    // Només córrer quan estem a la vista grid i la pestanya és visible
+    // (estalvia CPU/bateria quan l'usuari és a la llista o ha canviat de pestanya)
+    function syncAnim() {
+      const active = getVista() === 'grid' && !document.hidden;
+      if (active) startAnim(); else stopAnim();
+    }
+    syncAnim();
+    document.addEventListener('visibilitychange', syncAnim);
+    window.addEventListener('vista-change', syncAnim);
   })();
 
   // ─── MODE NIT ─────────────────────────────────────
@@ -1824,10 +1750,7 @@
     });
     // Vista llista: ho gestiona la pròpia llista (es reconstrueix a renderLlista)
     if (window.renderLlista) window.renderLlista();
-    // Refresca qualsevol dropdown antic si encara existeix
-    if (window._dropdowns) window._dropdowns.forEach(d => d.refresh());
   }
-  window._appliedFilters = () => ({ tipus: activeTipus, territori: activeTerritori, tematica: activeTematica });
 
   // ─── MODAL AJUDA'M ────────────────────────────────
   const ajudamOverlay = $('overlay-ajudam');
