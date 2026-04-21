@@ -25,10 +25,10 @@
 
 const TIPUS_META = {
   administratiu: { nom: 'Administratiu',       color: '#2563EB', descripcio: 'Canals oficials que supervisen o resolen davant l\'administració i empreses.' },
-  legal:         { nom: 'Legal',               color: '#B91C1C', descripcio: 'Via penal, sancionadora o d\'investigació oficial.' },
-  estrategic:    { nom: 'Legal estratègic',    color: '#7C2D12', descripcio: 'Accions judicials amb voluntat d\'impacte i precedent.' },
-  social:        { nom: 'Pressió social',      color: '#C2410C', descripcio: 'Entitats que visibilitzen, mobilitzen i fan pressió pública.' },
-  sectorial:     { nom: 'Incidència sectorial',color: '#047857', descripcio: 'Organitzacions especialitzades (medi ambient, habitatge...).' },
+  legal:         { nom: 'Legal',               color: '#DC2626', descripcio: 'Via penal, sancionadora o d\'investigació oficial.' },
+  estrategic:    { nom: 'Legal estratègic',    color: '#7C3AED', descripcio: 'Accions judicials amb voluntat d\'impacte i precedent.' },
+  social:        { nom: 'Pressió social',      color: '#EA580C', descripcio: 'Entitats que visibilitzen, mobilitzen i fan pressió pública.' },
+  sectorial:     { nom: 'Incidència sectorial',color: '#059669', descripcio: 'Organitzacions especialitzades (medi ambient, habitatge...).' },
 };
 
 const TERRITORI_META = {
