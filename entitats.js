@@ -32,21 +32,22 @@ const TIPUS_META = {
 };
 
 const TERRITORI_META = {
-  cat:    { nom: 'Catalunya del Sud',   descripcio: 'Canals i entitats amb seu i acció al Principat.' },
-  bal:    { nom: 'Illes Balears',       descripcio: 'Canals i entitats amb seu a les Illes.' },
-  val:    { nom: 'País Valencià',       descripcio: 'Canals i entitats amb seu al País Valencià.' },
-  cn:     { nom: 'Catalunya Nord',      descripcio: 'Canals i entitats amb seu al Rosselló i comarques veïnes.' },
-  and:    { nom: 'Andorra',             descripcio: 'Canals i entitats amb seu al Principat d\'Andorra.' },
-  franja: { nom: 'Franja de Ponent',    descripcio: 'Comarques orientals de l\'Aragó de parla catalana.' },
-  alguer: { nom: 'l\'Alguer',           descripcio: 'Ciutat catalanoparlant de Sardenya.' },
-  carxe:  { nom: 'El Carxe',            descripcio: 'Territori catalanoparlant al nord-est de Múrcia.' },
-  paisos:   { nom: 'Països Catalans',  descripcio: 'Entitats transversals que actuen a tots els territoris.' },
-  mesenlla: { nom: 'Més enllà',        descripcio: 'Entitats que poden ajudar si ets fora dels Països Catalans (resta del món).' },
+  // Ordre optimitzat per agrupar els tags curts i reduir línies a mòbil
+  cat:      { nom: 'Catalunya del Sud',  descripcio: 'Canals i entitats amb seu i acció al Principat.' },
+  bal:      { nom: 'Illes Balears',      descripcio: 'Canals i entitats amb seu a les Illes.' },
+  alguer:   { nom: 'l\'Alguer',          descripcio: 'Ciutat catalanoparlant de Sardenya.' },
+  val:      { nom: 'País Valencià',      descripcio: 'Canals i entitats amb seu al País Valencià.' },
+  cn:       { nom: 'Catalunya Nord',     descripcio: 'Canals i entitats amb seu al Rosselló i comarques veïnes.' },
+  and:      { nom: 'Andorra',            descripcio: 'Canals i entitats amb seu al Principat d\'Andorra.' },
+  franja:   { nom: 'Franja de Ponent',   descripcio: 'Comarques orientals de l\'Aragó de parla catalana.' },
+  carxe:    { nom: 'El Carxe',           descripcio: 'Territori catalanoparlant al nord-est de Múrcia.' },
+  mesenlla: { nom: 'Més enllà',          descripcio: 'Entitats que poden ajudar si ets fora dels Països Catalans (resta del món).' },
+  paisos:   { nom: 'Països Catalans',    descripcio: 'Entitats transversals que actuen a tots els territoris.' },
 };
 
 // Temàtiques del problema (per a la pregunta «De què es tracta?»)
 const TEMATIQUES_META = {
-  admin:         { nom: 'Administració no em respon',   descripcio: 'Silenci o mal funcionament d\'una administració pública.' },
+  admin:         { nom: 'Administració',                descripcio: 'Silenci o mal funcionament d\'una administració pública.' },
   consum:        { nom: 'Consum i empreses',            descripcio: 'Cobraments, contractes, serveis defectuosos.' },
   salut:         { nom: 'Salut',                        descripcio: 'CAP, hospitals, llistes d\'espera, errors sanitaris.' },
   corrupcio:     { nom: 'Corrupció',                    descripcio: 'Contractació irregular, ús indegut de fons públics.' },
