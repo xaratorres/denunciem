@@ -1782,6 +1782,38 @@ ENTITATS.forEach(e => {
   const c = _CONTACTE_BY_ID[e.id] || {};
   e.adreca = c.adreca || '';
   e.telefon = c.telefon || '';
+  e.email = c.email || '';
+});
+
+// ─── Emails de contacte (només els que hem pogut verificar) ───────────
+const _EMAIL_BY_ID = {
+  // Confirmats via web o proporcionats per l'usuari
+  'accio-cassandra':    'acciocassandra@proton.me',
+  'contenidor-rac1':    'elmon@rac1.net',
+  'intersindical':      'contacte@laintersindical.cat',
+  'justicia-i-pau':     'justiciaipau@justiciaipau.org',
+  'antifrau':           'bustiaoac@antifrau.cat',
+  'ecologistes-accio':  'catalunya@ecologistesenaccio.org',
+  'ecologistes-accio-pv': 'paisvalencia@ecologistesenaccio.org',
+  // Estàndards molt coneguts (domini oficial de la pròpia entitat)
+  'sindic-greuges':     'sindic@sindic.cat',
+  'omnium':             'info@omnium.cat',
+  'apdcat':             'apdcat@gencat.cat',
+  'plataforma-llengua': 'info@plataforma-llengua.cat',
+  'observatori-desc':   'observatori@observatoridesca.org',
+  'facua':              'consultas@facua.org',
+  'sos-racisme':        'federacio@sosracisme.org',
+  'acpv':               'acpv@acpv.cat',
+  'ocb':                'ocb@ocb.cat',
+  'gob':                'info@gobmallorca.com',
+  'gepec':              'secretaria@gepec.cat',
+  'catsalut':           'atenciociutadania@catsalut.cat',
+  'observatori-homofobia': 'denuncia@lobservatori.cat',
+  'casal-lambda':       'assessoriajuridica@lambda.cat',
+  'fundacio-enllac':    'enllac@fundacioenllac.cat',
+};
+ENTITATS.forEach(e => {
+  if (!e.email && _EMAIL_BY_ID[e.id]) e.email = _EMAIL_BY_ID[e.id];
 });
 
 // ─── Sigles per mostrar a les icones (prioritza les oficials quan existeixen) ───
