@@ -2115,6 +2115,7 @@
     if (secTitle) rightCol.appendChild(secTitle);
     llistaHost.appendChild(rightCol);
     let totalVisible = 0;
+    const anyFilterActive = activeTipus !== null || activeTerritori !== null || activeTematica !== null;
     Object.entries(TIPUS_META).forEach(([key, meta]) => {
       const llista = ENTITATS_V.filter(e => e.tipus === key && entitatMatchesFilters(e));
       if (!llista.length) return;
@@ -2122,7 +2123,9 @@
       const grup = document.createElement('details');
       grup.className = 'entitat-grup';
       grup.style.setProperty('--grupcolor', meta.color);
-      grup.open = false;
+      // Si l'usuari ve d'Ajuda'm amb filtres, obrim els grups amb canals directament
+      // (si no hi ha entitats coincidents el grup ja no s'ha renderitzat: `if (!llista.length) return`).
+      grup.open = anyFilterActive;
       grup.innerHTML = `
         <summary>
           <span class="entitat-grup-head">
