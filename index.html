@@ -629,22 +629,32 @@
       font-size: 0.92rem;
     }
     .ajudam-lead { color: var(--ink-2); }
-    /* Warning: ocupa el mateix espai que el lead, substituint-lo visualment */
+    /* Warning: ocupa el mateix espai que el lead i el tapa visualment (opac) */
     .ajudam-zero-warn {
       position: absolute;
-      inset: 0;
-      background: rgba(220,38,38,0.08);
+      inset: -4px -8px;
+      background: #fdeded;
       color: var(--red);
-      padding: 10px 14px;
-      border-radius: 8px;
+      padding: 14px 16px;
+      border-radius: 10px;
       font-weight: 500;
       border-left: 3px solid var(--red);
+      box-shadow: 0 4px 14px rgba(220,38,38,0.18);
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.2s;
+      transform: translateY(-4px);
+      transition: opacity 0.2s, transform 0.2s;
     }
-    .ajudam-zero-warn.visible { opacity: 1; visibility: visible; }
-    html.dark .ajudam-zero-warn { background: rgba(220,38,38,0.14); color: #fca5a5; }
+    .ajudam-zero-warn.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    html.dark .ajudam-zero-warn {
+      background: #2e1616;
+      color: #fca5a5;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
     .ajudam-grup { margin-bottom: 1.4rem; }
     .ajudam-grup:last-of-type { margin-bottom: 0.6rem; }
     .ajudam-q {
