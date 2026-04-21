@@ -240,6 +240,14 @@
     html.dark .nav-title { color: var(--ink); }
     @media (max-width: 560px) {
       .nav-title .nav-title-text { display: none; }
+      /* A mòbil el xip deixa de ser absolute i s'ubica a l'esquerra del centre
+         (entre la marca i els botons) per no solapar el botó Ajuda'm */
+      .nav-title {
+        position: static;
+        transform: none;
+        margin-left: 0.5rem;
+        margin-right: auto;
+      }
     }
 
     /* ── Dropdown tipus ── */
