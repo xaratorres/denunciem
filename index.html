@@ -508,6 +508,8 @@
 
     /* Quan estem en mode llista, deshabilita el overflow hidden del body perquè no es vegi tall rar */
     body.vista-llista { overflow: auto; }
+    /* Si hi ha més entitats que cel·les base, la graella creix cap avall i el body ha de permetre scroll */
+    body.vista-grid.grid-overflow { overflow: auto; }
 
     /* A escriptori: disposició en 2 columnes (intro fixa a l'esquerra + llista a la dreta) */
     @media (min-width: 960px) {
@@ -1310,14 +1312,14 @@
   const NAV_H = 54;
   const GW_INIT = window.innerWidth;
   const IS_MOBILE = GW_INIT < 500;
-  let COLS, ROWS, TOTAL;
+  let COLS, ROWS, BASE_ROWS, TOTAL;
 
   // Calcula COLS/ROWS per a cel·les QUADRADES (mateixa lògica que Ciutadata)
   function computeGridDims() {
     const GW = window.innerWidth;
     const GH = (window.visualViewport?.height ?? window.innerHeight) - NAV_H;
     if (IS_MOBILE) {
-      COLS = 6; ROWS = 10;
+      COLS = 6; BASE_ROWS = 10;
     } else {
       let bestDiff = Infinity, bestC = 12, bestR = 6;
       for (let c = 16; c >= 8; c--) {
@@ -1327,11 +1329,20 @@
         const diff = Math.abs(cellW - cellH);
         if (diff < bestDiff && r >= 4) { bestDiff = diff; bestC = c; bestR = r; }
       }
-      COLS = bestC; ROWS = bestR;
+      COLS = bestC; BASE_ROWS = bestR;
     }
+    // Si hi ha més entitats que cel·les a la graella base, afegim files al fons
+    // fins a encabir-les totes (amb una mica de marge per respirar).
+    const V_LEN = (typeof ENTITATS !== 'undefined')
+      ? ENTITATS.filter(e => !e.hidden).length
+      : 0;
+    const MIN_SLOTS = Math.ceil(V_LEN * 1.25); // 25% de "panots grisos" de marge
+    ROWS = Math.max(BASE_ROWS, Math.ceil(MIN_SLOTS / COLS));
     TOTAL = COLS * ROWS;
   }
   computeGridDims();
+  const HAS_EXTRA_ROWS = ROWS > BASE_ROWS;
+  if (HAS_EXTRA_ROWS) document.body.classList.add('grid-overflow');
 
   // ─── HELPERS ───────────────────────────────────────
   const $ = id => document.getElementById(id);
@@ -1365,17 +1376,28 @@
   function sizeGrid() {
     const GW = window.innerWidth;
     const GH = (window.visualViewport?.height ?? window.innerHeight) - NAV_H;
+    // cellSize es calcula perquè la graella BASE (sense files extres) encaixi en pantalla.
+    // Les files extres s'afegeixen al fons i fan créixer el grid (scrollable).
     const cellFromW = Math.floor((GW - GAP * (COLS + 1)) / COLS);
-    const cellFromH = Math.floor((GH - GAP * (ROWS + 1)) / ROWS);
+    const cellFromH = Math.floor((GH - GAP * (BASE_ROWS + 1)) / BASE_ROWS);
     cellSize = Math.max(1, Math.min(cellFromW, cellFromH));
-    gridEl.style.height = GH + 'px';
     gridEl.style.gridTemplateColumns = `repeat(${COLS}, ${cellSize}px)`;
     gridEl.style.gridTemplateRows    = `repeat(${ROWS}, ${cellSize}px)`;
-    // Centra verticalment l'espai lliure
-    const trackH = ROWS * cellSize + (ROWS - 1) * GAP;
-    const vPad = Math.max(GAP, (GH - trackH) / 2);
-    gridEl.style.paddingTop    = vPad + 'px';
-    gridEl.style.paddingBottom = vPad + 'px';
+    if (HAS_EXTRA_ROWS) {
+      // La graella creix cap avall; el body és scrollable (vegeu CSS body.grid-overflow).
+      gridEl.style.height = 'auto';
+      gridEl.style.minHeight = GH + 'px';
+      gridEl.style.paddingTop    = GAP + 'px';
+      gridEl.style.paddingBottom = GAP + 'px';
+    } else {
+      gridEl.style.height = GH + 'px';
+      gridEl.style.minHeight = '';
+      // Centra verticalment l'espai lliure
+      const trackH = ROWS * cellSize + (ROWS - 1) * GAP;
+      const vPad = Math.max(GAP, (GH - trackH) / 2);
+      gridEl.style.paddingTop    = vPad + 'px';
+      gridEl.style.paddingBottom = vPad + 'px';
+    }
     document.documentElement.style.setProperty('--cell-size', cellSize + 'px');
   }
   sizeGrid();
@@ -1387,7 +1409,9 @@
   const POSICIONS_EINES = ENTITATS_V.map(e => {
     const [rc, rr] = IS_MOBILE ? e.pos_mobil : e.pos;
     const col = Math.min(COLS - 1, Math.round(rc * COLS));
-    const row = Math.min(ROWS - 1, Math.round(rr * ROWS));
+    // Mapem sobre BASE_ROWS perquè la "foto" superior quedi igual que abans.
+    // Les col·lisions cauran a les files extres de sota via el wrap (p+1) % TOTAL.
+    const row = Math.min(BASE_ROWS - 1, Math.round(rr * BASE_ROWS));
     return row * COLS + col;
   });
   // Resolem col·lisions (si dues entitats cauen a la mateixa cel·la, la 2a es mou)
