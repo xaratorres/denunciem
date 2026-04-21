@@ -1722,7 +1722,12 @@
       rTimer = setTimeout(sizeGrid, 120);
     };
     window.addEventListener('resize', onResize);
-    window.addEventListener('orientationchange', () => setTimeout(onResize, 250));
+    // En canvi d'orientació recarreguem la pàgina: COLS/BASE_ROWS poden canviar
+    // radicalment (mòbil portrait ↔ mòbil landscape) i les posicions de les cel·les
+    // depenen d'aquestes dimensions, així que el més net és rebuildar de zero.
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => location.reload(), 300);
+    });
     if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
   }
 
