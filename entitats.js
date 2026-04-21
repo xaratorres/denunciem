@@ -1816,7 +1816,7 @@ const _SIGLES_BY_ID = {
   'accio-pel-catala':       'Acció\nCatalà',
   'intersindical':          'Inter\nsindical',
   'adenc':                  'ADENC\nNatura',
-  'sindicat-llogateres':    'Sindicat Llogater',
+  'sindicat-llogateres':    'Sindicat\nLlogater',
   'entrebarris':            'Entre\nBarris',
   'institut-catala-dones':  'IC Dones',
   'helia':                  'Assoc\nHèlia',
