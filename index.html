@@ -1510,9 +1510,9 @@
     // offsetWidth/Height funcionen tot i opacity:0 perquè l'element està al DOM
     const nomH = nomEl.offsetHeight || 24;
     const nomW = nomEl.offsetWidth || 120;
-    // Sempre a sobre; si no cap, llavors a sota
+    // Sempre a sobre; si toparia amb la nav sticky, posar-ho a sota
     let top = rect.top - nomH - GAP_PX;
-    if (top < GAP_PX) top = rect.bottom + GAP_PX;
+    if (top < NAV_H + GAP_PX) top = rect.bottom + GAP_PX;
     // Horitzontal: centrat sobre la cel·la, clamped al viewport
     let left = rect.left + rect.width / 2 - nomW / 2;
     left = Math.max(GAP_PX, Math.min(left, window.innerWidth - nomW - GAP_PX));
