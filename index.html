@@ -160,6 +160,30 @@
     .nav-btn.icon .nav-label { display: none; }
     /* Filtre actiu (quan hi ha filtres aplicats des d'Ajuda'm) */
     .nav-btn.active-filter { color: var(--red); border-color: var(--red); }
+
+    /* Ajuda'm: destacat en vermell + pulsació subtil per captar l'atenció */
+    #btn-ajudam {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      animation: ajudam-pulse 2.4s ease-in-out infinite;
+    }
+    #btn-ajudam:hover {
+      background: var(--red-dark);
+      border-color: var(--red-dark);
+      color: #fff;
+      animation-play-state: paused;
+    }
+    /* Quan ja hi ha filtre actiu, parem la pulsació (l'usuari ja ha interactuat) */
+    #btn-ajudam.active-filter { animation: none; }
+    @keyframes ajudam-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(220,38,38,0.5); }
+      70%  { box-shadow: 0 0 0 10px rgba(220,38,38,0); }
+      100% { box-shadow: 0 0 0 0 rgba(220,38,38,0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #btn-ajudam { animation: none; }
+    }
     @media (max-width: 560px) {
       .nav-btns { gap: 5px; }
       .nav-btn { padding: 6px 10px; letter-spacing: 0.05em; font-size: 0.68rem; }
