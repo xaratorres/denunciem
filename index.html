@@ -462,6 +462,25 @@
       font-weight: 700;
       justify-content: center;
     }
+    .llista-grup-plegar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px 14px;
+      margin-top: 8px;
+      background: transparent;
+      color: var(--ink-3);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .llista-grup-plegar:hover { background: rgba(0,0,0,0.04); color: var(--ink); }
+    .llista-grup-plegar svg { width: 14px; height: 14px; }
+    html.dark .llista-grup-plegar:hover { background: rgba(255,255,255,0.05); color: #fff; }
     .llista-footer {
       margin-top: 3rem;
       padding-top: 1.5rem;
@@ -2023,6 +2042,17 @@
         it.addEventListener('click', () => openFitxa(ent.id));
         grup.appendChild(it);
       });
+      // Botó per plegar el grup des del peu (estalvia scroll fins al títol)
+      const plegar = document.createElement('button');
+      plegar.className = 'llista-grup-plegar';
+      plegar.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg> Plegar`;
+      plegar.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        grup.open = false;
+        grup.querySelector('summary')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      grup.appendChild(plegar);
       llistaHost.appendChild(grup);
     });
     if (totalVisible === 0) {
