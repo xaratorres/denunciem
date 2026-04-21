@@ -65,6 +65,11 @@ const TEMATIQUES_META = {
   accessibilitat:{ nom: 'Accessibilitat digital',       descripcio: 'Webs i apps públiques no accessibles.' },
   lgtbi:         { nom: 'LGTBI-fòbia i drets',          descripcio: 'Discriminació o delictes d\'odi per orientació sexual, identitat o expressió de gènere.' },
   violencia_masclista: { nom: 'Violència masclista',    descripcio: 'Agressions, assetjament o discriminació per raó de sexe o gènere.' },
+  espai_public:  { nom: 'Espai públic i serveis municipals', descripcio: 'Carrers, parcs, mobiliari, enllumenat, neteja, sorolls, recollida de residus.' },
+  tributs_locals:{ nom: 'Tributs i taxes locals',       descripcio: 'IBI, plusvàlua, multes de trànsit, sancions municipals.' },
+  tramits:       { nom: 'Tràmits administratius',       descripcio: 'Sol·licituds, certificats, documentació, ajudes, padró.' },
+  immigracio:    { nom: 'Immigració i estrangeria',     descripcio: 'NIE, residència, nacionalitat, drets de persones migrants.' },
+  animals:       { nom: 'Protecció animal',             descripcio: 'Maltractament animal, colònies, animals abandonats, tinença responsable.' },
   qualsevol:     { nom: 'Qualsevol tema',               descripcio: 'Canals genèrics que poden tractar qualsevol assumpte (pressió mediàtica, etc).' },
 };
 
@@ -1914,11 +1919,11 @@ ENTITATS.forEach(e => {
 // ─── Temàtiques per entitat (per a la pregunta «De què es tracta?») ───
 const _TEMATIQUES_BY_ID = {
   // Administració general / queixes formals
-  'sindic-greuges':         ['admin'],
-  'generalitat-instancia':  ['admin'],
-  'oac-ajuntaments':        ['admin'],
-  'sindic-ib':              ['admin'],
-  'sindic-cv':              ['admin'],
+  'sindic-greuges':         ['admin', 'tramits', 'tributs_locals', 'espai_public'],
+  'generalitat-instancia':  ['admin', 'tramits'],
+  'oac-ajuntaments':        ['admin', 'espai_public', 'tributs_locals', 'tramits'],
+  'sindic-ib':              ['admin', 'tramits', 'tributs_locals', 'espai_public'],
+  'sindic-cv':              ['admin', 'tramits', 'tributs_locals', 'espai_public'],
   'raonador-andorra':       ['admin'],
   // Consum
   'consum':                 ['consum'],
@@ -1967,7 +1972,7 @@ const _TEMATIQUES_BY_ID = {
   'observatori-homofobia':  ['lgtbi', 'delicte_odi'],
   'casal-lambda':           ['lgtbi'],
   'fundacio-enllac':        ['lgtbi'],
-  'acathi':                 ['lgtbi', 'racisme'],
+  'acathi':                 ['lgtbi', 'racisme', 'immigracio'],
   'lambda-valencia':        ['lgtbi'],
   'depana':                 ['medi_ambient'],
   'iaeden':                 ['medi_ambient'],
