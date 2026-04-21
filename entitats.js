@@ -1992,6 +1992,6 @@ const _TEMATIQUES_BY_ID = {
   // Accessibilitat digital
   'accessibilitat-ib':      ['accessibilitat'],
   // Racisme
-  'sos-racisme':            ['racisme', 'catalanofobia', 'delicte_odi'],
+  'sos-racisme':            ['racisme', 'catalanofobia', 'delicte_odi', 'immigracio'],
 };
 ENTITATS.forEach(e => { e.tematiques = _TEMATIQUES_BY_ID[e.id] || []; });
