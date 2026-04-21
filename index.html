@@ -363,6 +363,23 @@
     .tool-initial.len-12 { font-size: min(calc(var(--cell-size, 60px) * 0.16), 13px); letter-spacing: -0.08em; }
     /* Per a 2 línies, reduïm una mica més la mida vertical */
     .tool-initial.multiline { line-height: 1.05; }
+
+    /* ── Ajust per a mòbil: font ~15% més petita perquè la cel·la rodona ja és petita ── */
+    @media (max-width: 560px) {
+      .tool-initial                { font-size: min(calc(var(--cell-size, 60px) * 0.48), 34px); }
+      .tool-initial.len-2          { font-size: min(calc(var(--cell-size, 60px) * 0.42), 30px); }
+      .tool-initial.len-3          { font-size: min(calc(var(--cell-size, 60px) * 0.32), 24px); }
+      .tool-initial.len-4          { font-size: min(calc(var(--cell-size, 60px) * 0.27), 20px); }
+      .tool-initial.len-5          { font-size: min(calc(var(--cell-size, 60px) * 0.23), 17px); }
+      .tool-initial.len-6          { font-size: min(calc(var(--cell-size, 60px) * 0.245), 17px); }
+      .tool-initial.len-7          { font-size: min(calc(var(--cell-size, 60px) * 0.215), 16px); }
+      .tool-initial.len-8          { font-size: min(calc(var(--cell-size, 60px) * 0.19), 14px); }
+      .tool-initial.len-9          { font-size: min(calc(var(--cell-size, 60px) * 0.175), 13px); }
+      .tool-initial.len-10         { font-size: min(calc(var(--cell-size, 60px) * 0.16), 12px); }
+      .tool-initial.len-11         { font-size: min(calc(var(--cell-size, 60px) * 0.145), 11px); }
+      .tool-initial.len-12         { font-size: min(calc(var(--cell-size, 60px) * 0.13), 10px); }
+      .tool-initial.multiline      { line-height: 1.1; }
+    }
     .nom {
       position: fixed;
       white-space: nowrap;
