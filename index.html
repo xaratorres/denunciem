@@ -1417,22 +1417,19 @@
   const IS_MOBILE = GW_INIT < 500;
   let COLS, ROWS, BASE_ROWS, TOTAL;
 
-  // Calcula COLS/ROWS per a cel·les QUADRADES (mateixa lògica que Ciutadata)
+  // Calcula COLS/ROWS per a cel·les QUADRADES
+  // Desktop: "full width" — cel·la dimensionada per l'alçada del viewport,
+  // COLS omple tota l'amplada disponible. Files extres al fons si calen.
   function computeGridDims() {
     const GW = window.innerWidth;
     const GH = (window.visualViewport?.height ?? window.innerHeight) - NAV_H;
     if (IS_MOBILE) {
       COLS = 6; BASE_ROWS = 10;
     } else {
-      let bestDiff = Infinity, bestC = 12, bestR = 6;
-      for (let c = 16; c >= 8; c--) {
-        const cellW = (GW - GAP * (c + 1)) / c;
-        const r = Math.max(3, Math.min(10, Math.round((GH - GAP) / (cellW + GAP))));
-        const cellH = (GH - GAP * (r + 1)) / r;
-        const diff = Math.abs(cellW - cellH);
-        if (diff < bestDiff && r >= 4) { bestDiff = diff; bestC = c; bestR = r; }
-      }
-      COLS = bestC; BASE_ROWS = bestR;
+      // Mida de cel·la: ~1/7 de l'alçada disponible, amb límits raonables
+      const TARGET_CELL = Math.max(62, Math.min(95, Math.floor((GH - GAP) / 7)));
+      COLS = Math.max(6, Math.floor((GW - GAP) / (TARGET_CELL + GAP)));
+      BASE_ROWS = Math.max(4, Math.floor((GH - GAP) / (TARGET_CELL + GAP)));
     }
     // Si hi ha més entitats que cel·les a la graella base, afegim files al fons
     // fins a encabir-les totes (amb una mica de marge per respirar).
