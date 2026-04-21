@@ -368,6 +368,9 @@
     .cell.eina.dim .tool-ring,
     .cell.eina.dim .eina-backdrop { opacity: 0.22; }
     .cell.eina.dim { cursor: default; }
+    /* Les cel·les filtrades no mostren el tooltip amb el nom */
+    .cell.eina.dim:hover .nom,
+    .cell.eina.dim.eina-activa .nom { opacity: 0; }
 
     /* ─── OVERLAYS (modals) ─────────────────────────── */
     .overlay {
