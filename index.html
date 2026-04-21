@@ -187,13 +187,13 @@
     @media (prefers-reduced-motion: reduce) {
       #btn-ajudam { animation: none; }
     }
+    /* Botó Sobre: només icona "i" (tant a mòbil com a escriptori) */
+    #btn-sobre .nav-label { display: none; }
+    #btn-sobre { padding: 6px 8px; }
     @media (max-width: 560px) {
       .nav-btns { gap: 5px; }
       .nav-btn { padding: 6px 10px; letter-spacing: 0.05em; font-size: 0.68rem; }
       .nav-btn.icon { padding: 6px 8px; }
-      /* A mòbil el botó Sobre es queda només amb la "i" per estalviar espai */
-      #btn-sobre .nav-label { display: none; }
-      #btn-sobre { padding: 6px 8px; }
     }
 
     /* ── Títol + comptador centrat a la nav (només vista grid) ── */
