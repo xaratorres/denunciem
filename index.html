@@ -372,8 +372,8 @@
     /* Per a 2 línies, reduïm una mica més la mida vertical */
     .tool-initial.multiline { line-height: 1.05; }
 
-    /* ── Ajust per a mòbil (portrait i landscape): font ~15% més petita ── */
-    @media (max-width: 560px), (max-height: 500px) {
+    /* ── Ajust per a mòbil: font ~15% més petita perquè la cel·la rodona ja és petita ── */
+    @media (max-width: 560px) {
       .tool-initial                { font-size: min(calc(var(--cell-size, 60px) * 0.48), 34px); }
       .tool-initial.len-2          { font-size: min(calc(var(--cell-size, 60px) * 0.42), 30px); }
       .tool-initial.len-3          { font-size: min(calc(var(--cell-size, 60px) * 0.32), 24px); }
@@ -1427,9 +1427,7 @@
     if (IS_MOBILE && !isLandscapeSmall) {
       COLS = 6; BASE_ROWS = 10;
     } else if (isLandscapeSmall) {
-      // Mida de cel·la equivalent a la del mòbil portrait (6 cols al cantó curt)
-      const shortSide = Math.min(GW, window.innerHeight);
-      const TARGET_CELL = Math.max(52, Math.min(64, Math.floor((shortSide - GAP * 7) / 6)));
+      const TARGET_CELL = Math.max(54, Math.min(80, Math.floor((GH - GAP) / 5)));
       COLS = Math.max(8, Math.floor((GW - GAP) / (TARGET_CELL + GAP)));
       BASE_ROWS = Math.max(3, Math.floor((GH - GAP) / (TARGET_CELL + GAP)));
     } else {
