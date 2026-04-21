@@ -1343,6 +1343,16 @@
     <div class="modal" id="fitxa-modal"></div>
   </div>
 
+  <!-- OVERLAY LANDSCAPE (mòbil horitzontal) -->
+  <div id="overlay-landscape" class="overlay">
+    <div class="modal" style="width:min(420px,92vw); text-align:center; padding:2rem 1.8rem 1.5rem;">
+      <div style="font-size:2.2rem; margin-bottom:0.4rem;">↺</div>
+      <h2 style="margin-bottom:0.4rem;">Gira el mòbil a vertical</h2>
+      <p style="color:var(--ink-2); font-size:0.92rem; line-height:1.5;">La vista de <strong>graella</strong> no es veu bé en horitzontal. Hem canviat a la vista <strong>llista</strong>. Quan tornis a posar el mòbil en vertical, tornarà a la graella automàticament.</p>
+      <button class="config-btn primary" data-close="overlay-landscape" style="margin-top:1rem;">Entesos</button>
+    </div>
+  </div>
+
   <!-- OVERLAY SOBRE -->
   <div id="overlay-sobre" class="overlay">
     <div class="modal">
@@ -1911,6 +1921,12 @@
   vistaSwitch.addEventListener('click', e => {
     const b = e.target.closest('button[data-v]');
     if (!b) return;
+    // Bloquejar grid a mòbil en landscape
+    if (b.dataset.v === 'grid' && typeof isMobileLandscape === 'function' && isMobileLandscape()) {
+      $('overlay-config').classList.remove('open');
+      setTimeout(() => $('overlay-landscape').classList.add('open'), 150);
+      return;
+    }
     setVista(b.dataset.v);
   });
   refreshVistaSwitch();
@@ -2383,10 +2399,47 @@
   window.renderLlista = renderLlista;
   renderLlista();
 
+  // ─── BLOQUEIG DE GRID EN LANDSCAPE (mòbil) ────────────
+  // Si l'usuari gira el mòbil a horitzontal, forcem vista llista i avisem.
+  // Quan torna a vertical, restaurem la vista que tenia.
+  let preLandscapeVista = null;
+  const landscapeMQ = window.matchMedia('(orientation: landscape)');
+  function isMobileLandscape() {
+    return IS_MOBILE && landscapeMQ.matches;
+  }
+  function handleOrientationChange() {
+    if (!IS_MOBILE) return;
+    if (landscapeMQ.matches) {
+      // Entra en landscape
+      if (preLandscapeVista === null) preLandscapeVista = getVista();
+      if (getVista() === 'grid') {
+        setVista('llista');
+        $('overlay-landscape').classList.add('open');
+      }
+    } else {
+      // Torna a portrait
+      if (preLandscapeVista === 'grid' && getVista() === 'llista') {
+        setVista('grid');
+      }
+      preLandscapeVista = null;
+      $('overlay-landscape').classList.remove('open');
+    }
+  }
+  // Escoltador — funciona tant per matchMedia com per orientationchange
+  if (landscapeMQ.addEventListener) landscapeMQ.addEventListener('change', handleOrientationChange);
+  else landscapeMQ.addListener(handleOrientationChange);
+  // Comprovació inicial (si l'usuari carrega ja en landscape)
+  handleOrientationChange();
+
   // ─── NAV BUTTONS ──────────────────────────────────
   $('btn-ajudam').addEventListener('click', openAjudam);
   $('btn-vista').addEventListener('click', () => {
     const curr = getVista();
+    // Si el mòbil està en horitzontal i intenten anar a grid, reobrim l'avís
+    if (isMobileLandscape() && curr === 'llista') {
+      $('overlay-landscape').classList.add('open');
+      return;
+    }
     setVista(curr === 'grid' ? 'llista' : 'grid');
   });
   $('btn-sobre').addEventListener('click', () => $('overlay-sobre').classList.add('open'));
