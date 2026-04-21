@@ -47,15 +47,16 @@ const TERRITORI_META = {
 
 // Temàtiques del problema (per a la pregunta «De què es tracta?»)
 const TEMATIQUES_META = {
+  // Ordre pensat per compactar tags curts al costat de llargs a mòbil
   admin:         { nom: 'Administració',                descripcio: 'Silenci o mal funcionament d\'una administració pública.' },
   consum:        { nom: 'Consum i empreses',            descripcio: 'Cobraments, contractes, serveis defectuosos.' },
-  salut:         { nom: 'Salut',                        descripcio: 'CAP, hospitals, llistes d\'espera, errors sanitaris.' },
   corrupcio:     { nom: 'Corrupció',                    descripcio: 'Contractació irregular, ús indegut de fons públics.' },
   delicte:       { nom: 'Delicte',                      descripcio: 'Agressions, robatoris, amenaces o estafes comunes.' },
+  catalanofobia: { nom: 'Catalanofòbia',                descripcio: 'Discriminació o delictes d\'odi per ser català.' },
   delicte_odi:   { nom: 'Delicte d\'odi',                descripcio: 'Agressió o discriminació per la identitat de la víctima (origen, llengua, orientació, gènere, religió...).' },
   dades:         { nom: 'Dades personals',              descripcio: 'Ús indegut de dades, filtracions, vigilància.' },
   llengua:       { nom: 'Drets lingüístics',            descripcio: 'Incompliments en matèria de català.' },
-  catalanofobia: { nom: 'Catalanofòbia',                descripcio: 'Discriminació o delictes d\'odi per ser català.' },
+  violencia_masclista: { nom: 'Violència masclista',    descripcio: 'Agressions, assetjament o discriminació per raó de sexe o gènere.' },
   drets_humans:  { nom: 'Drets humans',                 descripcio: 'Abusos institucionals, drets civils, presons.' },
   habitatge:     { nom: 'Habitatge',                    descripcio: 'Desnonaments, accés, drets socials.' },
   medi_ambient:  { nom: 'Medi ambient',                 descripcio: 'Contaminació, urbanisme agressiu, espais naturals.' },
@@ -65,8 +66,8 @@ const TEMATIQUES_META = {
   racisme:       { nom: 'Racisme i xenofòbia',          descripcio: 'Discriminació per origen, color, religió.' },
   accessibilitat:{ nom: 'Accessibilitat digital',       descripcio: 'Webs i apps públiques no accessibles.' },
   lgtbi:         { nom: 'LGTBI-fòbia i drets',          descripcio: 'Discriminació o delictes d\'odi per orientació sexual, identitat o expressió de gènere.' },
-  violencia_masclista: { nom: 'Violència masclista',    descripcio: 'Agressions, assetjament o discriminació per raó de sexe o gènere.' },
   espai_public:  { nom: 'Espai públic i serveis municipals', descripcio: 'Carrers, parcs, mobiliari, enllumenat, neteja, sorolls, recollida de residus.' },
+  salut:         { nom: 'Salut',                        descripcio: 'CAP, hospitals, llistes d\'espera, errors sanitaris.' },
   tributs_locals:{ nom: 'Tributs i taxes locals',       descripcio: 'IBI, plusvàlua, multes de trànsit, sancions municipals.' },
   tramits:       { nom: 'Tràmits locals',               descripcio: 'Sol·licituds, certificats, documentació, ajudes i padró a ajuntaments i administració local.' },
   immigracio:    { nom: 'Immigració i estrangeria',     descripcio: 'NIE, residència, nacionalitat, drets de persones migrants.' },
