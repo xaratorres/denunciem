@@ -337,12 +337,19 @@
       user-select: none;
       text-shadow: 0 1px 2px rgba(0,0,0,0.20);
       line-height: 1;
+      white-space: pre-line;
+      text-align: center;
+      padding: 0 4%;
     }
-    .tool-initial.len-2 { font-size: min(calc(var(--cell-size, 60px) * 0.42), 30px); letter-spacing: -0.04em; }
-    .tool-initial.len-3 { font-size: min(calc(var(--cell-size, 60px) * 0.30), 22px); letter-spacing: -0.04em; }
-    .tool-initial.len-4 { font-size: min(calc(var(--cell-size, 60px) * 0.24), 18px); letter-spacing: -0.04em; }
-    .tool-initial.len-5 { font-size: min(calc(var(--cell-size, 60px) * 0.20), 15px); letter-spacing: -0.04em; }
-    .tool-initial.len-6 { font-size: min(calc(var(--cell-size, 60px) * 0.17), 13px); letter-spacing: -0.05em; }
+    .tool-initial.len-2 { font-size: min(calc(var(--cell-size, 60px) * 0.50), 36px); letter-spacing: -0.04em; }
+    .tool-initial.len-3 { font-size: min(calc(var(--cell-size, 60px) * 0.38), 28px); letter-spacing: -0.04em; }
+    .tool-initial.len-4 { font-size: min(calc(var(--cell-size, 60px) * 0.32), 24px); letter-spacing: -0.04em; }
+    .tool-initial.len-5 { font-size: min(calc(var(--cell-size, 60px) * 0.27), 20px); letter-spacing: -0.04em; }
+    .tool-initial.len-6 { font-size: min(calc(var(--cell-size, 60px) * 0.23), 17px); letter-spacing: -0.04em; }
+    .tool-initial.len-7 { font-size: min(calc(var(--cell-size, 60px) * 0.20), 15px); letter-spacing: -0.05em; }
+    .tool-initial.len-8 { font-size: min(calc(var(--cell-size, 60px) * 0.18), 13px); letter-spacing: -0.05em; }
+    /* Per a 2 línies, reduïm una mica més la mida vertical */
+    .tool-initial.multiline { line-height: 1.05; }
     .nom {
       position: fixed;
       white-space: nowrap;
@@ -1565,7 +1572,11 @@
 
         const ini = document.createElement('span');
         const siglaText = ent.sigles || inicial(ent.nom);
-        ini.className = 'tool-initial len-' + Math.min(siglaText.length, 6);
+        // Per a sigles amb salt de línia, la mida es basa en la línia més llarga
+        const lines = siglaText.split('\n');
+        const maxLine = Math.max(...lines.map(l => l.length));
+        const lenClass = 'len-' + Math.min(Math.max(maxLine, 1), 8);
+        ini.className = 'tool-initial ' + lenClass + (lines.length > 1 ? ' multiline' : '');
         ini.textContent = siglaText;
         ring.appendChild(ini);
 
@@ -2168,7 +2179,9 @@
         const it = document.createElement('div');
         it.className = 'entitat-item';
         it.style.setProperty('--tipcolor', meta.color);
-        const s = ent.sigles || inicial(ent.nom);
+        const sRaw = ent.sigles || inicial(ent.nom);
+        // A la llista, aplanem el salt de línia (l'icona de la llista és més petita)
+        const s = sRaw.replace('\n', '');
         it.innerHTML = `
           <div class="entitat-ico ico-len-${Math.min(s.length, 5)}">${s}</div>
           <div class="entitat-info">

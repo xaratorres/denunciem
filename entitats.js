@@ -1874,17 +1874,38 @@ const _STOP_WORDS = new Set([
   'd','l','contra','sobre','sense','sota'
 ]);
 function autoSigla(nom) {
-  // Treu parèntesis i el que ve després d'un "—" o " - " (subtítols)
+  const MAX_LINE = 8;
+  // Treu parèntesis i subtítols després d'un em/en-dash
   const base = nom.replace(/\([^)]*\)/g, '').split(/\s[—–]\s|\s-\s/)[0].trim();
-  // Separa per espais i elimina apòstrofs inicials/finals
-  const raw = base.split(/\s+/).map(w => w.replace(/^['']|['']$/g, '').replace(/[.,]$/, ''));
-  const words = raw.filter(w => w && !_STOP_WORDS.has(w.toLowerCase()));
+  const raw = base.split(/\s+/).map(w => w.replace(/[.,]$/, ''));
+  const words = raw.filter(w => w && !_STOP_WORDS.has(w.toLowerCase().replace(/['']/g, '')));
   if (words.length === 0) return nom.charAt(0).toUpperCase();
-  // Regla 1: una sola paraula prou curta → sencera
-  if (words.length === 1 && [...words[0]].length <= 6) return words[0];
-  // Regla 2: múltiples paraules → inicials (capat a 6)
-  const inis = words.map(w => w.charAt(0).toUpperCase()).join('');
-  return inis.slice(0, 6);
+
+  // Regla 1: nom curt d'una línia (inclou els acrònims ja d'1 paraula llarga)
+  const joined = words.join(' ');
+  if (joined.length <= MAX_LINE) return joined;
+
+  // Regla 2: múltiples paraules → 2 línies balancejades al punt de tall més equilibrat
+  if (words.length >= 2) {
+    let best = null;
+    for (let i = 1; i < words.length; i++) {
+      const l1 = words.slice(0, i).join(' ');
+      const l2 = words.slice(i).join(' ');
+      if (l1.length > MAX_LINE || l2.length > MAX_LINE) continue;
+      const diff = Math.abs(l1.length - l2.length);
+      if (!best || diff < best.diff) best = { text: l1 + '\n' + l2, diff };
+    }
+    if (best) return best.text;
+    // Cap combinació encaixa en 2 línies → inicials
+    return words.map(w => w.charAt(0).toUpperCase()).join('').slice(0, 6);
+  }
+
+  // Regla 3: 1 paraula llarga (EntreBarris, Terraferida…) → partir pel mig
+  const w = words[0];
+  // Preferència: trencar abans d'una majúscula interna si n'hi ha (camelCase)
+  const camel = w.slice(1).search(/[A-ZÀ-Ü]/);
+  const cut = camel > 0 ? camel + 1 : Math.ceil(w.length / 2);
+  return w.slice(0, cut) + '\n' + w.slice(cut);
 }
 // Prova: autoSigla s'aplica a tots. _SIGLES_BY_ID queda com a fallback de seguretat.
 ENTITATS.forEach(e => {
