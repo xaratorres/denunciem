@@ -68,7 +68,7 @@ const TEMATIQUES_META = {
   violencia_masclista: { nom: 'Violència masclista',    descripcio: 'Agressions, assetjament o discriminació per raó de sexe o gènere.' },
   espai_public:  { nom: 'Espai públic i serveis municipals', descripcio: 'Carrers, parcs, mobiliari, enllumenat, neteja, sorolls, recollida de residus.' },
   tributs_locals:{ nom: 'Tributs i taxes locals',       descripcio: 'IBI, plusvàlua, multes de trànsit, sancions municipals.' },
-  tramits:       { nom: 'Tràmits administratius',       descripcio: 'Sol·licituds, certificats, documentació, ajudes, padró.' },
+  tramits:       { nom: 'Tràmits locals',               descripcio: 'Sol·licituds, certificats, documentació, ajudes i padró a ajuntaments i administració local.' },
   immigracio:    { nom: 'Immigració i estrangeria',     descripcio: 'NIE, residència, nacionalitat, drets de persones migrants.' },
   animals:       { nom: 'Protecció animal',             descripcio: 'Maltractament animal, colònies, animals abandonats, tinença responsable.' },
   pobresa:       { nom: 'Pobresa i exclusió social',    descripcio: 'Sensellarisme, pobresa energètica, inserció, drets bàsics.' },
