@@ -532,27 +532,35 @@
       60% { transform: translateX(-3px); }
       80% { transform: translateX(2px); }
     }
+    /* Wrap del lead: reserva alçada per a que warning i lead comparteixin espai */
+    .ajudam-lead-wrap {
+      position: relative;
+      margin-top: -0.3rem;
+      margin-bottom: 1.4rem;
+    }
+    .ajudam-lead,
     .ajudam-zero-warn {
-      display: none;
+      margin: 0;
+      line-height: 1.55;
+      font-size: 0.92rem;
+    }
+    .ajudam-lead { color: var(--ink-2); }
+    /* Warning: ocupa el mateix espai que el lead, substituint-lo visualment */
+    .ajudam-zero-warn {
+      position: absolute;
+      inset: 0;
       background: rgba(220,38,38,0.08);
       color: var(--red);
       padding: 10px 14px;
       border-radius: 8px;
-      font-size: 0.88rem;
       font-weight: 500;
-      line-height: 1.4;
-      margin-bottom: 1.2rem;
       border-left: 3px solid var(--red);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s;
     }
-    .ajudam-zero-warn.visible { display: block; }
+    .ajudam-zero-warn.visible { opacity: 1; visibility: visible; }
     html.dark .ajudam-zero-warn { background: rgba(220,38,38,0.14); color: #fca5a5; }
-    .ajudam-lead {
-      font-size: 0.92rem;
-      color: var(--ink-2);
-      line-height: 1.55;
-      margin-top: -0.3rem;
-      margin-bottom: 1.4rem;
-    }
     .ajudam-grup { margin-bottom: 1.4rem; }
     .ajudam-grup:last-of-type { margin-bottom: 0.6rem; }
     .ajudam-q {
@@ -1143,8 +1151,10 @@
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
       </button>
       <h2>Ajuda'm a trobar el canal <span class="ajudam-count" id="ajudam-count">0</span></h2>
-      <p class="ajudam-lead">Respon el que vulguis. Les preguntes sense resposta no filtren.</p>
-      <div class="ajudam-zero-warn" id="ajudam-zero-warn">Amb aquests criteris no hi ha cap recurs. Prova de canviar la selecció.</div>
+      <div class="ajudam-lead-wrap">
+        <p class="ajudam-lead" id="ajudam-lead">Respon el que vulguis. Les preguntes sense resposta no filtren.</p>
+        <p class="ajudam-zero-warn" id="ajudam-zero-warn">Amb aquests criteris no hi ha cap recurs. Prova de canviar la selecció.</p>
+      </div>
 
       <div class="ajudam-grup">
         <h3 class="ajudam-q">On ha passat el que vols denunciar? <span class="ajudam-check" data-check="territori" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span></h3>
@@ -1161,9 +1171,6 @@
         <div class="ajudam-opts" data-q="tipus"></div>
       </div>
 
-      <div class="ajudam-actions">
-        <button class="ajudam-btn ajudam-btn-apply" id="btn-ajudam-apply">Fet</button>
-      </div>
     </div>
   </div>
 
@@ -1822,10 +1829,8 @@
     ajudamOverlay.classList.add('open');
   }
 
-  $('btn-ajudam-apply').addEventListener('click', () => {
-    // Ja està tot aplicat — només tanca
-    ajudamOverlay.classList.remove('open');
-  });
+  // El modal es tanca amb la creu (data-close="overlay-ajudam") o ESC.
+  // Els canvis ja s'apliquen en directe, no cal cap botó «Fet».
 
   // Exposa openAjudam globalment per si la volem cridar de la nav
   window.openAjudam = openAjudam;
