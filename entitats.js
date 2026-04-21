@@ -40,7 +40,8 @@ const TERRITORI_META = {
   franja: { nom: 'Franja de Ponent',    descripcio: 'Comarques orientals de l\'Aragó de parla catalana.' },
   alguer: { nom: 'l\'Alguer',           descripcio: 'Ciutat catalanoparlant de Sardenya.' },
   carxe:  { nom: 'El Carxe',            descripcio: 'Territori catalanoparlant al nord-est de Múrcia.' },
-  paisos: { nom: 'Països Catalans',     descripcio: 'Entitats transversals que actuen a tots els territoris.' },
+  paisos:   { nom: 'Països Catalans',  descripcio: 'Entitats transversals que actuen a tots els territoris.' },
+  mesenlla: { nom: 'Més enllà',        descripcio: 'Entitats que poden ajudar si ets fora dels Països Catalans (resta del món).' },
 };
 
 // Temàtiques del problema (per a la pregunta «De què es tracta?»)

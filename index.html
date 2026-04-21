@@ -587,7 +587,7 @@
     /* ── Ajuda'm ── */
     #overlay-ajudam .modal { max-height: 94vh; overflow-y: auto; }
     @media (min-width: 960px) {
-      #ajudam-modal { width: min(960px, 94vw) !important; }
+      #ajudam-modal { width: min(1120px, 94vw) !important; }
       #overlay-sobre .modal { width: min(1040px, 94vw) !important; max-height: 94vh; }
     }
     #overlay-ajudam .modal h2 {
@@ -1534,6 +1534,7 @@
         cell.classList.add('eina');
         cell.dataset.tipus = ent.tipus;
         cell.dataset.territori = ent.territori || 'cat';
+        cell.dataset.mesenlla = ent.mesenlla ? '1' : '0';
         cell.dataset.tematiques = (ent.tematiques || []).join(',');
         cell.style.setProperty('--tipcolor', color);
 
@@ -1830,10 +1831,13 @@
 
   function entitatMatchesFilters(ent) {
     const matchT = activeTipus === null || ent.tipus === activeTipus;
-    // Territori: les transversals (paisos) apareixen a qualsevol filtre territorial
+    // Territori:
+    //  · "mesenlla" no hi posa entitats paisos automàticament; només les que tenen flag mesenlla:true.
+    //  · altres territoris: matching directe + transversals (paisos) que cobreixen tots els PPCC.
     const matchG = activeTerritori === null
-      || ent.territori === activeTerritori
-      || ent.territori === 'paisos';
+      || (activeTerritori === 'mesenlla'
+          ? !!ent.mesenlla
+          : (ent.territori === activeTerritori || ent.territori === 'paisos'));
     const matchTem = activeTematica === null
       || (ent.tematiques || []).includes(activeTematica);
     return matchT && matchG && matchTem;
@@ -1844,9 +1848,13 @@
     document.querySelectorAll('.cell.eina').forEach(c => {
       const tipus = c.dataset.tipus;
       const territori = c.dataset.territori;
+      const mesenlla = c.dataset.mesenlla === '1';
       const tematiques = (c.dataset.tematiques || '').split(',').filter(Boolean);
       const matchT = activeTipus === null || tipus === activeTipus;
-      const matchG = activeTerritori === null || territori === activeTerritori || territori === 'paisos';
+      const matchG = activeTerritori === null
+        || (activeTerritori === 'mesenlla'
+            ? mesenlla
+            : (territori === activeTerritori || territori === 'paisos'));
       const matchTem = activeTematica === null || tematiques.includes(activeTematica);
       c.classList.toggle('dim', !(matchT && matchG && matchTem));
     });
