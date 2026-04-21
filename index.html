@@ -342,6 +342,7 @@
     .tool-initial.len-3 { font-size: min(calc(var(--cell-size, 60px) * 0.30), 22px); letter-spacing: -0.04em; }
     .tool-initial.len-4 { font-size: min(calc(var(--cell-size, 60px) * 0.24), 18px); letter-spacing: -0.04em; }
     .tool-initial.len-5 { font-size: min(calc(var(--cell-size, 60px) * 0.20), 15px); letter-spacing: -0.04em; }
+    .tool-initial.len-6 { font-size: min(calc(var(--cell-size, 60px) * 0.17), 13px); letter-spacing: -0.05em; }
     .nom {
       position: fixed;
       white-space: nowrap;
@@ -1564,7 +1565,7 @@
 
         const ini = document.createElement('span');
         const siglaText = ent.sigles || inicial(ent.nom);
-        ini.className = 'tool-initial len-' + Math.min(siglaText.length, 5);
+        ini.className = 'tool-initial len-' + Math.min(siglaText.length, 6);
         ini.textContent = siglaText;
         ring.appendChild(ini);
 

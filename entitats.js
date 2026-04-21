@@ -1863,7 +1863,33 @@ const _SIGLES_BY_ID = {
   // Andorra
   'raonador-andorra':       'Raon',
 };
-ENTITATS.forEach(e => { e.sigles = _SIGLES_BY_ID[e.id] || e.nom.charAt(0).toUpperCase(); });
+// ─── PROVA: sigles auto-generades amb regla uniforme ─────────
+// Regla:
+//   · Nom d'una sola paraula i ≤ 6 lletres → nom sencer
+//   · Nom compost → inicials de totes les paraules significatives (filtra articles,
+//     preposicions) limitades a 6 caràcters
+// _SIGLES_BY_ID segueix com a "override" manual si calgués excepcions.
+const _STOP_WORDS = new Set([
+  'de','del','dels','la','el','els','les','i','a','al','als','en','per','amb',
+  'd','l','contra','sobre','sense','sota'
+]);
+function autoSigla(nom) {
+  // Treu parèntesis i el que ve després d'un "—" o " - " (subtítols)
+  const base = nom.replace(/\([^)]*\)/g, '').split(/\s[—–]\s|\s-\s/)[0].trim();
+  // Separa per espais i elimina apòstrofs inicials/finals
+  const raw = base.split(/\s+/).map(w => w.replace(/^['']|['']$/g, '').replace(/[.,]$/, ''));
+  const words = raw.filter(w => w && !_STOP_WORDS.has(w.toLowerCase()));
+  if (words.length === 0) return nom.charAt(0).toUpperCase();
+  // Regla 1: una sola paraula prou curta → sencera
+  if (words.length === 1 && [...words[0]].length <= 6) return words[0];
+  // Regla 2: múltiples paraules → inicials (capat a 6)
+  const inis = words.map(w => w.charAt(0).toUpperCase()).join('');
+  return inis.slice(0, 6);
+}
+// Prova: autoSigla s'aplica a tots. _SIGLES_BY_ID queda com a fallback de seguretat.
+ENTITATS.forEach(e => {
+  e.sigles = autoSigla(e.nom) || _SIGLES_BY_ID[e.id] || e.nom.charAt(0).toUpperCase();
+});
 
 // ─── Temàtiques per entitat (per a la pregunta «De què es tracta?») ───
 const _TEMATIQUES_BY_ID = {
