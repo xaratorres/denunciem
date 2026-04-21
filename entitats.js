@@ -444,34 +444,6 @@ const ENTITATS = [
     pos:       [0.733, 0.50],
     pos_mobil: [0.67, 0.40],
   },
-  {
-    id: 'ecologistes-accio',
-    hidden: true,
-    nom: 'Ecologistes en Acció',
-    tipus: 'sectorial',
-    ambit: 'Medi ambient',
-    descripcio_breu: 'Denúncia ambiental amb capacitat legal real: aturen projectes i guanyen judicis.',
-    per_a_que: 'Denunciar impactes ambientals i donar-los recorregut legal i mediàtic.',
-    quan_usar: [
-      'Contaminació (aire, aigua, sòl)',
-      'Urbanisme agressiu',
-      'Projectes destructius (macrogranges, mines...)',
-      'Incompliments de normativa ambiental',
-    ],
-    que_esperar: [
-      'Accions legals si el cas ho justifica',
-      'Campanyes públiques',
-      'Informes tècnics',
-    ],
-    punts_forts: ['Aturen projectes reals', 'Base jurídica sòlida', 'Presència territorial'],
-    limitacions: ['Prioritzen casos amb interès col·lectiu'],
-    resultat_habitual: 'Bloqueig, modificació del projecte o sanció.',
-    temps: 'Mesos / anys',
-    enllac: 'https://www.ecologistasenaccion.org/areas-de-accion/comision-juridica/',
-    pos:       [0.267, 0.875],
-    pos_mobil: [0.50, 0.90],
-  },
-
   // ══════════════════════════════════════════
   //  ADDICIONALS — AMB SEU ALS PAÏSOS CATALANS
   //  I WEB EN CATALÀ
@@ -1602,34 +1574,6 @@ const ENTITATS = [
     pos:       [0.267, 0.50],
     pos_mobil: [0.83, 0.90],
   },
-  {
-    id: 'ecologistes-accio-pv',
-    hidden: true,
-    nom: 'Ecologistes en Acció — Federació del País Valencià',
-    tipus: 'sectorial',
-    ambit: 'Medi ambient (País Valencià)',
-    descripcio_breu: 'Federació d\'Ecologistes en Acció al País Valencià, amb capacitat jurídica i presència territorial.',
-    per_a_que: 'Denunciar impactes ambientals al País Valencià amb una federació arrelada i amb capacitat d\'acció legal.',
-    quan_usar: [
-      'Contaminació o impactes ambientals al PV',
-      'Projectes destructius al territori valencià',
-      'Afectacions a espais naturals',
-      'Incompliments normativa ambiental',
-    ],
-    que_esperar: [
-      'Acompanyament tècnic',
-      'Possibles accions legals (via Comissió Jurídica)',
-      'Difusió pública',
-    ],
-    punts_forts: ['Presència territorial al PV', 'Suport jurídic estatal', 'Experiència en litigi ambiental'],
-    limitacions: ['Prioritzen casos d\'interès col·lectiu'],
-    resultat_habitual: 'Bloqueig o modificació de projectes, denúncia pública.',
-    temps: 'Mesos / anys',
-    enllac: 'https://www.ecologistasenaccion.org/areas-de-accion/comision-juridica/',
-    pos:       [0.40, 0.625],
-    pos_mobil: [0.17, 0.70],
-  },
-
 ];
 
 // ─── Assignació de territori per a cada entitat ────────
@@ -1649,7 +1593,6 @@ const _TERRITORI_BY_ID = {
   'omnium':                 'cat',
   'facua':                  'cat',
   'observatori-desc':       'cat',
-  'ecologistes-accio':      'cat',
   'intersindical':          'cat',
   'adenc':                  'cat',
   'sindicat-llogateres':    'cat',
@@ -1700,7 +1643,6 @@ const _TERRITORI_BY_ID = {
   'aplec':                  'cn',
 
   // Afegits posteriors
-  'ecologistes-accio-pv':   'val',
 
   // Andorra
   'raonador-andorra':       'and',
@@ -1731,7 +1673,6 @@ const _CONTACTE_BY_ID = {
   'omnium':                 { adreca: 'Carrer de la Diputació, 276, pral., 08009 Barcelona', telefon: '93 319 80 50' },
   'facua':                  { adreca: 'Carrer de Leiva, 25, 08014 Barcelona',              telefon: '688 954 954' },
   'observatori-desc':       { adreca: 'Carrer de Casp, 43, baixos, 08010 Barcelona',       telefon: '93 302 68 82' },
-  'ecologistes-accio':      { adreca: 'Carrer d\'Olzinelles, 31, 08014 Barcelona',         telefon: '648 76 11 99' },
   'intersindical':          { adreca: 'Carrer de Rocafort, 242 bis, 08029 Barcelona',      telefon: '93 481 36 60' },
   'adenc':                  { adreca: '',                                                 telefon: '' },
   'sindicat-llogateres':    { adreca: '',                                                 telefon: '' },
@@ -1769,7 +1710,6 @@ const _CONTACTE_BY_ID = {
   'accio-ecologista-agro':  { adreca: 'Portal de Valldigna, 15, 46003 València',           telefon: '96 391 78 64' },
   'aplec':                  { adreca: 'Universitat de Perpinyà, P1, Casa dels Països Catalans, Camí de la Passió Vella, 66860 Perpinyà Cedex', telefon: '+33 4 68 66 22 11' },
   'raonador-andorra':       { adreca: '',                                                 telefon: '+376 180 030 30' },
-  'ecologistes-accio-pv':   { adreca: '',                                                 telefon: '96 525 52 70' },
   'ibsalut':                { adreca: '',                                                 telefon: '971 17 56 00' },
   'ibavi':                  { adreca: '',                                                 telefon: '971 78 49 90' },
   'ibdona':                 { adreca: '',                                                 telefon: '' },
@@ -1793,8 +1733,6 @@ const _EMAIL_BY_ID = {
   'intersindical':      'contacte@laintersindical.cat',
   'justicia-i-pau':     'justiciaipau@justiciaipau.org',
   'antifrau':           'bustiaoac@antifrau.cat',
-  'ecologistes-accio':  'catalunya@ecologistesenaccio.org',
-  'ecologistes-accio-pv': 'paisvalencia@ecologistesenaccio.org',
   // Estàndards molt coneguts (domini oficial de la pròpia entitat)
   'sindic-greuges':     'sindic@sindic.cat',
   'omnium':             'info@omnium.cat',
@@ -1894,7 +1832,6 @@ const _SIGLES_BY_ID = {
   'omnium':                 'ÒC',
   'facua':                  'FACUA',
   'observatori-desc':       'DESC',
-  'ecologistes-accio':      'EeA',
   'contenidor-rac1':        'RAC1',
   'sos-racisme':            'SOS',
   'justicia-i-pau':         'J&P',
@@ -1919,7 +1856,6 @@ const _SIGLES_BY_ID = {
   'agencia-valenciana-antifrau': 'AVA',
   'escola-valenciana':      'EV',
   'accio-ecologista-agro':  'Agró',
-  'ecologistes-accio-pv':   'EePV',
 
   // Catalunya Nord
   'aplec':                  'APL',
@@ -1997,8 +1933,6 @@ const _TEMATIQUES_BY_ID = {
   'amics-terra':            ['medi_ambient'],
   'terraferida':            ['medi_ambient'],
   'salvem-sa-badia':        ['medi_ambient'],
-  'ecologistes-accio':      ['medi_ambient'],
-  'ecologistes-accio-pv':   ['medi_ambient'],
   'accio-ecologista-agro':  ['medi_ambient'],
   // Laboral
   'intersindical':          ['laboral'],
