@@ -940,10 +940,10 @@
       flex-shrink: 0;
       line-height: 1;
     }
-    .entitat-ico.ico-len-2 { font-size: 0.85rem; letter-spacing: -0.04em; }
-    .entitat-ico.ico-len-3 { font-size: 0.72rem; letter-spacing: -0.04em; }
-    .entitat-ico.ico-len-4 { font-size: 0.62rem; letter-spacing: -0.04em; }
-    .entitat-ico.ico-len-5 { font-size: 0.52rem; letter-spacing: -0.04em; }
+    .entitat-ico.ico-len-2 { font-size: 0.92rem; letter-spacing: -0.04em; }
+    .entitat-ico.ico-len-3 { font-size: 0.78rem; letter-spacing: -0.04em; }
+    .entitat-ico.ico-len-4 { font-size: 0.64rem; letter-spacing: -0.05em; }
+    .entitat-ico.ico-len-5 { font-size: 0.55rem; letter-spacing: -0.05em; }
     .entitat-info { flex: 1; min-width: 0; }
     .entitat-nom {
       font-size: 0.92rem; font-weight: 600;
@@ -2347,9 +2347,22 @@
         const it = document.createElement('div');
         it.className = 'entitat-item';
         it.style.setProperty('--tipcolor', meta.color);
+        // A la llista l'icona és petit: si la sigla del grid és de 2 línies o llarga,
+        // generem unes inicials netes a partir del nom (manté els acrònims ja curts).
         const sRaw = ent.sigles || inicial(ent.nom);
-        // A la llista, aplanem el salt de línia (l'icona de la llista és més petita)
-        const s = sRaw.replace('\n', '');
+        let s;
+        if (!sRaw.includes('\n') && sRaw.length <= 5) {
+          s = sRaw; // acrònim ja adequat (GOB, TIB, ACPV, FAADA...)
+        } else {
+          const STOP = new Set(['de','del','dels','la','el','els','les','i','a','al','als','en','per','amb','d','l']);
+          const base = ent.nom.replace(/\([^)]*\)/g, '').split(/\s[—–]\s/)[0].trim();
+          const words = base.split(/\s+/).filter(w => w && !STOP.has(w.toLowerCase().replace(/['']/g,'')));
+          if (words.length === 1 && /^[A-ZÀ-Ü0-9]{2,5}$/.test(words[0])) {
+            s = words[0];
+          } else {
+            s = words.map(w => w.charAt(0).toUpperCase()).join('').slice(0, 4) || sRaw;
+          }
+        }
         it.innerHTML = `
           <div class="entitat-ico ico-len-${Math.min(s.length, 5)}">${s}</div>
           <div class="entitat-info">
