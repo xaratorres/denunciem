@@ -520,7 +520,10 @@
     }
 
     /* ── Ajuda'm ── */
-    #overlay-ajudam .modal { max-height: 92vh; overflow-y: auto; }
+    #overlay-ajudam .modal { max-height: 94vh; overflow-y: auto; }
+    @media (min-width: 960px) {
+      #ajudam-modal { width: min(960px, 94vw) !important; }
+    }
     #overlay-ajudam .modal h2 {
       display: inline-flex;
       align-items: center;
