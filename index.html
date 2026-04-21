@@ -516,6 +516,33 @@
       letter-spacing: 0.1em;
       color: var(--ink-3);
       margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .ajudam-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff;
+      opacity: 0;
+      transform: scale(0.3);
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      flex-shrink: 0;
+    }
+    .ajudam-check.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .ajudam-check.pulse { animation: ajudam-check-pulse 0.55s ease-out; }
+    @keyframes ajudam-check-pulse {
+      0%   { transform: scale(1); box-shadow: 0 0 0 0 rgba(220,38,38,0.6); }
+      50%  { transform: scale(1.35); box-shadow: 0 0 0 6px rgba(220,38,38,0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220,38,38,0); }
     }
     .ajudam-opts {
       display: flex;
@@ -1074,23 +1101,23 @@
       <p class="ajudam-lead">Respon el que vulguis. Les preguntes sense resposta no filtren.</p>
 
       <div class="ajudam-grup">
-        <h3 class="ajudam-q">On ha passat el que vols denunciar?</h3>
+        <h3 class="ajudam-q">On ha passat el que vols denunciar? <span class="ajudam-check" data-check="territori" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span></h3>
         <div class="ajudam-opts" data-q="territori"></div>
       </div>
 
       <div class="ajudam-grup">
-        <h3 class="ajudam-q">De què es tracta?</h3>
+        <h3 class="ajudam-q">De què es tracta? <span class="ajudam-check" data-check="tematica" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span></h3>
         <div class="ajudam-opts" data-q="tematica"></div>
       </div>
 
       <div class="ajudam-grup">
-        <h3 class="ajudam-q">Per quina via vols fer-ho?</h3>
+        <h3 class="ajudam-q">Per quina via vols fer-ho? <span class="ajudam-check" data-check="tipus" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span></h3>
         <div class="ajudam-opts" data-q="tipus"></div>
       </div>
 
       <div class="ajudam-actions">
         <button class="ajudam-btn ajudam-btn-clear" id="btn-ajudam-clear">Neteja</button>
-        <button class="ajudam-btn ajudam-btn-apply" id="btn-ajudam-apply">Aplicar</button>
+        <button class="ajudam-btn ajudam-btn-apply" id="btn-ajudam-apply">Fet</button>
       </div>
     </div>
   </div>
@@ -1660,8 +1687,20 @@
   // ─── MODAL AJUDA'M ────────────────────────────────
   const ajudamOverlay = $('overlay-ajudam');
   const ajudamModal   = $('ajudam-modal');
-  // Estat draft mentre el modal és obert (no toca els active* fins a "Aplicar")
-  let draftTipus = null, draftTerritori = null, draftTematica = null;
+
+  function pulseCheck(q, hasValue) {
+    const check = ajudamModal.querySelector(`.ajudam-check[data-check="${q}"]`);
+    if (!check) return;
+    if (hasValue) {
+      check.classList.add('visible');
+      // Re-disparar l'animació de pols encara que ja estigui visible
+      check.classList.remove('pulse');
+      void check.offsetWidth; // força reflow
+      check.classList.add('pulse');
+    } else {
+      check.classList.remove('visible', 'pulse');
+    }
+  }
 
   function buildAjudamOptions() {
     const groups = [
@@ -1679,13 +1718,16 @@
         b.dataset.val = key;
         b.textContent = m.nom;
         b.addEventListener('click', () => {
-          // Radio-like: click a la seleccionada la desactiva; altres opcions es netegen
           const wasSelected = b.classList.contains('selected');
           container.querySelectorAll('.ajudam-opt').forEach(x => x.classList.remove('selected'));
           if (!wasSelected) b.classList.add('selected');
-          if      (q === 'territori') draftTerritori = wasSelected ? null : key;
-          else if (q === 'tematica')  draftTematica  = wasSelected ? null : key;
-          else if (q === 'tipus')     draftTipus     = wasSelected ? null : key;
+          const newVal = wasSelected ? null : key;
+          // Aplica immediatament a l'estat actiu (auto-save)
+          if      (q === 'territori') activeTerritori = newVal;
+          else if (q === 'tematica')  activeTematica  = newVal;
+          else if (q === 'tipus')     activeTipus     = newVal;
+          pulseCheck(q, newVal !== null);
+          applyFilters();
         });
         container.appendChild(b);
       });
@@ -1694,32 +1736,36 @@
   buildAjudamOptions();
 
   function openAjudam() {
-    // Carrega l'estat actual al draft + UI
-    draftTipus = activeTipus;
-    draftTerritori = activeTerritori;
-    draftTematica = activeTematica;
+    // Sincronitza UI amb l'estat actual (que sempre està aplicat)
     ajudamModal.querySelectorAll('.ajudam-opt').forEach(b => b.classList.remove('selected'));
     const setSel = (q, val) => {
+      pulseCheck(q, val !== null);
       if (val === null) return;
       const el = ajudamModal.querySelector(`.ajudam-opts[data-q="${q}"] .ajudam-opt[data-val="${val}"]`);
       if (el) el.classList.add('selected');
     };
+    // No anima en obrir — només mostra les marques sense pols
+    ['territori','tematica','tipus'].forEach(q => {
+      const check = ajudamModal.querySelector(`.ajudam-check[data-check="${q}"]`);
+      if (check) check.classList.remove('pulse');
+    });
     setSel('territori', activeTerritori);
     setSel('tematica',  activeTematica);
     setSel('tipus',     activeTipus);
+    // Treu totes les pulses (només els visible es mantenen)
+    setTimeout(() => ajudamModal.querySelectorAll('.ajudam-check.pulse').forEach(c => c.classList.remove('pulse')), 0);
     ajudamOverlay.classList.add('open');
   }
 
   $('btn-ajudam-clear').addEventListener('click', () => {
-    draftTipus = null; draftTerritori = null; draftTematica = null;
+    activeTipus = null; activeTerritori = null; activeTematica = null;
     ajudamModal.querySelectorAll('.ajudam-opt.selected').forEach(b => b.classList.remove('selected'));
+    ajudamModal.querySelectorAll('.ajudam-check').forEach(c => c.classList.remove('visible', 'pulse'));
+    applyFilters();
   });
 
   $('btn-ajudam-apply').addEventListener('click', () => {
-    activeTipus = draftTipus;
-    activeTerritori = draftTerritori;
-    activeTematica = draftTematica;
-    applyFilters();
+    // Ja està tot aplicat — només tanca
     ajudamOverlay.classList.remove('open');
   });
 
