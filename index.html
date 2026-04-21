@@ -1697,13 +1697,21 @@
     });
 
     let rafId = null;
+    // Throttle a ~30fps: les aures són lentes i no es nota res; la càrrega de paint baixa a la meitat
+    let lastTick = 0;
+    const FRAME_MS = 1000 / 30;
     function tick(t) {
+      rafId = requestAnimationFrame(tick);
+      if (t - lastTick < FRAME_MS) return;
+      lastTick = t;
       toolData.forEach(td => {
         const raw = (1 + Math.sin(t * td.speed + td.phase)) * 0.5;
         const raw2 = (1 + Math.sin(t * td.speed * 2.4 + td.phase + 1.8)) * 0.5;
+        // Radis d'ombra reduïts (abans 34/12/90/34 → ara 20/7/48/18).
+        // box-shadow es pinta a CPU, no a GPU: baixar el blur és la millora més gran.
         const sh =
-          `0 0 ${(raw2 * 34).toFixed(1)}px ${(raw2 * 12).toFixed(1)}px rgba(${td.r},${td.g},${td.b},${(0.30 + raw2 * 0.40).toFixed(2)}),` +
-          `0 0 ${(raw  * 90).toFixed(1)}px ${(raw  * 34).toFixed(1)}px rgba(${td.r},${td.g},${td.b},${(0.10 + raw  * 0.22).toFixed(2)})`;
+          `0 0 ${(raw2 * 20).toFixed(1)}px ${(raw2 * 7).toFixed(1)}px rgba(${td.r},${td.g},${td.b},${(0.30 + raw2 * 0.40).toFixed(2)}),` +
+          `0 0 ${(raw  * 48).toFixed(1)}px ${(raw  * 18).toFixed(1)}px rgba(${td.r},${td.g},${td.b},${(0.10 + raw  * 0.22).toFixed(2)})`;
         td.ring.style.boxShadow = sh;
         // Emet ona quan l'aura passa de decreixent a creixent
         const growing = Math.cos(t * td.speed + td.phase) > 0;
@@ -1720,7 +1728,6 @@
         const ty = g.dir === 'up'   ? -g.offset : g.dir === 'down'  ? (g.offset - g.maxOffset) : 0;
         g.pre.style.transform = `translate(${tx}px,${ty}px)`;
       });
-      rafId = requestAnimationFrame(tick);
     }
     function startAnim() {
       if (rafId !== null) return;
