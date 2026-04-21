@@ -196,6 +196,52 @@
       #btn-sobre { padding: 6px 8px; }
     }
 
+    /* ── Títol + comptador centrat a la nav (només vista grid) ── */
+    .nav-title {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+    }
+    body.vista-grid .nav-title { display: inline-flex; }
+    .nav-count {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      transition: background 0.15s, transform 0.12s;
+      user-select: none;
+    }
+    .nav-count.clearable { cursor: pointer; }
+    .nav-count.clearable:hover { background: var(--red-dark); }
+    .nav-count.clearable:active { transform: scale(0.95); }
+    .nav-count .x-clear {
+      width: 10px; height: 10px;
+      opacity: 0;
+      transition: opacity 0.15s, width 0.15s;
+    }
+    .nav-count.clearable .x-clear { opacity: 0.85; }
+    html.dark .nav-title { color: var(--ink); }
+    @media (max-width: 560px) {
+      .nav-title .nav-title-text { display: none; }
+    }
+
     /* ── Dropdown tipus ── */
 
     /* ─── GRID PANOTS ────────────────────────────── */
@@ -1128,6 +1174,10 @@
   <!-- NAV -->
   <nav>
     <div class="brand"><span class="brand-name">Denunci<span class="em">em</span></span><span class="chip-revisio">En revisió</span></div>
+    <div class="nav-title" id="nav-title" aria-hidden="true">
+      <span class="nav-title-text">Canals de denúncia</span>
+      <span class="nav-count" id="nav-count" role="button" tabindex="0" title="">0<svg class="x-clear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>
+    </div>
     <div class="nav-btns">
       <button class="nav-btn" id="btn-ajudam" title="Ajuda'm a trobar el canal" aria-label="Ajuda'm">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
@@ -1901,7 +1951,39 @@
     const any = activeTipus !== null || activeTerritori !== null || activeTematica !== null;
     $('btn-ajudam').classList.toggle('active-filter', any);
     updateAjudamCount();
+    updateNavCount(any);
   };
+
+  // Xip comptador de la nav (vista grid) — mateixa mecànica que el de la llista
+  function updateNavCount(hasFilters) {
+    const el = document.getElementById('nav-count');
+    if (!el) return;
+    const n = ENTITATS_V.filter(entitatMatchesFilters).length;
+    // Substitueix només el primer text node (conserva l'SVG)
+    el.firstChild.nodeValue = n + ' ';
+    el.classList.toggle('clearable', !!hasFilters);
+    el.title = hasFilters ? 'Clica per netejar els filtres' : '';
+  }
+  (function wireNavCount() {
+    const el = document.getElementById('nav-count');
+    if (!el) return;
+    const clear = () => {
+      if (activeTipus === null && activeTerritori === null && activeTematica === null) return;
+      activeTipus = null;
+      activeTerritori = null;
+      activeTematica = null;
+      ajudamModal.querySelectorAll('.ajudam-opt.selected').forEach(b => b.classList.remove('selected'));
+      ajudamModal.querySelectorAll('.ajudam-check.visible').forEach(c => c.classList.remove('visible', 'pulse'));
+      applyFilters();
+    };
+    el.addEventListener('click', () => { if (el.classList.contains('clearable')) clear(); });
+    el.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && el.classList.contains('clearable')) {
+        e.preventDefault(); clear();
+      }
+    });
+  })();
+
   applyFilters();
 
   // ─── FITXA ────────────────────────────────────────
