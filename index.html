@@ -1807,7 +1807,7 @@
     const LLISTA_INTRO_HTML = `
       <header class="llista-intro">
         <h1>Els teus drets, a <span class="em">un clic</span>.</h1>
-        <p>Directori d'<strong>entitats i canals</strong> que tens a disposició als Països Catalans per fer valer els teus drets. Estan agrupats per tipus de via: administratiu, legal, pressió social…</p>
+        <p>Directori d'<strong>entitats i canals</strong> que tens a disposició a la <strong>nació</strong> per fer valer els teus drets. Estan agrupats per tipus de via: administratiu, legal, pressió social…</p>
         <p>Toca una entitat per veure què fa, quan usar-la, i les dades de contacte. Si no saps per on començar, obre <span class="hint-ajudam">Ajuda'm</span> i respon les preguntes.</p>
       </header>
     `;
@@ -1822,7 +1822,7 @@
       const grup = document.createElement('details');
       grup.className = 'entitat-grup';
       grup.style.setProperty('--grupcolor', meta.color);
-      grup.open = true;
+      grup.open = false;
       grup.innerHTML = `
         <summary>
           <span class="entitat-grup-head">
