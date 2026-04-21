@@ -591,7 +591,7 @@
     /* ── Cercador de la llista ── */
     .llista-search {
       position: relative;
-      margin: 0 0 1rem;
+      margin: 0.2rem 0 0.9rem;
     }
     .llista-search-ico {
       position: absolute;
@@ -2269,9 +2269,11 @@
     // Wrapper per a la columna dreta (títol + grups) — facilita layout 2 columnes a desktop
     const rightCol = document.createElement('div');
     rightCol.className = 'llista-rightcol';
-    // Mou el títol (que està al final de LLISTA_INTRO_HTML) dins del wrapper
+    // Mou títol i cercador (estan al final de LLISTA_INTRO_HTML) dins del wrapper dret
     const secTitle = llistaHost.querySelector('.llista-sec-title');
+    const searchBar = llistaHost.querySelector('.llista-search');
     if (secTitle) rightCol.appendChild(secTitle);
+    if (searchBar) rightCol.appendChild(searchBar);
     llistaHost.appendChild(rightCol);
     let totalVisible = 0;
     const anyFilterActive = activeTipus !== null || activeTerritori !== null || activeTematica !== null;
