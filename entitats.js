@@ -1753,6 +1753,155 @@ const ENTITATS = [
     pos:       [0.85, 0.40],
     pos_mobil: [0.83, 0.40],
   },
+
+  // ══════════════════════════════════════════
+  //  SINDICATS LABORALS / ENSENYAMENT
+  // ══════════════════════════════════════════
+  {
+    id: 'ustec-stes',
+    nom: 'USTEC-STEs',
+    tipus: 'social',
+    ambit: 'Drets laborals i educació pública (CAT)',
+    descripcio_breu: 'Sindicat majoritari de l\'ensenyament públic a Catalunya.',
+    per_a_que: 'Rebre assessorament sindical en temes laborals i educatius del sector públic.',
+    quan_usar: [
+      'Conflicte laboral docent (oposicions, concursos, interinitats)',
+      'Problemes a centres educatius públics',
+      'Drets laborals del personal d\'ensenyament',
+    ],
+    que_esperar: [
+      'Assessorament jurídic laboral',
+      'Representació sindical',
+      'Campanyes col·lectives',
+    ],
+    punts_forts: ['Referent del sector educatiu', 'Acció sindical col·lectiva'],
+    limitacions: ['Alguns serveis només per afiliats'],
+    resultat_habitual: 'Suport sindical i/o mediació del conflicte.',
+    temps: 'Setmanes',
+    enllac: 'https://www.sindicat.net/contacte/',
+    pos:       [0.20, 0.10],
+    pos_mobil: [0.17, 0.30],
+  },
+  {
+    id: 'cgt-cat',
+    nom: 'CGT Catalunya',
+    tipus: 'social',
+    ambit: 'Drets laborals (sindicat, CAT)',
+    descripcio_breu: 'Confederació General del Treball: sindicat anarcosindicalista amb acció sindical a Catalunya.',
+    per_a_que: 'Obtenir acompanyament sindical combatiu en conflictes laborals.',
+    quan_usar: [
+      'Conflicte laboral on vols pressió col·lectiva',
+      'Acomiadament, assetjament o impagaments',
+      'Defensa de drets sindicals',
+    ],
+    que_esperar: [
+      'Assessorament sindical i jurídic',
+      'Suport en accions col·lectives',
+    ],
+    punts_forts: ['Enfocament combatiu', 'Experiència en lluita sindical'],
+    limitacions: ['Alguns serveis per afiliats'],
+    resultat_habitual: 'Mediació, denúncia o judicialització del conflicte.',
+    temps: 'Setmanes / mesos',
+    enllac: 'https://cgtcatalunya.cat/ambit/accio-sindical/la-cgt-i-la-seva-actuacio-sindical/',
+    pos:       [0.40, 0.10],
+    pos_mobil: [0.33, 0.30],
+  },
+  {
+    id: 'iac',
+    nom: 'Intersindical Alternativa de Catalunya (IAC)',
+    tipus: 'social',
+    ambit: 'Drets laborals (sindicat, CAT)',
+    descripcio_breu: 'Sindicat català alternatiu i assembleari per a la defensa dels drets laborals.',
+    per_a_que: 'Rebre suport sindical en conflictes laborals amb un enfocament assembleari.',
+    quan_usar: [
+      'Conflicte laboral (acomiadament, assetjament, impagaments)',
+      'Necessites representació sindical alternativa',
+      'Incompliments del conveni',
+    ],
+    que_esperar: [
+      'Assessorament sindical',
+      'Acompanyament en el procés',
+    ],
+    punts_forts: ['Enfocament assembleari', 'Arrelament territorial'],
+    limitacions: ['Alguns serveis per afiliats'],
+    resultat_habitual: 'Mediació o judicialització.',
+    temps: 'Setmanes',
+    enllac: 'https://iac.cat/contacte/',
+    pos:       [0.60, 0.10],
+    pos_mobil: [0.50, 0.30],
+  },
+  {
+    id: 'intersindical-valenciana',
+    nom: 'Intersindical Valenciana',
+    tipus: 'social',
+    ambit: 'Drets laborals (sindicat, PV)',
+    descripcio_breu: 'Sindicat valencià de classe per a la defensa dels drets laborals.',
+    per_a_que: 'Obtenir suport i assessorament sindical al País Valencià.',
+    quan_usar: [
+      'Conflicte laboral al PV',
+      'Acomiadaments, impagaments, assetjament',
+      'Necessites representació sindical en valencià',
+    ],
+    que_esperar: [
+      'Assessorament sindical i jurídic',
+      'Acompanyament al procés',
+    ],
+    punts_forts: ['Sindicat en valencià', 'Arrelament al PV'],
+    limitacions: ['Alguns serveis per afiliats'],
+    resultat_habitual: 'Mediació, denúncia o judicialització.',
+    temps: 'Setmanes',
+    enllac: 'https://intersindical.org/comunes/on_som',
+    pos:       [0.80, 0.10],
+    pos_mobil: [0.67, 0.30],
+  },
+  {
+    id: 'anpe-bal',
+    nom: 'ANPE Balears',
+    tipus: 'social',
+    ambit: 'Drets laborals i educació pública (IB)',
+    descripcio_breu: 'Sindicat independent del professorat a les Illes Balears.',
+    per_a_que: 'Rebre assessorament sindical específic per al personal docent de les Illes.',
+    quan_usar: [
+      'Conflicte docent a IB',
+      'Oposicions, concursos, destinacions',
+      'Drets laborals professorat',
+    ],
+    que_esperar: [
+      'Assessorament sindical i jurídic',
+      'Representació davant l\'administració educativa',
+    ],
+    punts_forts: ['Especialitzat en ensenyament', 'Independent'],
+    limitacions: ['Serveis majoritàriament per afiliats'],
+    resultat_habitual: 'Mediació o suport jurídic.',
+    temps: 'Setmanes',
+    enllac: 'https://anpebalears.es/contacto',
+    pos:       [0.15, 0.85],
+    pos_mobil: [0.17, 0.85],
+  },
+  {
+    id: 'stei',
+    nom: 'STEI — Intersindical de les Illes Balears',
+    tipus: 'social',
+    ambit: 'Drets laborals i educació (IB)',
+    descripcio_breu: 'Sindicat intersectorial de les Illes Balears amb forta presència educativa.',
+    per_a_que: 'Obtenir suport sindical a les Illes en diversos sectors (ensenyament, sanitat, administració...).',
+    quan_usar: [
+      'Conflicte laboral a IB',
+      'Problemes docents o de personal educatiu',
+      'Necessites representació en català',
+    ],
+    que_esperar: [
+      'Assessorament sindical i jurídic',
+      'Acompanyament al procés',
+    ],
+    punts_forts: ['Sindicat en català a IB', 'Presència educativa i més sectors'],
+    limitacions: ['Alguns serveis per afiliats'],
+    resultat_habitual: 'Mediació o judicialització.',
+    temps: 'Setmanes',
+    enllac: 'https://stei.cat/general/index.php/8-portada/4-delegacions-i-horaris',
+    pos:       [0.35, 0.85],
+    pos_mobil: [0.33, 0.85],
+  },
 ];
 
 // ─── Assignació de territori per a cada entitat ────────
@@ -1839,6 +1988,14 @@ const _TERRITORI_BY_ID = {
   'cites-val':              'val',
   'cites-ib':               'bal',
   'faada':                  'paisos',
+
+  // Sindicats
+  'ustec-stes':             'cat',
+  'cgt-cat':                'cat',
+  'iac':                    'cat',
+  'intersindical-valenciana': 'val',
+  'anpe-bal':               'bal',
+  'stei':                   'bal',
 };
 ENTITATS.forEach(e => { e.territori = _TERRITORI_BY_ID[e.id] || 'cat'; });
 
@@ -1914,6 +2071,14 @@ const _CONTACTE_BY_ID = {
   'cites-val':              { adreca: 'València',                                         telefon: '96 350 90 45' },
   'cites-ib':               { adreca: 'Palma',                                            telefon: '971 21 45 25' },
   'faada':                  { adreca: '',                                                 telefon: '' },
+
+  // Sindicats
+  'ustec-stes':               { adreca: '',                                               telefon: '93 302 76 06' },
+  'cgt-cat':                  { adreca: '',                                               telefon: '93 512 04 81' },
+  'iac':                      { adreca: '',                                               telefon: '93 317 31 51' },
+  'intersindical-valenciana': { adreca: '',                                               telefon: '' },
+  'anpe-bal':                 { adreca: '',                                               telefon: '971 46 12 90' },
+  'stei':                     { adreca: '',                                               telefon: '971 90 16 00' },
 };
 ENTITATS.forEach(e => {
   const c = _CONTACTE_BY_ID[e.id] || {};
@@ -1979,6 +2144,13 @@ const _EMAIL_BY_ID = {
   'cites-bcn':                   'barcelona.cice@comercio.mineco.es',
   'cites-val':                   'valencia.cice@comercio.mineco.es',
   'cites-ib':                    'mallorca.cice@comercio.mineco.es',
+  // Sindicats
+  'ustec-stes':                  'barcelona@sindicat.net',
+  'cgt-cat':                     'spccc@spcgtcatalunya.cat',
+  'iac':                         'acciosindical@iac.cat',
+  'intersindical-valenciana':    'intersindicalvalenciana@intersindical.org',
+  'anpe-bal':                    'administracio@anpebalears.es',
+  'stei':                        'stei@stei.cat',
 };
 ENTITATS.forEach(e => {
   if (!e.email && _EMAIL_BY_ID[e.id]) e.email = _EMAIL_BY_ID[e.id];
@@ -2074,6 +2246,13 @@ const _SIGLES_BY_ID = {
   'cites-val':              'CITES\nVAL',
   'cites-ib':               'CITES\nPalma',
   'faada':                  'FAADA',
+  // Sindicats
+  'ustec-stes':             'USTEC\nSTEs',
+  'cgt-cat':                'CGT\nCat',
+  'iac':                    'IAC',
+  'intersindical-valenciana':'Inter\nPV',
+  'anpe-bal':               'ANPE\nBalears',
+  'stei':                   'STEI',
 };
 // ─── PROVA: sigles auto-generades amb regla uniforme ─────────
 // Regla:
@@ -2209,5 +2388,12 @@ const _TEMATIQUES_BY_ID = {
   'cites-val':              ['animals'],
   'cites-ib':               ['animals'],
   'faada':                  ['animals'],
+  // Sindicats
+  'ustec-stes':             ['laboral', 'ensenyament'],
+  'cgt-cat':                ['laboral'],
+  'iac':                    ['laboral'],
+  'intersindical-valenciana':['laboral'],
+  'anpe-bal':               ['laboral', 'ensenyament'],
+  'stei':                   ['laboral', 'ensenyament'],
 };
 ENTITATS.forEach(e => { e.tematiques = _TEMATIQUES_BY_ID[e.id] || []; });
