@@ -500,6 +500,52 @@
 
     /* ── Ajuda'm ── */
     #overlay-ajudam .modal { max-height: 92vh; overflow-y: auto; }
+    #overlay-ajudam .modal h2 {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .ajudam-count {
+      display: inline-flex;
+      align-items: center;
+      min-width: 36px;
+      height: 26px;
+      padding: 0 10px;
+      background: var(--ink);
+      color: var(--bg);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .ajudam-count.zero {
+      background: var(--red);
+      color: #fff;
+      animation: count-shake 0.45s ease-out;
+    }
+    @keyframes count-shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-3px); }
+      80% { transform: translateX(2px); }
+    }
+    .ajudam-zero-warn {
+      display: none;
+      background: rgba(220,38,38,0.08);
+      color: var(--red);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 1.2rem;
+      border-left: 3px solid var(--red);
+    }
+    .ajudam-zero-warn.visible { display: block; }
+    html.dark .ajudam-zero-warn { background: rgba(220,38,38,0.14); color: #fca5a5; }
     .ajudam-lead {
       font-size: 0.92rem;
       color: var(--ink-2);
@@ -1096,8 +1142,9 @@
       <button class="modal-close" data-close="overlay-ajudam" aria-label="Tanca">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
       </button>
-      <h2>Ajuda'm a trobar el canal</h2>
+      <h2>Ajuda'm a trobar el canal <span class="ajudam-count" id="ajudam-count">0</span></h2>
       <p class="ajudam-lead">Respon el que vulguis. Les preguntes sense resposta no filtren.</p>
+      <div class="ajudam-zero-warn" id="ajudam-zero-warn">Amb aquests criteris no hi ha cap recurs. Prova de canviar la selecció.</div>
 
       <div class="ajudam-grup">
         <h3 class="ajudam-q">On ha passat el que vols denunciar? <span class="ajudam-check" data-check="territori" aria-hidden="true"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span></h3>
@@ -1686,6 +1733,23 @@
   const ajudamOverlay = $('overlay-ajudam');
   const ajudamModal   = $('ajudam-modal');
 
+  function updateAjudamCount() {
+    const countEl = document.getElementById('ajudam-count');
+    const warnEl  = document.getElementById('ajudam-zero-warn');
+    if (!countEl) return;
+    const n = ENTITATS_V.filter(entitatMatchesFilters).length;
+    countEl.textContent = n;
+    const wasZero = countEl.classList.contains('zero');
+    countEl.classList.toggle('zero', n === 0);
+    if (warnEl) warnEl.classList.toggle('visible', n === 0);
+    // Re-trigger shake animation cada vegada que arribi a 0 (si abans no ho era ja, o si torna)
+    if (n === 0) {
+      countEl.classList.remove('zero');
+      void countEl.offsetWidth;
+      countEl.classList.add('zero');
+    }
+  }
+
   function pulseCheck(q, hasValue) {
     const check = ajudamModal.querySelector(`.ajudam-check[data-check="${q}"]`);
     if (!check) return;
@@ -1752,6 +1816,7 @@
     setSel('tipus',     activeTipus);
     // Treu totes les pulses (només els visible es mantenen)
     setTimeout(() => ajudamModal.querySelectorAll('.ajudam-check.pulse').forEach(c => c.classList.remove('pulse')), 0);
+    updateAjudamCount();
     ajudamOverlay.classList.add('open');
   }
 
@@ -1763,12 +1828,13 @@
   // Exposa openAjudam globalment per si la volem cridar de la nav
   window.openAjudam = openAjudam;
 
-  // Marca el botó Ajuda'm en roig si hi ha algun filtre actiu
+  // Marca el botó Ajuda'm en roig si hi ha algun filtre actiu + actualitza comptador
   const _origApply = applyFilters;
   applyFilters = function() {
     _origApply();
     const any = activeTipus !== null || activeTerritori !== null || activeTematica !== null;
     $('btn-ajudam').classList.toggle('active-filter', any);
+    updateAjudamCount();
   };
   applyFilters();
 
