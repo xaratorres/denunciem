@@ -1417,12 +1417,19 @@
   const IS_MOBILE = GW_INIT < 500;
   let COLS, ROWS, BASE_ROWS, TOTAL;
 
-  // Calcula COLS/ROWS per a cel·les QUADRADES (mateixa lògica que Ciutadata)
+  // Calcula COLS/ROWS per a cel·les QUADRADES
   function computeGridDims() {
     const GW = window.innerWidth;
     const GH = (window.visualViewport?.height ?? window.innerHeight) - NAV_H;
-    if (IS_MOBILE) {
+    // Landscape amb alçada petita (mòbil girat o tauleta horitzontal):
+    // cel·les dimensionades per l'alçada, COLS ompli l'amplada.
+    const isLandscapeSmall = GW > GH && GH < 500;
+    if (IS_MOBILE && !isLandscapeSmall) {
       COLS = 6; BASE_ROWS = 10;
+    } else if (isLandscapeSmall) {
+      const TARGET_CELL = Math.max(54, Math.min(80, Math.floor((GH - GAP) / 5)));
+      COLS = Math.max(8, Math.floor((GW - GAP) / (TARGET_CELL + GAP)));
+      BASE_ROWS = Math.max(3, Math.floor((GH - GAP) / (TARGET_CELL + GAP)));
     } else {
       let bestDiff = Infinity, bestC = 12, bestR = 6;
       for (let c = 16; c >= 8; c--) {
