@@ -154,19 +154,16 @@
     .nav-btn .nav-icon {
       width: 15px; height: 15px;
       flex-shrink: 0;
-      display: none;
+      display: inline-block;
     }
-    /* Botons només-icona (ex. config) mostren la icona sempre */
-    .nav-btn.icon .nav-icon { display: inline-block; }
-    /* A mòbil, mostra només la icona */
+    /* Botons només-icona (config, view toggle): sense label */
+    .nav-btn.icon .nav-label { display: none; }
+    /* Filtre actiu (quan hi ha filtres aplicats des d'Ajuda'm) */
+    .nav-btn.active-filter { color: var(--red); border-color: var(--red); }
     @media (max-width: 560px) {
       .nav-btns { gap: 5px; }
-      .nav-btn .nav-icon { display: inline-block; }
-      .nav-btn .nav-label { display: none; }
-      .nav-btn { padding: 6px 7px; letter-spacing: 0; gap: 0; }
-      .nav-btn.dd { padding: 6px 7px; }
-      .nav-btn.dd svg.chev { display: none; } /* chevron fora perquè és compacte */
-      .nav-btn.active-filter { color: var(--red); border-color: var(--red); }
+      .nav-btn { padding: 6px 10px; letter-spacing: 0.05em; font-size: 0.68rem; }
+      .nav-btn.icon { padding: 6px 8px; }
     }
 
     /* ── Dropdown tipus ── */
@@ -409,6 +406,112 @@
       color: var(--ink-3);
       letter-spacing: 0.06em;
     }
+
+    /* ── Vista llista ────────────────────────────── */
+    .llista-view {
+      display: none;
+      height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      padding: 20px 22px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .llista-view .entitat-grup {
+      margin-top: 0.4rem;
+      padding: 0.5rem 0.2rem 0.3rem;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: none;
+    }
+    .llista-view .entitat-grup:first-child { border-top: none; }
+    .llista-empty {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--ink-3);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .llista-empty strong { color: var(--ink); font-weight: 600; }
+
+    /* Toggle vistes */
+    body.vista-grid #llista { display: none; }
+    body.vista-llista #grid { display: none; }
+    body.vista-llista #llista { display: block; }
+
+    /* Quan estem en mode llista, deshabilita el overflow hidden del body perquè no es vegi tall rar */
+    body.vista-llista { overflow: auto; }
+
+    /* ── Ajuda'm ── */
+    #overlay-ajudam .modal { max-height: 92vh; overflow-y: auto; }
+    .ajudam-lead {
+      font-size: 0.92rem;
+      color: var(--ink-2);
+      line-height: 1.55;
+      margin-top: -0.3rem;
+      margin-bottom: 1.4rem;
+    }
+    .ajudam-grup { margin-bottom: 1.4rem; }
+    .ajudam-grup:last-of-type { margin-bottom: 0.6rem; }
+    .ajudam-q {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-3);
+      margin-bottom: 0.7rem;
+    }
+    .ajudam-opts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .ajudam-opt {
+      padding: 7px 13px;
+      border-radius: 100px;
+      border: 1px solid var(--border-2);
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--ink-2);
+      background: transparent;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .ajudam-opt:hover { border-color: var(--ink-3); color: var(--ink); }
+    .ajudam-opt.selected {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
+    html.dark .ajudam-opt { border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.65); }
+    html.dark .ajudam-opt:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+    html.dark .ajudam-opt.selected { background: var(--red); border-color: var(--red); color: #fff; }
+    .ajudam-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--border);
+      margin-top: 1.3rem;
+    }
+    html.dark .ajudam-actions { border-top-color: rgba(255,255,255,0.08); }
+    .ajudam-btn {
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: background 0.15s, color 0.15s;
+    }
+    .ajudam-btn-clear {
+      background: rgba(0,0,0,0.06);
+      color: var(--ink-2);
+    }
+    .ajudam-btn-clear:hover { background: rgba(0,0,0,0.12); color: var(--ink); }
+    html.dark .ajudam-btn-clear { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.7); }
+    html.dark .ajudam-btn-clear:hover { background: rgba(255,255,255,0.16); color: #fff; }
+    .ajudam-btn-apply {
+      background: var(--red);
+      color: #fff;
+      min-width: 120px;
+    }
+    .ajudam-btn-apply:hover { background: var(--red-dark); }
 
     /* ── Onboarding ── */
     #overlay-onboarding .modal {
@@ -724,6 +827,28 @@
     }
     .toggle.on { background: var(--red); }
     .toggle.on::after { transform: translateX(18px); }
+    /* Switch de vista (Llista / Graella) */
+    .config-vista-switch {
+      display: inline-flex;
+      background: rgba(0,0,0,0.06);
+      border-radius: 100px;
+      padding: 3px;
+    }
+    .config-vista-switch button {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-2);
+      background: transparent;
+    }
+    .config-vista-switch button.active {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    html.dark .config-vista-switch { background: rgba(255,255,255,0.08); }
+    html.dark .config-vista-switch button { color: rgba(255,255,255,0.65); }
+    html.dark .config-vista-switch button.active { background: var(--red); color: #fff; }
     /* Botons config: secundari (default) i primari */
     .config-btn {
       font-size: 0.82rem; font-weight: 500;
@@ -827,18 +952,11 @@
   <nav>
     <div class="brand"><span class="brand-name">Denunci<span class="em">em</span></span><span class="chip-revisio">En revisió</span></div>
     <div class="nav-btns">
-      <div class="nav-dropdown">
-        <button class="nav-btn dd" id="btn-tipus" title="Filtrar per tipus" aria-label="Tipus"></button>
-        <div class="dd-panel" id="dd-tipus"></div>
-      </div>
-      <div class="nav-dropdown">
-        <button class="nav-btn dd" id="btn-territori" title="Filtrar per territori" aria-label="Territori"></button>
-        <div class="dd-panel" id="dd-territori"></div>
-      </div>
-      <button class="nav-btn" id="btn-entitats" title="Veure totes les entitats" aria-label="Entitats">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
-        <span class="nav-label">Entitats</span>
+      <button class="nav-btn" id="btn-ajudam" title="Ajuda'm a trobar el canal" aria-label="Ajuda'm">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        <span class="nav-label">Ajuda'm</span>
       </button>
+      <button class="nav-btn icon" id="btn-vista" title="Canviar vista" aria-label="Canviar vista"></button>
       <button class="nav-btn" id="btn-sobre" title="Sobre Denunciem" aria-label="Sobre">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span class="nav-label">Sobre</span>
@@ -849,8 +967,11 @@
     </div>
   </nav>
 
-  <!-- GRID -->
+  <!-- GRID (vista panots) -->
   <div id="grid"></div>
+
+  <!-- LLISTA (vista alternativa de targetes) -->
+  <section id="llista" class="llista-view"></section>
 
   <!-- OVERLAY ONBOARDING -->
   <div id="overlay-onboarding" class="overlay">
@@ -867,22 +988,40 @@
     </div>
   </div>
 
+  <!-- OVERLAY AJUDA'M -->
+  <div id="overlay-ajudam" class="overlay">
+    <div class="modal" id="ajudam-modal" style="width:min(620px,94vw)">
+      <button class="modal-close" data-close="overlay-ajudam" aria-label="Tanca">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <h2>Ajuda'm a trobar el canal</h2>
+      <p class="ajudam-lead">Respon el que vulguis. Les preguntes sense resposta no filtren.</p>
+
+      <div class="ajudam-grup">
+        <h3 class="ajudam-q">On ha passat el que vols denunciar?</h3>
+        <div class="ajudam-opts" data-q="territori"></div>
+      </div>
+
+      <div class="ajudam-grup">
+        <h3 class="ajudam-q">De què es tracta?</h3>
+        <div class="ajudam-opts" data-q="tematica"></div>
+      </div>
+
+      <div class="ajudam-grup">
+        <h3 class="ajudam-q">Per quina via vols fer-ho?</h3>
+        <div class="ajudam-opts" data-q="tipus"></div>
+      </div>
+
+      <div class="ajudam-actions">
+        <button class="ajudam-btn ajudam-btn-clear" id="btn-ajudam-clear">Neteja</button>
+        <button class="ajudam-btn ajudam-btn-apply" id="btn-ajudam-apply">Aplicar</button>
+      </div>
+    </div>
+  </div>
+
   <!-- OVERLAY FITXA -->
   <div id="overlay-fitxa" class="overlay">
     <div class="modal" id="fitxa-modal"></div>
-  </div>
-
-  <!-- OVERLAY ENTITATS -->
-  <div id="overlay-entitats" class="overlay">
-    <div class="modal">
-      <button class="modal-close" data-close="overlay-entitats" aria-label="Tanca">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-      </button>
-      <h2>Entitats</h2>
-      <p class="lead">Totes les entitats i canals del directori, agrupats per tipus de via. Toca una entitat per veure la fitxa completa.</p>
-      <div id="entitats-llista"></div>
-      <div class="modal-footer"><small>Catalunya · Drets ciutadans</small></div>
-    </div>
   </div>
 
   <!-- OVERLAY SOBRE -->
@@ -928,6 +1067,16 @@
           <span class="config-row-label">Mode nit</span>
           <button id="toggle-dark" class="toggle" role="switch" aria-label="Mode nit"></button>
         </div>
+        <div class="config-row" style="margin-top:0.6rem">
+          <div class="config-row-label">
+            Vista
+            <div class="config-hint">Com es mostren les entitats a la pàgina.</div>
+          </div>
+          <div class="config-vista-switch" id="config-vista-switch">
+            <button type="button" data-v="llista">Llista</button>
+            <button type="button" data-v="grid">Graella</button>
+          </div>
+        </div>
       </div>
 
       <div class="config-seccio">
@@ -958,6 +1107,28 @@
   <script src="entitats.js"></script>
   <script>
   'use strict';
+
+  // ─── VISTA (grid / llista) ─────────────────────────
+  const VISTA_KEY = 'denunciem-vista';
+  function getVista() {
+    return localStorage.getItem(VISTA_KEY) || 'llista';
+  }
+  function setVista(v) {
+    localStorage.setItem(VISTA_KEY, v);
+    document.body.classList.toggle('vista-grid', v === 'grid');
+    document.body.classList.toggle('vista-llista', v === 'llista');
+    // Refresca l'icona del toggle (si existeix)
+    const btn = document.getElementById('btn-vista');
+    if (btn) btn.innerHTML = v === 'grid' ? ICON_VIEW_LIST : ICON_VIEW_GRID;
+    if (btn) btn.setAttribute('aria-label', v === 'grid' ? 'Veure com a llista' : 'Veure com a graella');
+    if (btn) btn.setAttribute('title', v === 'grid' ? 'Veure com a llista' : 'Veure com a graella');
+    window.dispatchEvent(new CustomEvent('vista-change', { detail: v }));
+  }
+  // Icones inline (es fan servir al toggle i a la nav)
+  const ICON_VIEW_GRID = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`;
+  const ICON_VIEW_LIST = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>`;
+  // Aplica vista inicial com més aviat millor
+  setVista(getVista());
 
   // ─── CONFIG ────────────────────────────────────────
   const GAP  = 4;
@@ -1114,6 +1285,7 @@
         cell.classList.add('eina');
         cell.dataset.tipus = ent.tipus;
         cell.dataset.territori = ent.territori || 'cat';
+        cell.dataset.tematiques = (ent.tematiques || []).join(',');
         cell.style.setProperty('--tipcolor', color);
 
         // Backdrop tintat (versió fosca del color) amb textura d'X
@@ -1318,6 +1490,23 @@
   })();
   toggleDark.addEventListener('click', () => applyDark(!document.documentElement.classList.contains('dark')));
 
+  // Switch de vista al Config
+  const vistaSwitch = $('config-vista-switch');
+  function refreshVistaSwitch() {
+    const curr = getVista();
+    vistaSwitch.querySelectorAll('button').forEach(b => {
+      b.classList.toggle('active', b.dataset.v === curr);
+    });
+  }
+  vistaSwitch.addEventListener('click', e => {
+    const b = e.target.closest('button[data-v]');
+    if (!b) return;
+    setVista(b.dataset.v);
+  });
+  refreshVistaSwitch();
+  // Mantén el switch sincronitzat si la vista canvia des de la nav
+  window.addEventListener('vista-change', refreshVistaSwitch);
+
   // ─── SPLASH ───────────────────────────────────────
   const splash = $('splash');
   let splashDismissed = false;
@@ -1357,108 +1546,116 @@
     if (e.key === 'Escape') document.querySelectorAll('.overlay.open').forEach(o => o.classList.remove('open'));
   });
 
-  // ─── FILTRES COMBINATS (tipus + territori) ────────
+  // ─── FILTRES COMBINATS (tipus + territori + tematica) ────────
   let activeTipus = null;
   let activeTerritori = null;
+  let activeTematica = null;
+
+  function entitatMatchesFilters(ent) {
+    const matchT = activeTipus === null || ent.tipus === activeTipus;
+    // Territori: les transversals (paisos) apareixen a qualsevol filtre territorial
+    const matchG = activeTerritori === null
+      || ent.territori === activeTerritori
+      || ent.territori === 'paisos';
+    const matchTem = activeTematica === null
+      || (ent.tematiques || []).includes(activeTematica);
+    return matchT && matchG && matchTem;
+  }
 
   function applyFilters() {
+    // Grid: dim cel·les que no coincideixen
     document.querySelectorAll('.cell.eina').forEach(c => {
-      const matchT = activeTipus === null || c.dataset.tipus === activeTipus;
-      const matchG = activeTerritori === null || c.dataset.territori === activeTerritori;
-      c.classList.toggle('dim', !(matchT && matchG));
+      const tipus = c.dataset.tipus;
+      const territori = c.dataset.territori;
+      const tematiques = (c.dataset.tematiques || '').split(',').filter(Boolean);
+      const matchT = activeTipus === null || tipus === activeTipus;
+      const matchG = activeTerritori === null || territori === activeTerritori || territori === 'paisos';
+      const matchTem = activeTematica === null || tematiques.includes(activeTematica);
+      c.classList.toggle('dim', !(matchT && matchG && matchTem));
     });
+    // Vista llista: ho gestiona la pròpia llista (es reconstrueix a renderLlista)
+    if (window.renderLlista) window.renderLlista();
+    // Refresca qualsevol dropdown antic si encara existeix
+    if (window._dropdowns) window._dropdowns.forEach(d => d.refresh());
   }
+  window._appliedFilters = () => ({ tipus: activeTipus, territori: activeTerritori, tematica: activeTematica });
 
-  // ─── Generador de dropdowns reutilitzable ─────────
-  const _dropdowns = [];
-  function makeFilterDropdown({ btnId, panelId, meta, defaultLabel, getValue, otherMatches, setActive, getActive, chevron, navIcon }) {
-    const btn = $(btnId), panel = $(panelId);
-    function build() {
-      const activeKey = getActive();
-      const items = [
-        { key: null, nom: `Tots (${defaultLabel})`, desc: 'Mostra-ho tot.' },
-        ...Object.entries(meta).map(([k, m]) => ({ key: k, nom: m.nom, desc: m.descripcio, color: m.color })),
-      ];
-      panel.innerHTML = '';
-      items.forEach(it => {
-        // Compte: només entitats visibles que també compleixen l'altre filtre actiu
-        const count = ENTITATS_V.filter(e => {
-          const thisMatch = it.key === null || getValue(e) === it.key;
-          return thisMatch && otherMatches(e);
-        }).length;
+  // ─── MODAL AJUDA'M ────────────────────────────────
+  const ajudamOverlay = $('overlay-ajudam');
+  const ajudamModal   = $('ajudam-modal');
+  // Estat draft mentre el modal és obert (no toca els active* fins a "Aplicar")
+  let draftTipus = null, draftTerritori = null, draftTematica = null;
+
+  function buildAjudamOptions() {
+    const groups = [
+      { q: 'territori', meta: TERRITORI_META, skip: ['paisos'] },
+      { q: 'tematica',  meta: TEMATIQUES_META },
+      { q: 'tipus',     meta: TIPUS_META },
+    ];
+    groups.forEach(({ q, meta, skip }) => {
+      const container = ajudamModal.querySelector(`.ajudam-opts[data-q="${q}"]`);
+      container.innerHTML = '';
+      Object.entries(meta).forEach(([key, m]) => {
+        if (skip && skip.includes(key)) return;
         const b = document.createElement('button');
-        b.className = 'dd-item';
-        b.dataset.key = it.key ?? '';
-        if (it.color) b.style.setProperty('--tipcolor', it.color);
-        if ((it.key || null) === activeKey) b.classList.add('active');
-        b.innerHTML = `
-          <span class="dd-dot"></span>
-          <span class="dd-body">
-            <span class="dd-title">${it.nom}</span>
-            <span class="dd-desc">${it.desc}</span>
-            <span class="dd-count">${count} ${count === 1 ? 'entitat' : 'entitats'}</span>
-          </span>
-        `;
+        b.className = 'ajudam-opt';
+        b.dataset.val = key;
+        b.textContent = m.nom;
         b.addEventListener('click', () => {
-          setActive(it.key);
-          refreshLabel(it.key);
-          applyFilters();
-          _dropdowns.forEach(d => d.refresh());
-          close();
+          // Radio-like: click a la seleccionada la desactiva; altres opcions es netegen
+          const wasSelected = b.classList.contains('selected');
+          container.querySelectorAll('.ajudam-opt').forEach(x => x.classList.remove('selected'));
+          if (!wasSelected) b.classList.add('selected');
+          if      (q === 'territori') draftTerritori = wasSelected ? null : key;
+          else if (q === 'tematica')  draftTematica  = wasSelected ? null : key;
+          else if (q === 'tipus')     draftTipus     = wasSelected ? null : key;
         });
-        panel.appendChild(b);
+        container.appendChild(b);
       });
-    }
-    function refreshLabel(key) {
-      const label = key === null ? defaultLabel : meta[key].nom;
-      btn.innerHTML = `${navIcon}<span class="nav-label">${label}</span>${chevron}`;
-      btn.classList.toggle('active-filter', key !== null);
-    }
-    let open = false;
-    function toggle() { open ? close() : openFn(); }
-    function openFn() { open = true; panel.classList.add('open'); btn.classList.add('open'); build(); }
-    function close() { open = false; panel.classList.remove('open'); btn.classList.remove('open'); }
-    btn.addEventListener('click', e => { e.stopPropagation(); toggle(); });
-    document.addEventListener('click', e => {
-      if (open && !panel.contains(e.target) && e.target !== btn && !btn.contains(e.target)) close();
     });
-    refreshLabel(null);
-    build();
-    const api = { refresh: build };
-    _dropdowns.push(api);
-    return api;
+  }
+  buildAjudamOptions();
+
+  function openAjudam() {
+    // Carrega l'estat actual al draft + UI
+    draftTipus = activeTipus;
+    draftTerritori = activeTerritori;
+    draftTematica = activeTematica;
+    ajudamModal.querySelectorAll('.ajudam-opt').forEach(b => b.classList.remove('selected'));
+    const setSel = (q, val) => {
+      if (val === null) return;
+      const el = ajudamModal.querySelector(`.ajudam-opts[data-q="${q}"] .ajudam-opt[data-val="${val}"]`);
+      if (el) el.classList.add('selected');
+    };
+    setSel('territori', activeTerritori);
+    setSel('tematica',  activeTematica);
+    setSel('tipus',     activeTipus);
+    ajudamOverlay.classList.add('open');
   }
 
-  const CHEVRON = `<svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5 6 7.5 9 4.5"/></svg>`;
-  const ICON_TIPUS = `<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></svg>`;
-  const ICON_TERRITORI = `<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
-
-  makeFilterDropdown({
-    btnId: 'btn-tipus',
-    panelId: 'dd-tipus',
-    meta: TIPUS_META,
-    defaultLabel: 'Tipus',
-    getValue: e => e.tipus,
-    setActive: k => { activeTipus = k; },
-    getActive: () => activeTipus,
-    otherMatches: e => activeTerritori === null || e.territori === activeTerritori,
-    chevron: CHEVRON,
-    navIcon: ICON_TIPUS,
+  $('btn-ajudam-clear').addEventListener('click', () => {
+    draftTipus = null; draftTerritori = null; draftTematica = null;
+    ajudamModal.querySelectorAll('.ajudam-opt.selected').forEach(b => b.classList.remove('selected'));
   });
 
-  makeFilterDropdown({
-    btnId: 'btn-territori',
-    panelId: 'dd-territori',
-    meta: TERRITORI_META,
-    defaultLabel: 'Territori',
-    getValue: e => e.territori,
-    setActive: k => { activeTerritori = k; },
-    getActive: () => activeTerritori,
-    otherMatches: e => activeTipus === null || e.tipus === activeTipus,
-    chevron: CHEVRON,
-    navIcon: ICON_TERRITORI,
+  $('btn-ajudam-apply').addEventListener('click', () => {
+    activeTipus = draftTipus;
+    activeTerritori = draftTerritori;
+    activeTematica = draftTematica;
+    applyFilters();
+    ajudamOverlay.classList.remove('open');
   });
 
+  // Exposa openAjudam globalment per si la volem cridar de la nav
+  window.openAjudam = openAjudam;
+
+  // Marca el botó Ajuda'm en roig si hi ha algun filtre actiu
+  const _origApply = applyFilters;
+  applyFilters = function() {
+    _origApply();
+    const any = activeTipus !== null || activeTerritori !== null || activeTematica !== null;
+    $('btn-ajudam').classList.toggle('active-filter', any);
+  };
   applyFilters();
 
   // ─── FITXA ────────────────────────────────────────
@@ -1552,16 +1749,20 @@
   }
   window.openFitxa = openFitxa;
 
-  // ─── ENTITATS MODAL ───────────────────────────────
-  const entitatsLlista = $('entitats-llista');
-  function buildEntitatsLlista() {
-    entitatsLlista.innerHTML = '';
+  // ─── VISTA LLISTA (plena pantalla, reemplaça el modal Entitats) ───
+  function renderLlista() {
+    const llistaHost = document.getElementById('llista');
+    if (!llistaHost) return;
+    llistaHost.innerHTML = '';
+    let totalVisible = 0;
     Object.entries(TIPUS_META).forEach(([key, meta]) => {
-      const llista = ENTITATS_V.filter(e => e.tipus === key);
+      const llista = ENTITATS_V.filter(e => e.tipus === key && entitatMatchesFilters(e));
       if (!llista.length) return;
+      totalVisible += llista.length;
       const grup = document.createElement('details');
       grup.className = 'entitat-grup';
       grup.style.setProperty('--grupcolor', meta.color);
+      grup.open = true;
       grup.innerHTML = `
         <summary>
           <span class="entitat-grup-head">
@@ -1585,21 +1786,23 @@
             <div class="entitat-desc">${ent.descripcio_breu}</div>
           </div>
         `;
-        it.addEventListener('click', () => {
-          $('overlay-entitats').classList.remove('open');
-          setTimeout(() => openFitxa(ent.id), 150);
-        });
+        it.addEventListener('click', () => openFitxa(ent.id));
         grup.appendChild(it);
       });
-      entitatsLlista.appendChild(grup);
+      llistaHost.appendChild(grup);
     });
+    if (totalVisible === 0) {
+      llistaHost.innerHTML = `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`;
+    }
   }
-  buildEntitatsLlista();
+  window.renderLlista = renderLlista;
+  renderLlista();
 
   // ─── NAV BUTTONS ──────────────────────────────────
-  $('btn-entitats').addEventListener('click', () => {
-    entitatsLlista.querySelectorAll('details').forEach(d => d.removeAttribute('open'));
-    $('overlay-entitats').classList.add('open');
+  $('btn-ajudam').addEventListener('click', openAjudam);
+  $('btn-vista').addEventListener('click', () => {
+    const curr = getVista();
+    setVista(curr === 'grid' ? 'llista' : 'grid');
   });
   $('btn-sobre').addEventListener('click', () => $('overlay-sobre').classList.add('open'));
   $('btn-config').addEventListener('click', () => $('overlay-config').classList.add('open'));

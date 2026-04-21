@@ -32,12 +32,35 @@ const TIPUS_META = {
 };
 
 const TERRITORI_META = {
-  cat:    { nom: 'Catalunya',           descripcio: 'Canals i entitats amb seu i acció al Principat.' },
+  cat:    { nom: 'Catalunya del Sud',   descripcio: 'Canals i entitats amb seu i acció al Principat.' },
   bal:    { nom: 'Illes Balears',       descripcio: 'Canals i entitats amb seu a les Illes.' },
   val:    { nom: 'País Valencià',       descripcio: 'Canals i entitats amb seu al País Valencià.' },
   cn:     { nom: 'Catalunya Nord',      descripcio: 'Canals i entitats amb seu al Rosselló i comarques veïnes.' },
   and:    { nom: 'Andorra',             descripcio: 'Canals i entitats amb seu al Principat d\'Andorra.' },
+  franja: { nom: 'Franja de Ponent',    descripcio: 'Comarques orientals de l\'Aragó de parla catalana.' },
+  alguer: { nom: 'l\'Alguer',           descripcio: 'Ciutat catalanoparlant de Sardenya.' },
+  carxe:  { nom: 'El Carxe',            descripcio: 'Territori catalanoparlant al nord-est de Múrcia.' },
   paisos: { nom: 'Països Catalans',     descripcio: 'Entitats transversals que actuen a tots els territoris.' },
+};
+
+// Temàtiques del problema (per a la pregunta «De què es tracta?»)
+const TEMATIQUES_META = {
+  admin:         { nom: 'Administració no em respon',   descripcio: 'Silenci o mal funcionament d\'una administració pública.' },
+  consum:        { nom: 'Consum i empreses',            descripcio: 'Cobraments, contractes, serveis defectuosos.' },
+  salut:         { nom: 'Salut',                        descripcio: 'CAP, hospitals, llistes d\'espera, errors sanitaris.' },
+  corrupcio:     { nom: 'Corrupció',                    descripcio: 'Contractació irregular, ús indegut de fons públics.' },
+  delicte:       { nom: 'Delicte',                      descripcio: 'Agressions, robatoris, amenaces, delictes d\'odi.' },
+  dades:         { nom: 'Dades personals',              descripcio: 'Ús indegut de dades, filtracions, vigilància.' },
+  llengua:       { nom: 'Drets lingüístics',            descripcio: 'Incompliments en matèria de català.' },
+  catalanofobia: { nom: 'Catalanofòbia',                descripcio: 'Discriminació o delictes d\'odi per ser català.' },
+  drets_humans:  { nom: 'Drets humans',                 descripcio: 'Abusos institucionals, drets civils, presons.' },
+  habitatge:     { nom: 'Habitatge',                    descripcio: 'Desnonaments, accés, drets socials.' },
+  medi_ambient:  { nom: 'Medi ambient',                 descripcio: 'Contaminació, urbanisme agressiu, espais naturals.' },
+  laboral:       { nom: 'Drets laborals',               descripcio: 'Acomiadaments, assetjament, conveni, impagaments.' },
+  transport:     { nom: 'Transport públic',             descripcio: 'Incidències, horaris, accessibilitat.' },
+  ensenyament:   { nom: 'Ensenyament',                  descripcio: 'Drets educatius, ensenyament en català.' },
+  racisme:       { nom: 'Racisme i xenofòbia',          descripcio: 'Discriminació per origen, color, religió.' },
+  accessibilitat:{ nom: 'Accessibilitat digital',       descripcio: 'Webs i apps públiques no accessibles.' },
 };
 
 const ENTITATS = [
@@ -1301,3 +1324,65 @@ const _SIGLES_BY_ID = {
   'raonador-andorra':       'Raon',
 };
 ENTITATS.forEach(e => { e.sigles = _SIGLES_BY_ID[e.id] || e.nom.charAt(0).toUpperCase(); });
+
+// ─── Temàtiques per entitat (per a la pregunta «De què es tracta?») ───
+const _TEMATIQUES_BY_ID = {
+  // Administració general / queixes formals
+  'sindic-greuges':         ['admin'],
+  'generalitat-instancia':  ['admin'],
+  'oac-ajuntaments':        ['admin'],
+  'sindic-ib':              ['admin'],
+  'sindic-cv':              ['admin'],
+  'raonador-andorra':       ['admin'],
+  // Consum
+  'consum':                 ['consum'],
+  'consum-ib':              ['consum'],
+  'facua':                  ['consum'],
+  'contenidor-rac1':        ['consum'],
+  // Salut
+  'catsalut':               ['salut'],
+  'ibsalut':                ['salut'],
+  // Corrupció
+  'antifrau':               ['corrupcio'],
+  'oficina-prevencio-ib':   ['corrupcio'],
+  'agencia-valenciana-antifrau': ['corrupcio'],
+  // Delicte i via judicial
+  'mossos':                 ['delicte'],
+  'jutjat-guardia':         ['delicte'],
+  // Dades
+  'apdcat':                 ['dades'],
+  // Llengua + catalanofòbia
+  'politica-linguistica':   ['llengua'],
+  'plataforma-llengua':     ['llengua', 'catalanofobia'],
+  'accio-pel-catala':       ['llengua'],
+  'drets-linguistics-ib':   ['llengua'],
+  'ocb':                    ['llengua'],
+  'acpv':                   ['llengua'],
+  'escola-valenciana':      ['llengua', 'ensenyament'],
+  'aplec':                  ['llengua', 'ensenyament'],
+  // Drets humans / civils
+  'iridia':                 ['drets_humans'],
+  'justicia-i-pau':         ['drets_humans'],
+  'omnium':                 ['drets_humans', 'llengua'],
+  // Nació / catalanofòbia (Acció Cassandra)
+  'accio-cassandra':        ['catalanofobia', 'drets_humans'],
+  // Habitatge
+  'observatori-desc':       ['habitatge'],
+  'ibavi':                  ['habitatge'],
+  // Medi ambient
+  'gepec':                  ['medi_ambient'],
+  'gob':                    ['medi_ambient'],
+  'adenc':                  ['medi_ambient'],
+  'ecologistes-accio':      ['medi_ambient'],
+  'ecologistes-accio-pv':   ['medi_ambient'],
+  'accio-ecologista-agro':  ['medi_ambient'],
+  // Laboral
+  'intersindical':          ['laboral'],
+  // Transport
+  'tib-transports-ib':      ['transport'],
+  // Accessibilitat digital
+  'accessibilitat-ib':      ['accessibilitat'],
+  // Racisme
+  'sos-racisme':            ['racisme', 'catalanofobia'],
+};
+ENTITATS.forEach(e => { e.tematiques = _TEMATIQUES_BY_ID[e.id] || []; });
