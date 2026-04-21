@@ -63,7 +63,7 @@ const TEMATIQUES_META = {
   ensenyament:   { nom: 'Ensenyament',                  descripcio: 'Drets educatius, ensenyament en català.' },
   racisme:       { nom: 'Racisme i xenofòbia',          descripcio: 'Discriminació per origen, color, religió.' },
   accessibilitat:{ nom: 'Accessibilitat digital',       descripcio: 'Webs i apps públiques no accessibles.' },
-  lgtbi:         { nom: 'LGTBI-fòbia i drets LGTBI+',   descripcio: 'Discriminació o delictes d\'odi per orientació sexual, identitat o expressió de gènere.' },
+  lgtbi:         { nom: 'LGTBI-fòbia i drets',          descripcio: 'Discriminació o delictes d\'odi per orientació sexual, identitat o expressió de gènere.' },
   violencia_masclista: { nom: 'Violència masclista',    descripcio: 'Agressions, assetjament o discriminació per raó de sexe o gènere.' },
   qualsevol:     { nom: 'Qualsevol tema',               descripcio: 'Canals genèrics que poden tractar qualsevol assumpte (pressió mediàtica, etc).' },
 };
