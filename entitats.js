@@ -1229,31 +1229,6 @@ const ENTITATS = [
     pos_mobil: [0.67, 0.30],
   },
   {
-    id: 'oficina-prevencio-ib',
-    nom: 'Oficina de Prevenció i Lluita contra la Corrupció IB',
-    tipus: 'legal',
-    ambit: 'Corrupció i fons públics (IB)',
-    descripcio_breu: 'Investiga corrupció i irregularitats a l\'administració balear.',
-    per_a_que: 'Denunciar corrupció, contractació irregular o ús indegut de recursos públics a les Illes Balears.',
-    quan_usar: [
-      'Contractes públics sospitosos a IB',
-      'Nepotisme o tracte de favor a administracions balears',
-      'Ús irregular de diners públics',
-    ],
-    que_esperar: [
-      'Investigació confidencial',
-      'Possible trasllat a fiscalia',
-    ],
-    punts_forts: ['Admet denúncies anònimes', 'Independència'],
-    limitacions: ['Requereix base de proves', 'Àmbit només IB'],
-    resultat_habitual: 'Investigació i, si escau, accions legals.',
-    temps: 'Mesos',
-    enllac: 'https://www.oaib.es/ca/denuncies/',
-    enllac_inactiu: true,
-    pos:       [0.40, 0.50],
-    pos_mobil: [0.33, 0.60],
-  },
-  {
     id: 'ocb',
     nom: 'Obra Cultural Balear (OCB)',
     tipus: 'social',
@@ -1599,7 +1574,7 @@ const ENTITATS = [
     limitacions: ['Només webs/apps públiques IB'],
     resultat_habitual: 'Adaptació o justificació del responsable.',
     temps: 'Setmanes',
-    enllac: 'https://www.caib.es/sistrafront/sistrafront/inicio?language=ca&modelo=IN0014CON&version=1',
+    enllac: 'https://www.caib.es/seucaib/ca/200/personas%20/tramites/tramite/4055271/',
     pos:       [0.267, 0.50],
     pos_mobil: [0.83, 0.90],
   },
@@ -1680,7 +1655,6 @@ const _TERRITORI_BY_ID = {
 
   // Illes Balears
   'sindic-ib':              'bal',
-  'oficina-prevencio-ib':   'bal',
   'ocb':                    'bal',
   'gob':                    'bal',
   'ibsalut':                'bal',
@@ -1762,7 +1736,6 @@ const _CONTACTE_BY_ID = {
   'gepec':                  { adreca: '',                                                 telefon: '977 33 11 42' },
   'accio-pel-catala':       { adreca: '',                                                 telefon: '' },
   'sindic-ib':              { adreca: '',                                                 telefon: '012' },
-  'oficina-prevencio-ib':   { adreca: 'Carrer d\'Antoni Marquès Marquès, 11, 07003 Palma',  telefon: '971 72 00 04' },
   'ocb':                    { adreca: 'Carrer de Sant Alonso, 24, 07001 Palma',            telefon: '971 72 32 99' },
   'gob':                    { adreca: 'Carrer de Manuel Sanchis Guarner, 10, 07004 Palma', telefon: '971 49 60 60' },
   'sindic-cv':              { adreca: 'Carrer Pascual Blasco, 1, 03001 Alacant',           telefon: '900 210 970' },
@@ -1812,6 +1785,31 @@ const _EMAIL_BY_ID = {
   'observatori-homofobia': 'denuncia@lobservatori.cat',
   'casal-lambda':       'assessoriajuridica@lambda.cat',
   'fundacio-enllac':    'enllac@fundacioenllac.cat',
+  // Batch abril 2026
+  'iridia':                      'info@iridia.cat',
+  'adenc':                       'correu@adenc.cat',
+  'sindicat-llogateres':         'sindicat@sindicatdellogateres.org',
+  'entrebarris':                 'info@entrebarris.org',
+  'institut-catala-dones':       'icd@gencat.cat',
+  'helia':                       'helia@heliadones.org',
+  'fundacio-surt':               'surt@surt.org',
+  'acathi':                      'acathi@acathi.org',
+  'lambda-valencia':             'info@lambdavalencia.org',
+  'depana':                      'info@depana.org',
+  'iaeden':                      'iaeden@iaeden.cat',
+  'plataforma-ebre':             'plataformadefensaebre@gmail.com',
+  'sos-costa-brava':             'hola@soscostabrava.cat',
+  'no-a-la-mat':                 'noalamatselva@gmail.com',
+  'xuquer-viu':                  'coordinadora@xuquerviu.net',
+  'per-l-horta':                 'perlhorta@perlhorta.info',
+  'salvem-sa-badia':             'salvemsabadiadeportmany@gmail.com',
+  'sindic-cv':                   'consultes@elsindic.com',
+  'agencia-valenciana-antifrau': 'comunicacion@antifraucv.es',
+  'accio-ecologista-agro':       'lhorta@accioecologista-agro.org',
+  'aplec':                       'aplec@aplec.cat',
+  'drets-linguistics-ib':        'oficina@ieb.caib.es',
+  'ibavi':                       'altresconsultes.mca@ibavi.caib.es',
+  'consum-ib':                   'secretaria@dgconsum.caib.es',
 };
 ENTITATS.forEach(e => {
   if (!e.email && _EMAIL_BY_ID[e.id]) e.email = _EMAIL_BY_ID[e.id];
@@ -1878,7 +1876,6 @@ const _SIGLES_BY_ID = {
 
   // Balears
   'sindic-ib':              'CAIB',
-  'oficina-prevencio-ib':   'OAIB',
   'ocb':                    'OCB',
   'gob':                    'GOB',
   'ibsalut':                'IBS',
@@ -1923,7 +1920,6 @@ const _TEMATIQUES_BY_ID = {
   'ibsalut':                ['salut'],
   // Corrupció
   'antifrau':               ['corrupcio'],
-  'oficina-prevencio-ib':   ['corrupcio'],
   'agencia-valenciana-antifrau': ['corrupcio'],
   // Delicte i via judicial
   'mossos':                 ['delicte', 'delicte_odi'],
