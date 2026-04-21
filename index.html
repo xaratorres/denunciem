@@ -553,9 +553,9 @@
     body.vista-llista #llista { display: block; }
 
     /* Quan estem en mode llista, deshabilita el overflow hidden del body perquè no es vegi tall rar */
-    body.vista-llista { overflow: auto; }
+    body.vista-llista { overflow-y: auto; overflow-x: hidden; }
     /* Si hi ha més entitats que cel·les base, la graella creix cap avall i el body ha de permetre scroll */
-    body.vista-grid.grid-overflow { overflow: auto; }
+    body.vista-grid.grid-overflow { overflow-y: auto; overflow-x: hidden; }
 
     /* A escriptori: disposició en 2 columnes (intro fixa a l'esquerra + llista a la dreta) */
     @media (min-width: 960px) {
