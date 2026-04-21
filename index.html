@@ -570,12 +570,8 @@
         align-self: start;
       }
       body.vista-llista #llista .llista-intro h1 { font-size: 2rem; }
-      body.vista-llista #llista .llista-sec-title {
-        grid-column: 2;
-        margin: 0 0 0.6rem;
-      }
-      body.vista-llista #llista > details.entitat-grup { grid-column: 2; }
-      body.vista-llista #llista > .llista-empty { grid-column: 2; }
+      body.vista-llista #llista .llista-rightcol { grid-column: 2; }
+      body.vista-llista #llista .llista-rightcol .llista-sec-title { margin: 0 0 0.6rem; }
       body.vista-llista #llista > .llista-footer {
         grid-column: 1 / -1;
         margin-top: 2rem;
@@ -2048,6 +2044,13 @@
     const llistaHost = document.getElementById('llista');
     if (!llistaHost) return;
     llistaHost.innerHTML = LLISTA_INTRO_HTML;
+    // Wrapper per a la columna dreta (títol + grups) — facilita layout 2 columnes a desktop
+    const rightCol = document.createElement('div');
+    rightCol.className = 'llista-rightcol';
+    // Mou el títol (que està al final de LLISTA_INTRO_HTML) dins del wrapper
+    const secTitle = llistaHost.querySelector('.llista-sec-title');
+    if (secTitle) rightCol.appendChild(secTitle);
+    llistaHost.appendChild(rightCol);
     let totalVisible = 0;
     Object.entries(TIPUS_META).forEach(([key, meta]) => {
       const llista = ENTITATS_V.filter(e => e.tipus === key && entitatMatchesFilters(e));
@@ -2094,10 +2097,10 @@
         grup.querySelector('summary')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
       grup.appendChild(plegar);
-      llistaHost.appendChild(grup);
+      rightCol.appendChild(grup);
     });
     if (totalVisible === 0) {
-      llistaHost.insertAdjacentHTML('beforeend', `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`);
+      rightCol.insertAdjacentHTML('beforeend', `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`);
     }
     llistaHost.insertAdjacentHTML('beforeend', LLISTA_FOOTER_HTML);
   }
