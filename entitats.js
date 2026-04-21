@@ -1483,6 +1483,30 @@ const ENTITATS = [
     pos_mobil: [0.50, 0.00],
   },
   {
+    id: 'ibdona',
+    nom: 'Institut Balear de la Dona (IBDONA)',
+    tipus: 'administratiu',
+    ambit: 'Violència masclista (canal oficial IB)',
+    descripcio_breu: 'Organisme del Govern Balear per a l\'atenció a dones víctimes de violència masclista a les Illes.',
+    per_a_que: 'Rebre atenció, recursos i acompanyament de l\'administració pública balear en casos de violència masclista.',
+    quan_usar: [
+      'Violència masclista a la parella o exparella (IB)',
+      'Assetjament sexual o laboral per raó de gènere',
+      'Necessites recursos d\'acollida o suport a les Illes',
+    ],
+    que_esperar: [
+      'Atenció especialitzada',
+      'Derivació a recursos (acollida, jurídic, psicològic)',
+    ],
+    punts_forts: ['Canal oficial', 'Xarxa de recursos pública'],
+    limitacions: ['Específicament dones víctimes de violència masclista', 'Àmbit només IB'],
+    resultat_habitual: 'Atenció i activació de recursos segons el cas.',
+    temps: 'Dies / setmanes',
+    enllac: 'https://www.caib.es/webgoib/vols-informaci%C3%B3-o-ajuda-sobre-la-viol%C3%A8ncia-contra-les-dones-',
+    pos:       [0.55, 0.05],
+    pos_mobil: [0.67, 0.05],
+  },
+  {
     id: 'drets-linguistics-ib',
     nom: 'Oficina de Defensa dels Drets Lingüístics (IB)',
     tipus: 'administratiu',
@@ -1659,6 +1683,7 @@ const _TERRITORI_BY_ID = {
   'gob':                    'bal',
   'ibsalut':                'bal',
   'ibavi':                  'bal',
+  'ibdona':                 'bal',
   'drets-linguistics-ib':   'bal',
   'consum-ib':              'bal',
   'tib-transports-ib':      'bal',
@@ -1747,6 +1772,7 @@ const _CONTACTE_BY_ID = {
   'ecologistes-accio-pv':   { adreca: '',                                                 telefon: '96 525 52 70' },
   'ibsalut':                { adreca: '',                                                 telefon: '971 17 56 00' },
   'ibavi':                  { adreca: '',                                                 telefon: '971 78 49 90' },
+  'ibdona':                 { adreca: '',                                                 telefon: '' },
   'drets-linguistics-ib':   { adreca: '',                                                 telefon: '012' },
   'consum-ib':              { adreca: '',                                                 telefon: '971 17 65 58' },
   'tib-transports-ib':      { adreca: '',                                                 telefon: '971 17 77 77' },
@@ -1809,6 +1835,7 @@ const _EMAIL_BY_ID = {
   'aplec':                       'aplec@aplec.cat',
   'drets-linguistics-ib':        'oficina@ieb.caib.es',
   'ibavi':                       'altresconsultes.mca@ibavi.caib.es',
+  'ibdona':                      'ibdona@ibdona.caib.es',
   'consum-ib':                   'secretaria@dgconsum.caib.es',
 };
 ENTITATS.forEach(e => {
@@ -1880,6 +1907,7 @@ const _SIGLES_BY_ID = {
   'gob':                    'GOB',
   'ibsalut':                'IBS',
   'ibavi':                  'IBAVI',
+  'ibdona':                 'IBD',
   'drets-linguistics-ib':   'ODL',
   'consum-ib':              'CIB',
   'tib-transports-ib':      'TIB',
@@ -1944,6 +1972,7 @@ const _TEMATIQUES_BY_ID = {
   // Habitatge
   'observatori-desc':       ['habitatge'],
   'ibavi':                  ['habitatge'],
+  'ibdona':                 ['violencia_masclista'],
   // Medi ambient
   'gepec':                  ['medi_ambient'],
   'gob':                    ['medi_ambient'],
