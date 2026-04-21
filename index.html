@@ -1755,9 +1755,16 @@
   })();
 
   // Reajustar layout al resize (amb debounce)
+  // A mòbil, ignorem els canvis d'orientació (rotar mòbil): conservem la disposició
+  // portrait inicial perquè el grid no es recalculi ni es redibuixi.
   {
+    const INITIAL_PORTRAIT = window.innerHeight >= window.innerWidth;
     let rTimer = null;
     const onResize = () => {
+      if (IS_MOBILE) {
+        const nowPortrait = window.innerHeight >= window.innerWidth;
+        if (nowPortrait !== INITIAL_PORTRAIT) return;
+      }
       clearTimeout(rTimer);
       rTimer = setTimeout(sizeGrid, 120);
     };
