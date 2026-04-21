@@ -551,6 +551,37 @@
     /* Quan estem en mode llista, deshabilita el overflow hidden del body perquè no es vegi tall rar */
     body.vista-llista { overflow: auto; }
 
+    /* A escriptori: disposició en 2 columnes (intro fixa a l'esquerra + llista a la dreta) */
+    @media (min-width: 960px) {
+      body.vista-llista #llista {
+        max-width: 1280px;
+        padding: 28px 32px 40px;
+        display: grid;
+        grid-template-columns: minmax(280px, 340px) 1fr;
+        column-gap: 48px;
+        align-items: start;
+      }
+      body.vista-llista #llista .llista-intro {
+        position: sticky;
+        top: 0;
+        padding: 0.2rem 0 1rem;
+        border-bottom: none;
+        margin-bottom: 0;
+        align-self: start;
+      }
+      body.vista-llista #llista .llista-intro h1 { font-size: 2rem; }
+      body.vista-llista #llista .llista-sec-title {
+        grid-column: 2;
+        margin: 0 0 0.6rem;
+      }
+      body.vista-llista #llista > details.entitat-grup { grid-column: 2; }
+      body.vista-llista #llista > .llista-empty { grid-column: 2; }
+      body.vista-llista #llista > .llista-footer {
+        grid-column: 1 / -1;
+        margin-top: 2rem;
+      }
+    }
+
     /* ── Ajuda'm ── */
     #overlay-ajudam .modal { max-height: 92vh; overflow-y: auto; }
     #overlay-ajudam .modal h2 {
