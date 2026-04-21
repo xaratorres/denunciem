@@ -416,6 +416,40 @@
       max-width: 900px;
       margin: 0 auto;
     }
+    .llista-intro {
+      padding: 0.4rem 0.2rem 1.4rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 0.5rem;
+    }
+    .llista-intro h1 {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .llista-intro h1 .em { color: var(--red); }
+    .llista-intro p {
+      font-size: 0.95rem;
+      color: var(--ink-2);
+      line-height: 1.6;
+      max-width: 68ch;
+    }
+    .llista-intro p + p { margin-top: 0.6rem; }
+    .llista-intro .hint-ajudam {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: rgba(220,38,38,0.08);
+      color: var(--red);
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+    html.dark .llista-intro { border-bottom-color: rgba(255,255,255,0.08); }
+    html.dark .llista-intro .hint-ajudam { background: rgba(220,38,38,0.18); color: #fca5a5; }
     .llista-view .entitat-grup {
       margin-top: 0.4rem;
       padding: 0.5rem 0.2rem 0.3rem;
@@ -1756,9 +1790,16 @@
 
   // ─── VISTA LLISTA (plena pantalla, reemplaça el modal Entitats) ───
   function renderLlista() {
+    const LLISTA_INTRO_HTML = `
+      <header class="llista-intro">
+        <h1>Els teus drets, a <span class="em">un clic</span>.</h1>
+        <p>Directori d'<strong>entitats i canals</strong> que tens a disposició als Països Catalans per fer valer els teus drets. Estan agrupats per tipus de via: administratiu, legal, pressió social…</p>
+        <p>Toca una entitat per veure què fa, quan usar-la, i les dades de contacte. Si no saps per on començar, obre <span class="hint-ajudam">Ajuda'm</span> i respon les preguntes.</p>
+      </header>
+    `;
     const llistaHost = document.getElementById('llista');
     if (!llistaHost) return;
-    llistaHost.innerHTML = '';
+    llistaHost.innerHTML = LLISTA_INTRO_HTML;
     let totalVisible = 0;
     Object.entries(TIPUS_META).forEach(([key, meta]) => {
       const llista = ENTITATS_V.filter(e => e.tipus === key && entitatMatchesFilters(e));
@@ -1797,7 +1838,7 @@
       llistaHost.appendChild(grup);
     });
     if (totalVisible === 0) {
-      llistaHost.innerHTML = `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`;
+      llistaHost.insertAdjacentHTML('beforeend', `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`);
     }
   }
   window.renderLlista = renderLlista;
