@@ -341,17 +341,26 @@
       text-align: center;
       padding: 0 4%;
     }
+    /* Fins a 5 lletres: mida i marge actuals (estil compacte/elegant) */
     .tool-initial.len-2 { font-size: min(calc(var(--cell-size, 60px) * 0.50), 36px); letter-spacing: -0.04em; }
     .tool-initial.len-3 { font-size: min(calc(var(--cell-size, 60px) * 0.38), 28px); letter-spacing: -0.04em; }
     .tool-initial.len-4 { font-size: min(calc(var(--cell-size, 60px) * 0.32), 24px); letter-spacing: -0.04em; }
     .tool-initial.len-5 { font-size: min(calc(var(--cell-size, 60px) * 0.27), 20px); letter-spacing: -0.04em; }
-    .tool-initial.len-6 { font-size: min(calc(var(--cell-size, 60px) * 0.23), 17px); letter-spacing: -0.04em; }
-    .tool-initial.len-7 { font-size: min(calc(var(--cell-size, 60px) * 0.20), 15px); letter-spacing: -0.05em; }
-    .tool-initial.len-8 { font-size: min(calc(var(--cell-size, 60px) * 0.18), 13px); letter-spacing: -0.05em; }
-    .tool-initial.len-9  { font-size: min(calc(var(--cell-size, 60px) * 0.16), 12px); letter-spacing: -0.05em; }
-    .tool-initial.len-10 { font-size: min(calc(var(--cell-size, 60px) * 0.15), 11px); letter-spacing: -0.05em; }
-    .tool-initial.len-11 { font-size: min(calc(var(--cell-size, 60px) * 0.135), 10px); letter-spacing: -0.06em; }
-    .tool-initial.len-12 { font-size: min(calc(var(--cell-size, 60px) * 0.12), 9px);  letter-spacing: -0.06em; }
+    /* ≥6 lletres: redueix marge i amplia font per arribar més a prop del perímetre */
+    .tool-initial.len-6,
+    .tool-initial.len-7,
+    .tool-initial.len-8,
+    .tool-initial.len-9,
+    .tool-initial.len-10,
+    .tool-initial.len-11,
+    .tool-initial.len-12 { padding: 0 1%; }
+    .tool-initial.len-6  { font-size: min(calc(var(--cell-size, 60px) * 0.28), 20px); letter-spacing: -0.04em; }
+    .tool-initial.len-7  { font-size: min(calc(var(--cell-size, 60px) * 0.24), 18px); letter-spacing: -0.05em; }
+    .tool-initial.len-8  { font-size: min(calc(var(--cell-size, 60px) * 0.21), 16px); letter-spacing: -0.05em; }
+    .tool-initial.len-9  { font-size: min(calc(var(--cell-size, 60px) * 0.19), 14px); letter-spacing: -0.05em; }
+    .tool-initial.len-10 { font-size: min(calc(var(--cell-size, 60px) * 0.17), 13px); letter-spacing: -0.06em; }
+    .tool-initial.len-11 { font-size: min(calc(var(--cell-size, 60px) * 0.155), 12px); letter-spacing: -0.06em; }
+    .tool-initial.len-12 { font-size: min(calc(var(--cell-size, 60px) * 0.142), 11px); letter-spacing: -0.06em; }
     /* Per a 2 línies, reduïm una mica més la mida vertical */
     .tool-initial.multiline { line-height: 1.05; }
     .nom {

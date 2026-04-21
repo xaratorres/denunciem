@@ -1818,7 +1818,7 @@ const _SIGLES_BY_ID = {
   'adenc':                  'ADENC\nNatura',
   'sindicat-llogateres':    'Sindicat\nLlogater',
   'entrebarris':            'Entre\nBarris',
-  'institut-catala-dones':  'IC Dones',
+  'institut-catala-dones':  'IC\nDones',
   'helia':                  'Assoc\nHèlia',
   'fundacio-surt':          'Fundació\nSurt',
   'observatori-homofobia':  'Contra\nHomofòb',
