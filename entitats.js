@@ -49,7 +49,8 @@ const TEMATIQUES_META = {
   consum:        { nom: 'Consum i empreses',            descripcio: 'Cobraments, contractes, serveis defectuosos.' },
   salut:         { nom: 'Salut',                        descripcio: 'CAP, hospitals, llistes d\'espera, errors sanitaris.' },
   corrupcio:     { nom: 'Corrupció',                    descripcio: 'Contractació irregular, ús indegut de fons públics.' },
-  delicte:       { nom: 'Delicte',                      descripcio: 'Agressions, robatoris, amenaces, delictes d\'odi.' },
+  delicte:       { nom: 'Delicte',                      descripcio: 'Agressions, robatoris, amenaces o estafes comunes.' },
+  delicte_odi:   { nom: 'Delicte d\'odi',                descripcio: 'Agressió o discriminació per la identitat de la víctima (origen, llengua, orientació, gènere, religió...).' },
   dades:         { nom: 'Dades personals',              descripcio: 'Ús indegut de dades, filtracions, vigilància.' },
   llengua:       { nom: 'Drets lingüístics',            descripcio: 'Incompliments en matèria de català.' },
   catalanofobia: { nom: 'Catalanofòbia',                descripcio: 'Discriminació o delictes d\'odi per ser català.' },
@@ -63,6 +64,7 @@ const TEMATIQUES_META = {
   accessibilitat:{ nom: 'Accessibilitat digital',       descripcio: 'Webs i apps públiques no accessibles.' },
   lgtbi:         { nom: 'LGTBI-fòbia i drets LGTBI+',   descripcio: 'Discriminació o delictes d\'odi per orientació sexual, identitat o expressió de gènere.' },
   violencia_masclista: { nom: 'Violència masclista',    descripcio: 'Agressions, assetjament o discriminació per raó de sexe o gènere.' },
+  qualsevol:     { nom: 'Qualsevol tema',               descripcio: 'Canals genèrics que poden tractar qualsevol assumpte (pressió mediàtica, etc).' },
 };
 
 const ENTITATS = [
@@ -1871,7 +1873,7 @@ const _TEMATIQUES_BY_ID = {
   'consum':                 ['consum'],
   'consum-ib':              ['consum'],
   'facua':                  ['consum'],
-  'contenidor-rac1':        ['consum'],
+  'contenidor-rac1':        ['consum', 'admin', 'qualsevol'],
   // Salut
   'catsalut':               ['salut'],
   'ibsalut':                ['salut'],
@@ -1880,8 +1882,8 @@ const _TEMATIQUES_BY_ID = {
   'oficina-prevencio-ib':   ['corrupcio'],
   'agencia-valenciana-antifrau': ['corrupcio'],
   // Delicte i via judicial
-  'mossos':                 ['delicte'],
-  'jutjat-guardia':         ['delicte'],
+  'mossos':                 ['delicte', 'delicte_odi'],
+  'jutjat-guardia':         ['delicte', 'delicte_odi'],
   // Dades
   'apdcat':                 ['dades'],
   // Llengua + catalanofòbia
@@ -1898,7 +1900,7 @@ const _TEMATIQUES_BY_ID = {
   'justicia-i-pau':         ['drets_humans'],
   'omnium':                 ['drets_humans', 'llengua'],
   // Nació / catalanofòbia (Acció Cassandra)
-  'accio-cassandra':        ['catalanofobia', 'drets_humans'],
+  'accio-cassandra':        ['catalanofobia', 'drets_humans', 'delicte_odi'],
   // Habitatge
   'observatori-desc':       ['habitatge'],
   'ibavi':                  ['habitatge'],
@@ -1911,7 +1913,7 @@ const _TEMATIQUES_BY_ID = {
   'institut-catala-dones':  ['violencia_masclista'],
   'helia':                  ['violencia_masclista'],
   'fundacio-surt':          ['violencia_masclista'],
-  'observatori-homofobia':  ['lgtbi'],
+  'observatori-homofobia':  ['lgtbi', 'delicte_odi'],
   'casal-lambda':           ['lgtbi'],
   'fundacio-enllac':        ['lgtbi'],
   'acathi':                 ['lgtbi', 'racisme'],
@@ -1936,6 +1938,6 @@ const _TEMATIQUES_BY_ID = {
   // Accessibilitat digital
   'accessibilitat-ib':      ['accessibilitat'],
   // Racisme
-  'sos-racisme':            ['racisme', 'catalanofobia'],
+  'sos-racisme':            ['racisme', 'catalanofobia', 'delicte_odi'],
 };
 ENTITATS.forEach(e => { e.tematiques = _TEMATIQUES_BY_ID[e.id] || []; });
