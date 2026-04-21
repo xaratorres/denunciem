@@ -1493,7 +1493,7 @@
     cellSize = Math.max(1, Math.min(cellFromW, cellFromH));
     gridEl.style.gridTemplateColumns = `repeat(${COLS}, ${cellSize}px)`;
     gridEl.style.gridTemplateRows    = `repeat(${ROWS}, ${cellSize}px)`;
-    if (HAS_EXTRA_ROWS) {
+    if (ROWS > BASE_ROWS) {
       // La graella creix cap avall; el body és scrollable (vegeu CSS body.grid-overflow).
       gridEl.style.height = 'auto';
       gridEl.style.minHeight = GH + 'px';
@@ -1516,22 +1516,23 @@
   // Entitats visibles al grid (les amb `hidden:true` queden fora del mapa i dels filtres UI,
   // però segueixen accessibles via deep-link #id)
   const ENTITATS_V = ENTITATS.filter(e => !e.hidden);
-  const POSICIONS_EINES = ENTITATS_V.map(e => {
-    const [rc, rr] = IS_MOBILE ? e.pos_mobil : e.pos;
-    const col = Math.min(COLS - 1, Math.round(rc * COLS));
-    // Mapem sobre BASE_ROWS perquè la "foto" superior quedi igual que abans.
-    // Les col·lisions cauran a les files extres de sota via el wrap (p+1) % TOTAL.
-    const row = Math.min(BASE_ROWS - 1, Math.round(rr * BASE_ROWS));
-    return row * COLS + col;
-  });
-  // Resolem col·lisions (si dues entitats cauen a la mateixa cel·la, la 2a es mou)
-  const usat = new Set();
-  POSICIONS_EINES.forEach((pos, i) => {
-    let p = pos;
-    while (usat.has(p)) p = (p + 1) % TOTAL;
-    POSICIONS_EINES[i] = p;
-    usat.add(p);
-  });
+  let POSICIONS_EINES = [];
+  function computePositions() {
+    POSICIONS_EINES = ENTITATS_V.map(e => {
+      const [rc, rr] = IS_MOBILE ? e.pos_mobil : e.pos;
+      const col = Math.min(COLS - 1, Math.round(rc * COLS));
+      const row = Math.min(BASE_ROWS - 1, Math.round(rr * BASE_ROWS));
+      return row * COLS + col;
+    });
+    const usat = new Set();
+    POSICIONS_EINES.forEach((pos, i) => {
+      let p = pos;
+      while (usat.has(p)) p = (p + 1) % TOTAL;
+      POSICIONS_EINES[i] = p;
+      usat.add(p);
+    });
+  }
+  computePositions();
 
   // ─── TONS PANOTS ───────────────────────────────────
   const TONS = ['#ebe8e3','#e3e0db','#dcd9d3','#e8e5df','#d5d1cb','#eae7e2','#dfdcd6','#d8d4ce'];
@@ -1579,8 +1580,15 @@
   // ─── CONSTRUCCIÓ GRID ─────────────────────────────
   const toolData = [];
   const grisData = [];
+  let waveLayer = null;
 
-  (function buildGrid() {
+  function buildGrid() {
+    // Neteja estat previ abans de reconstruir (per suportar rebuild on resize)
+    gridEl.innerHTML = '';
+    toolData.length = 0;
+    grisData.length = 0;
+    waveLayer = null;
+
     const einesPosMap = new Map(POSICIONS_EINES.map((pos, i) => [pos, i]));
     const assignedBg = new Array(TOTAL).fill(null);
 
@@ -1712,33 +1720,43 @@
 
       gridEl.appendChild(cell);
     }
-  })();
+    // La capa d'ones es (re)crea i s'enganxa al final
+    waveLayer = document.createElement('div');
+    waveLayer.id = 'wave-layer';
+    gridEl.appendChild(waveLayer);
+    // Re-aplica filtres actuals per no perdre-ho en rebuild
+    if (typeof applyFilters === 'function') applyFilters();
+  }
+  buildGrid();
 
   // Reajustar layout al resize (amb debounce)
   {
     let rTimer = null;
     const onResize = () => {
       clearTimeout(rTimer);
-      rTimer = setTimeout(sizeGrid, 120);
+      rTimer = setTimeout(() => {
+        // Recomputem dimensions; si COLS/BASE_ROWS canvien, reconstruïm el grid
+        const oldC = COLS, oldR = ROWS;
+        computeGridDims();
+        const HAS_EXTRA_ROWS_NOW = ROWS > BASE_ROWS;
+        document.body.classList.toggle('grid-overflow', HAS_EXTRA_ROWS_NOW);
+        if (COLS !== oldC || ROWS !== oldR) {
+          computePositions();
+          buildGrid();
+        }
+        sizeGrid();
+      }, 120);
     };
     window.addEventListener('resize', onResize);
-    // En canvi d'orientació recarreguem la pàgina: COLS/BASE_ROWS poden canviar
-    // radicalment (mòbil portrait ↔ mòbil landscape) i les posicions de les cel·les
-    // depenen d'aquestes dimensions, així que el més net és rebuildar de zero.
-    window.addEventListener('orientationchange', () => {
-      setTimeout(() => location.reload(), 300);
-    });
+    window.addEventListener('orientationchange', () => setTimeout(onResize, 250));
     if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
   }
 
   // ─── ANIMACIÓ: aura + ones + scroll X ─────────────
   (function anim() {
-    // Capa per a les ones, dins el grid
-    const waveLayer = document.createElement('div');
-    waveLayer.id = 'wave-layer';
-    gridEl.appendChild(waveLayer);
-
+    // waveLayer ja està creada per buildGrid() i es regenera en cada rebuild
     function spawnWave(td) {
+      if (!waveLayer) return;
       // offsetLeft/Top són relatius a l'offsetParent (#grid té position:relative),
       // així sempre queden al centre exacte de la cel·la, independent de scroll o
       // caches obsoletes.
