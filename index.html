@@ -394,6 +394,7 @@
     .llista-count {
       display: inline-flex;
       align-items: center;
+      gap: 6px;
       min-width: 30px;
       padding: 2px 10px;
       background: var(--red);
@@ -402,7 +403,18 @@
       font-size: 0.72rem;
       font-weight: 700;
       justify-content: center;
+      transition: background 0.15s, transform 0.1s;
     }
+    /* Quan hi ha filtres actius, el xip esdevé clicable per netejar-los */
+    .llista-count.clearable { cursor: pointer; }
+    .llista-count.clearable:hover { background: var(--red-dark); }
+    .llista-count.clearable:active { transform: scale(0.95); }
+    .llista-count .x-clear {
+      width: 10px; height: 10px;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .llista-count.clearable .x-clear { opacity: 0.85; }
     .llista-grup-plegar {
       display: flex;
       align-items: center;
@@ -1961,7 +1973,7 @@
         <p>Directori d'<strong>entitats i canals</strong> que tens a disposició a la <strong>nació</strong> per fer valer els teus drets. Estan agrupats per tipus de via: administratiu, legal, pressió social…</p>
         <p>Toca una entitat per veure què fa, quan usar-la, i les dades de contacte. Si no saps per on començar, obre <span class="hint-ajudam">Ajuda'm</span> i respon les preguntes.</p>
       </header>
-      <h2 class="llista-sec-title">Canals de denúncia <span class="llista-count">${ENTITATS_V.length}</span></h2>
+      <h2 class="llista-sec-title">Canals de denúncia <span class="llista-count" id="llista-count">${ENTITATS_V.length}<svg class="x-clear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></h2>
     `;
     const LLISTA_FOOTER_HTML = `
       <footer class="llista-footer">
@@ -2030,6 +2042,28 @@
       rightCol.insertAdjacentHTML('beforeend', `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`);
     }
     llistaHost.insertAdjacentHTML('beforeend', LLISTA_FOOTER_HTML);
+    // Actualitza el xip comptador amb el total filtrat i fes-lo clicable si hi ha filtres
+    const countEl = document.getElementById('llista-count');
+    if (countEl) {
+      const anyFilter = activeTipus !== null || activeTerritori !== null || activeTematica !== null;
+      // Només substitueix el nombre (primer text node); mantén l'SVG
+      countEl.firstChild.nodeValue = totalVisible + ' ';
+      countEl.classList.toggle('clearable', anyFilter);
+      countEl.title = anyFilter ? 'Clica per netejar els filtres' : '';
+      if (anyFilter && !countEl._wiredClear) {
+        countEl.addEventListener('click', () => {
+          if (activeTipus === null && activeTerritori === null && activeTematica === null) return;
+          activeTipus = null;
+          activeTerritori = null;
+          activeTematica = null;
+          // Sincronitza l'UI del modal Ajuda'm si està a punt d'obrir-se
+          ajudamModal.querySelectorAll('.ajudam-opt.selected').forEach(b => b.classList.remove('selected'));
+          ajudamModal.querySelectorAll('.ajudam-check.visible').forEach(c => c.classList.remove('visible', 'pulse'));
+          applyFilters();
+        });
+        countEl._wiredClear = true;
+      }
+    }
   }
   window.renderLlista = renderLlista;
   renderLlista();
