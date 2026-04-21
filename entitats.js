@@ -1794,74 +1794,73 @@ ENTITATS.forEach(e => { if (_MESENLLA_IDS.has(e.id)) e.mesenlla = true; });
 // ─── Sigles per mostrar a les icones (prioritza les oficials quan existeixen) ───
 const _SIGLES_BY_ID = {
   // Catalunya
-  'sindic-greuges':         'SG',
-  'consum':                 'ACC',
-  'catsalut':               'SCS',
-  'generalitat-instancia':  'GEN',
-  'politica-linguistica':   'DGPL',
+  'sindic-greuges':         'Síndic\nCat',
+  'consum':                 'Consum\nCat',
+  'catsalut':               'Cat\nSalut',
+  'generalitat-instancia':  'Gene\nCat',
+  'antifrau':               'Antifrau\nCat',
+  'mossos':                 'Mossos',
+  'apdcat':                 'Cat\nDades',
+  'jutjat-guardia':         'Jutjats\nCat',
+  'accio-cassandra':        'Acció\nCassan',
+  'iridia':                 'Irídia\nDrets',
+  'plataforma-llengua':     'P x\nLlengua',
+  'omnium':                 'Òmnium\nCultural',
+  'facua':                  'FACUA\nCat',
+  'observatori-desc':       'Obs\nDESC',
+  'contenidor-rac1':        'Contenidor\nRAC1',
+  'sos-racisme':            'SOS\nRacisme',
+  'justicia-i-pau':         'Justícia\nPau',
+  'gepec':                  'GEPEC\nEdC',
+  'politica-linguistica':   'Política\nLingüís',
+  'accio-pel-catala':       'Acció\nCatalà',
+  'intersindical':          'Inter\nsindical',
+  'adenc':                  'ADENC\nNatura',
+  'sindicat-llogateres':    'Sindicat Llogater',
+  'entrebarris':            'Entre\nBarris',
+  'institut-catala-dones':  'IC Dones',
+  'helia':                  'Assoc\nHèlia',
+  'fundacio-surt':          'Fundació\nSurt',
+  'observatori-homofobia':  'Contra\nHomofòb',
+  'casal-lambda':           'Casal\nLambda',
+  'fundacio-enllac':        'Fundació\nEnllaç',
+  'acathi':                 'ACATHI',
+  'depana':                 'DEPANA',
+  'iaeden':                 'IAEDEN',
+  'plataforma-ebre':        'Defensa\nEbre',
+  'sos-costa-brava':        'SOS\nCosta',
+  'no-a-la-mat':            'No MAT',
+  'xuquer-viu':             'Xúquer\nViu',
+  'per-l-horta':            "l'Horta",
+  'amics-terra':            'Terra\nMallorca',
+  'terraferida':            'Terra\nFerida',
+  'salvem-sa-badia':        'Salvem\nPortmany',
   'oac-ajuntaments':        'OAC',
-  'antifrau':               'OAF',
-  'mossos':                 'MdE',
-  'apdcat':                 'APDC',
-  'jutjat-guardia':         'JG',
-  'accio-cassandra':        'Cass',
-  'iridia':                 'IRI',
-  'plataforma-llengua':     'PxLl',
-  'intersindical':          'IS',
-  'adenc':                  'ADENC',
-  'sindicat-llogateres':    'SLl',
-  'entrebarris':            'EB',
-  'institut-catala-dones':  'ICD',
-  'helia':                  'Hèlia',
-  'fundacio-surt':          'Surt',
-  'observatori-homofobia':  'OCH',
-  'casal-lambda':           'Lamb',
-  'fundacio-enllac':        'Enll',
-  'acathi':                 'ACAT',
-  'lambda-valencia':        'LV',
-  'depana':                 'DEPA',
-  'iaeden':                 'IAED',
-  'plataforma-ebre':        'PDE',
-  'sos-costa-brava':        'SCB',
-  'no-a-la-mat':            'MAT',
-  'xuquer-viu':             'XVv',
-  'per-l-horta':            'PxH',
-  'amics-terra':            'AdT',
-  'terraferida':            'TFer',
-  'salvem-sa-badia':        'SSB',
-  'omnium':                 'ÒC',
-  'facua':                  'FACUA',
-  'observatori-desc':       'DESC',
-  'contenidor-rac1':        'RAC1',
-  'sos-racisme':            'SOS',
-  'justicia-i-pau':         'J&P',
-  'gepec':                  'GEPEC',
-  'accio-pel-catala':       'APC',
-
-  // Balears
-  'sindic-ib':              'CAIB',
-  'ocb':                    'OCB',
-  'gob':                    'GOB',
-  'ibsalut':                'IBS',
-  'ibavi':                  'IBAVI',
-  'ibdona':                 'IBD',
-  'drets-linguistics-ib':   'ODL',
-  'consum-ib':              'CIB',
-  'tib-transports-ib':      'TIB',
-  'accessibilitat-ib':      'A11',
 
   // País Valencià
-  'acpv':                   'ACPV',
-  'sindic-cv':              'SCV',
-  'agencia-valenciana-antifrau': 'AVA',
-  'escola-valenciana':      'EV',
-  'accio-ecologista-agro':  'Agró',
+  'acpv':                   'Acció\nCPV',
+  'sindic-cv':              'Síndic\nValència',
+  'agencia-valenciana-antifrau': 'AV\nAntifrau',
+  'escola-valenciana':      'Escola\nValencià',
+  'accio-ecologista-agro':  'Acció\nE-Agro',
+
+  // Balears
+  'sindic-ib':              'Atenció\nBalears',
+  'ocb':                    'OCB\nBalear',
+  'gob':                    'GOB',
+  'ibsalut':                'IbSalut',
+  'ibavi':                  'IBAVI',
+  'ibdona':                 'IbDona',
+  'drets-linguistics-ib':   'ODD\nLingüís',
+  'consum-ib':              'Consum\nBalears',
+  'tib-transports-ib':      'TIB',
+  'accessibilitat-ib':      'Accés\nwebs',
 
   // Catalunya Nord
-  'aplec':                  'APL',
+  'aplec':                  'APLEC\nCatNord',
 
   // Andorra
-  'raonador-andorra':       'Raon',
+  'raonador-andorra':       'Raonador\nAndorra',
 };
 // ─── PROVA: sigles auto-generades amb regla uniforme ─────────
 // Regla:
@@ -1907,9 +1906,9 @@ function autoSigla(nom) {
   const cut = camel > 0 ? camel + 1 : Math.ceil(w.length / 2);
   return w.slice(0, cut) + '\n' + w.slice(cut);
 }
-// Prova: autoSigla s'aplica a tots. _SIGLES_BY_ID queda com a fallback de seguretat.
+// Prioritat: sigla manual de _SIGLES_BY_ID; si no n'hi ha, autoSigla.
 ENTITATS.forEach(e => {
-  e.sigles = autoSigla(e.nom) || _SIGLES_BY_ID[e.id] || e.nom.charAt(0).toUpperCase();
+  e.sigles = _SIGLES_BY_ID[e.id] || autoSigla(e.nom) || e.nom.charAt(0).toUpperCase();
 });
 
 // ─── Temàtiques per entitat (per a la pregunta «De què es tracta?») ───
