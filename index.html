@@ -587,6 +587,46 @@
       border-bottom: none;
     }
     .llista-view .entitat-grup:first-child { border-top: none; }
+
+    /* ── Cercador de la llista ── */
+    .llista-search {
+      position: relative;
+      margin: 0 0 1rem;
+    }
+    .llista-search-ico {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-3);
+      pointer-events: none;
+    }
+    .llista-search input {
+      width: 100%;
+      padding: 0.55rem 0.9rem 0.55rem 2.2rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.92rem;
+      box-sizing: border-box;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .llista-search input:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.12);
+    }
+    html.dark .llista-search input { background: rgba(255,255,255,0.04); }
+    mark.hl {
+      background: rgba(220,38,38,0.18);
+      color: inherit;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+    html.dark mark.hl { background: rgba(220,38,38,0.32); color: #fff; }
+
     .llista-empty {
       text-align: center;
       padding: 80px 20px;
@@ -2183,6 +2223,27 @@
   window.openFitxa = openFitxa;
 
   // ─── VISTA LLISTA (plena pantalla, reemplaça el modal Entitats) ───
+  // ─── CERCADOR (vista llista) ─────────────
+  let searchQuery = '';
+  function escRx(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function hl(text, q) {
+    const safe = escHtml(text || '');
+    if (!q || q.length < 2) return safe;
+    try {
+      const re = new RegExp('(' + escRx(q) + ')', 'gi');
+      return safe.replace(re, '<mark class="hl">$1</mark>');
+    } catch (_) { return safe; }
+  }
+  function entMatchesQuery(ent, q) {
+    if (!q || q.length < 2) return true;
+    const lc = q.toLowerCase();
+    return [ent.nom, ent.ambit, ent.descripcio_breu, ent.sigles]
+      .some(f => (f || '').toLowerCase().replace(/\n/g,' ').includes(lc));
+  }
+
   function renderLlista() {
     const LLISTA_INTRO_HTML = `
       <header class="llista-intro">
@@ -2191,6 +2252,10 @@
         <p>Toca una entitat per veure què fa, quan usar-la, i les dades de contacte. Si no saps per on començar, obre <span class="hint-ajudam">Ajuda'm</span> i respon les preguntes.</p>
       </header>
       <h2 class="llista-sec-title">Canals de denúncia <span class="llista-count" id="llista-count">${ENTITATS_V.length}<svg class="x-clear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></h2>
+      <div class="llista-search">
+        <svg class="llista-search-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" id="llista-search-input" placeholder="Cerca entitat, àmbit o paraula clau…" autocomplete="off" value="${escHtml(searchQuery)}">
+      </div>
     `;
     const LLISTA_FOOTER_HTML = `
       <footer class="llista-footer">
@@ -2209,16 +2274,17 @@
     llistaHost.appendChild(rightCol);
     let totalVisible = 0;
     const anyFilterActive = activeTipus !== null || activeTerritori !== null || activeTematica !== null;
+    const q = searchQuery.trim();
+    const activeSearch = q.length >= 2;
     Object.entries(TIPUS_META).forEach(([key, meta]) => {
-      const llista = ENTITATS_V.filter(e => e.tipus === key && entitatMatchesFilters(e));
+      const llista = ENTITATS_V.filter(e => e.tipus === key && entitatMatchesFilters(e) && entMatchesQuery(e, q));
       if (!llista.length) return;
       totalVisible += llista.length;
       const grup = document.createElement('details');
       grup.className = 'entitat-grup';
       grup.style.setProperty('--grupcolor', meta.color);
-      // Si l'usuari ve d'Ajuda'm amb filtres, obrim els grups amb canals directament
-      // (si no hi ha entitats coincidents el grup ja no s'ha renderitzat: `if (!llista.length) return`).
-      grup.open = anyFilterActive;
+      // Obrir automàticament si l'usuari ve d'Ajuda'm amb filtres, o si hi ha una cerca activa
+      grup.open = anyFilterActive || activeSearch;
       grup.innerHTML = `
         <summary>
           <span class="entitat-grup-head">
@@ -2239,9 +2305,9 @@
         it.innerHTML = `
           <div class="entitat-ico ico-len-${Math.min(s.length, 5)}">${s}</div>
           <div class="entitat-info">
-            <div class="entitat-nom">${ent.nom}</div>
-            <div class="entitat-ambit">${ent.ambit}</div>
-            <div class="entitat-desc">${ent.descripcio_breu}</div>
+            <div class="entitat-nom">${hl(ent.nom, q)}</div>
+            <div class="entitat-ambit">${hl(ent.ambit, q)}</div>
+            <div class="entitat-desc">${hl(ent.descripcio_breu, q)}</div>
           </div>
         `;
         it.addEventListener('click', () => openFitxa(ent.id));
@@ -2261,7 +2327,10 @@
       rightCol.appendChild(grup);
     });
     if (totalVisible === 0) {
-      rightCol.insertAdjacentHTML('beforeend', `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`);
+      const msg = activeSearch
+        ? `<div class="llista-empty"><strong>Cap resultat</strong> per <em>"${escHtml(q)}"</em>.<br>Prova amb una altra paraula o neteja la cerca.</div>`
+        : `<div class="llista-empty"><strong>Cap entitat coincideix</strong> amb els filtres aplicats.<br>Prova amb <em>Ajuda'm</em> per triar altres criteris.</div>`;
+      rightCol.insertAdjacentHTML('beforeend', msg);
     }
     llistaHost.insertAdjacentHTML('beforeend', LLISTA_FOOTER_HTML);
     // Actualitza el xip comptador amb el total filtrat i fes-lo clicable si hi ha filtres
@@ -2284,6 +2353,20 @@
           applyFilters();
         });
         countEl._wiredClear = true;
+      }
+    }
+    // ── Wire del cercador ──
+    const searchEl = document.getElementById('llista-search-input');
+    if (searchEl) {
+      searchEl.addEventListener('input', () => {
+        searchQuery = searchEl.value;
+        renderLlista();
+      });
+      // Restaurem focus i caret si l'usuari ja estava escrivint
+      if (searchQuery) {
+        searchEl.focus();
+        const v = searchEl.value;
+        try { searchEl.setSelectionRange(v.length, v.length); } catch (_) {}
       }
     }
   }
