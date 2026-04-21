@@ -1953,6 +1953,7 @@
   let activeTipus = null;
   let activeTerritori = null;
   let activeTematica = null;
+  let searchQuery = '';
 
   function entitatMatchesFilters(ent) {
     const matchT = activeTipus === null || ent.tipus === activeTipus;
@@ -2224,7 +2225,7 @@
 
   // ─── VISTA LLISTA (plena pantalla, reemplaça el modal Entitats) ───
   // ─── CERCADOR (vista llista) ─────────────
-  let searchQuery = '';
+  // searchQuery ja declarat amb els altres estats de filtre
   function escRx(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
   function escHtml(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
