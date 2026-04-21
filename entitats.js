@@ -702,6 +702,60 @@ const ENTITATS = [
     pos_mobil: [0.17, 0.70],
   },
   // ══════════════════════════════════════════
+  //  HABITATGE
+  // ══════════════════════════════════════════
+  {
+    id: 'sindicat-llogateres',
+    nom: 'Sindicat de Llogateres',
+    tipus: 'social',
+    ambit: 'Drets de lloguer i habitatge',
+    descripcio_breu: 'Sindicat que defensa drets de llogateres davant pujades abusives, assetjament i desnonaments.',
+    per_a_que: 'Rebre assessorament col·lectiu i acompanyament davant abusos del teu propietari o gran tenidor.',
+    quan_usar: [
+      'Pujades de lloguer abusives',
+      'Assetjament immobiliari (mobbing)',
+      'No renovació contra la llei',
+      'Desnonaments',
+    ],
+    que_esperar: [
+      'Assessorament legal col·lectiu',
+      'Acció col·lectiva si escau',
+      'Pressió pública i política',
+    ],
+    punts_forts: ['Força col·lectiva', 'Experiència en litigis d\'habitatge', 'Campanyes d\'impacte'],
+    limitacions: ['Prioritzen casos estratègics i col·lectius'],
+    resultat_habitual: 'Reducció de lloguer, aturada de desnonament o acció col·lectiva.',
+    temps: 'Setmanes / mesos',
+    enllac: 'https://sindicatdellogateres.org/recurs/',
+    pos:       [0.333, 0.50],
+    pos_mobil: [0.00, 0.50],
+  },
+  {
+    id: 'entrebarris',
+    nom: 'EntreBarris',
+    tipus: 'social',
+    ambit: 'Habitatge i drets veïnals',
+    descripcio_breu: 'Xarxa de suport veïnal i mutualisme en habitatge i drets socials.',
+    per_a_que: 'Sumar-te a una xarxa de suport veïnal en casos d\'habitatge i vulnerabilitat, amb suport entre iguals.',
+    quan_usar: [
+      'Problemes d\'habitatge al teu barri',
+      'Suport veïnal davant desnonaments',
+      'Accions d\'organització comunitària',
+    ],
+    que_esperar: [
+      'Suport mutu i organització comunitària',
+      'Acompanyament als casos',
+    ],
+    punts_forts: ['Arrelament de barri', 'Xarxa de suport mutualista'],
+    limitacions: ['No és canal formal de queixa'],
+    resultat_habitual: 'Suport al cas i acció col·lectiva.',
+    temps: 'Variable',
+    enllac: 'https://entrebarris.org/contacte/',
+    pos:       [0.60, 0.00],
+    pos_mobil: [0.67, 0.50],
+  },
+
+  // ══════════════════════════════════════════
   //  VIOLÈNCIA MASCLISTA
   // ══════════════════════════════════════════
   {
@@ -1596,6 +1650,8 @@ const _TERRITORI_BY_ID = {
   'ecologistes-accio':      'cat',
   'intersindical':          'cat',
   'adenc':                  'cat',
+  'sindicat-llogateres':    'cat',
+  'entrebarris':            'cat',
   'institut-catala-dones':  'cat',
   'helia':                  'cat',
   'fundacio-surt':          'cat',
@@ -1676,6 +1732,8 @@ const _CONTACTE_BY_ID = {
   'ecologistes-accio':      { adreca: 'Carrer d\'Olzinelles, 31, 08014 Barcelona',         telefon: '648 76 11 99' },
   'intersindical':          { adreca: 'Carrer de Rocafort, 242 bis, 08029 Barcelona',      telefon: '93 481 36 60' },
   'adenc':                  { adreca: '',                                                 telefon: '' },
+  'sindicat-llogateres':    { adreca: '',                                                 telefon: '' },
+  'entrebarris':            { adreca: '',                                                 telefon: '' },
   'institut-catala-dones':  { adreca: '',                                                 telefon: '900 900 120 (24h, gratuït)' },
   'helia':                  { adreca: '',                                                 telefon: '' },
   'fundacio-surt':          { adreca: '',                                                 telefon: '' },
@@ -1742,6 +1800,8 @@ const _SIGLES_BY_ID = {
   'plataforma-llengua':     'PxLl',
   'intersindical':          'IS',
   'adenc':                  'ADENC',
+  'sindicat-llogateres':    'SLl',
+  'entrebarris':            'EB',
   'institut-catala-dones':  'ICD',
   'helia':                  'Hèlia',
   'fundacio-surt':          'Surt',
@@ -1846,6 +1906,8 @@ const _TEMATIQUES_BY_ID = {
   'gepec':                  ['medi_ambient'],
   'gob':                    ['medi_ambient'],
   'adenc':                  ['medi_ambient'],
+  'sindicat-llogateres':    ['habitatge'],
+  'entrebarris':            ['habitatge'],
   'institut-catala-dones':  ['violencia_masclista'],
   'helia':                  ['violencia_masclista'],
   'fundacio-surt':          ['violencia_masclista'],
