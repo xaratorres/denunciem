@@ -570,8 +570,7 @@
     html.dark .ajudam-opt.selected { background: var(--red); border-color: var(--red); color: #fff; }
     .ajudam-actions {
       display: flex;
-      justify-content: space-between;
-      gap: 10px;
+      justify-content: flex-end;
       padding-top: 1.1rem;
       border-top: 1px solid var(--border);
       margin-top: 1.3rem;
@@ -1116,7 +1115,6 @@
       </div>
 
       <div class="ajudam-actions">
-        <button class="ajudam-btn ajudam-btn-clear" id="btn-ajudam-clear">Neteja</button>
         <button class="ajudam-btn ajudam-btn-apply" id="btn-ajudam-apply">Fet</button>
       </div>
     </div>
@@ -1756,13 +1754,6 @@
     setTimeout(() => ajudamModal.querySelectorAll('.ajudam-check.pulse').forEach(c => c.classList.remove('pulse')), 0);
     ajudamOverlay.classList.add('open');
   }
-
-  $('btn-ajudam-clear').addEventListener('click', () => {
-    activeTipus = null; activeTerritori = null; activeTematica = null;
-    ajudamModal.querySelectorAll('.ajudam-opt.selected').forEach(b => b.classList.remove('selected'));
-    ajudamModal.querySelectorAll('.ajudam-check').forEach(c => c.classList.remove('visible', 'pulse'));
-    applyFilters();
-  });
 
   $('btn-ajudam-apply').addEventListener('click', () => {
     // Ja està tot aplicat — només tanca
