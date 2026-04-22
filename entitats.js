@@ -2326,7 +2326,7 @@ const _TEMATIQUES_BY_ID = {
   'antifrau':               ['corrupcio'],
   'agencia-valenciana-antifrau': ['corrupcio'],
   // Delicte i via judicial
-  'mossos':                 ['delicte', 'delicte_odi'],
+  'mossos':                 ['delicte', 'delicte_odi', 'violencia_masclista', 'catalanofobia', 'racisme', 'lgtbi', 'animals', 'medi_ambient', 'dades'],
   'jutjat-guardia':         ['delicte', 'delicte_odi'],
   // Dades
   'apdcat':                 ['dades'],
