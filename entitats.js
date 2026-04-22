@@ -428,7 +428,7 @@ const ENTITATS = [
   // ══════════════════════════════════════════
   {
     id: 'observatori-desc',
-    nom: 'Observatori DESC',
+    nom: 'Observatori DESCA',
     tipus: 'sectorial',
     ambit: 'Habitatge i drets socials',
     descripcio_breu: 'Defensa drets econòmics, socials i culturals: habitatge, pobresa, desnonaments.',
@@ -2185,7 +2185,7 @@ const _SIGLES_BY_ID = {
   'plataforma-llengua':     'P x\nLlengua',
   'omnium':                 'Òmnium\nCultural',
   'facua':                  'FACUA\nCat',
-  'observatori-desc':       'Obs\nDESC',
+  'observatori-desc':       'Obs\nDESCA',
   'contenidor-rac1':        'Contenidor\nRAC1',
   'sos-racisme':            'SOS\nRacisme',
   'justicia-i-pau':         'Justícia\nPau',
