@@ -1,6 +1,6 @@
 // Denunciem.cat — Service Worker
 // Versió: puja-la a cada release
-const CACHE = 'denunciem-v10';
+const CACHE = 'denunciem-v11';
 
 // Core: fitxers que canvien sovint → network-first
 const CORE = [
