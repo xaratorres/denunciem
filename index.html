@@ -542,12 +542,13 @@
     .llista-grup-plegar svg { width: 14px; height: 14px; }
     html.dark .llista-grup-plegar:hover { background: rgba(255,255,255,0.05); color: #fff; }
     .llista-footer {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
       border-top: 1px solid var(--border);
       font-size: 0.85rem;
       color: var(--ink-3);
-      line-height: 1.55;
+      line-height: 1.5;
     }
     .llista-footer strong { color: var(--ink-2); font-weight: 600; }
     .llista-footer a { color: var(--red); border-bottom: 1px solid rgba(220,38,38,0.35); }
@@ -670,7 +671,7 @@
     @media (min-width: 960px) {
       body.vista-llista #llista {
         max-width: 1280px;
-        padding: 28px 32px 40px;
+        padding: 20px 32px 16px;
         display: grid;
         grid-template-columns: minmax(280px, 340px) 1fr;
         column-gap: 48px;
@@ -689,7 +690,7 @@
       body.vista-llista #llista .llista-rightcol .llista-sec-title { margin: 0 0 0.6rem; }
       body.vista-llista #llista > .llista-footer {
         grid-column: 1 / -1;
-        margin-top: 2rem;
+        margin-top: 1rem;
       }
     }
 
@@ -2320,6 +2321,9 @@
     const LLISTA_FOOTER_HTML = `
       <footer class="llista-footer">
         <strong>Eina en fase de revisió.</strong> Si detectes algun error o vols fer una aportació, escriu a <a href="https://xiuxiuejar.com/espai/drets" target="_blank" rel="noopener noreferrer">xiuxiuejar.com/espai/drets</a>.
+        <div class="legal-links">
+          <button type="button" data-legal-open="legal">Avís legal</button><span>·</span><button type="button" data-legal-open="privacy">Política de privacitat</button><span>·</span><button type="button" data-legal-open="contact">Contacte</button>
+        </div>
       </footer>
     `;
     const llistaHost = document.getElementById('llista');
@@ -2546,5 +2550,288 @@
     });
   }
   </script>
+
+<!-- ─────────────── LEGAL KIT (minimalista) ─────────────── -->
+<style>
+  .legal-links {
+    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    color: rgba(0,0,0,0.42);
+    letter-spacing: 0.01em;
+  }
+  .legal-links button {
+    background: none; border: 0; padding: 0;
+    font: inherit; color: inherit; cursor: pointer;
+    transition: color 0.15s;
+  }
+  .legal-links button:hover { color: var(--red); }
+  .legal-links span { margin: 0 0.45rem; opacity: 0.5; }
+  html.dark .legal-links { color: rgba(255,255,255,0.38); }
+  html.dark .legal-links button:hover { color: #ef4444; }
+
+  #overlay-legal:not(.open),
+  #overlay-privacy:not(.open),
+  #overlay-contact:not(.open) { display: none !important; }
+
+  #overlay-legal .modal h3,
+  #overlay-privacy .modal h3 { font-size: 0.98rem; font-weight: 600; margin: 1rem 0 0.35rem; color: var(--ink); }
+  #overlay-legal .modal p,
+  #overlay-privacy .modal p { margin: 0.3rem 0; line-height: 1.55; color: var(--ink-2); font-size: 0.88rem; }
+  #overlay-legal .modal ul,
+  #overlay-privacy .modal ul { margin: 0.2rem 0 0.4rem 1.1rem; padding: 0; font-size: 0.85rem; color: var(--ink-2); }
+  html.dark #overlay-legal .modal h3,
+  html.dark #overlay-privacy .modal h3 { color: #f5f5f5; }
+  html.dark #overlay-legal .modal p,
+  html.dark #overlay-privacy .modal p,
+  html.dark #overlay-legal .modal ul,
+  html.dark #overlay-privacy .modal ul { color: rgba(255,255,255,0.72); }
+
+  #overlay-contact .modal { width: min(500px, 94vw); }
+  .contact-field { display: block; margin-bottom: 0.75rem; }
+  .contact-field label { display: block; font-size: 0.72rem; font-weight: 500; margin-bottom: 0.25rem; color: var(--ink-2); }
+  html.dark .contact-field label { color: rgba(255,255,255,0.72); }
+  .contact-field input, .contact-field textarea {
+    width: 100%; box-sizing: border-box;
+    padding: 0.5rem 0.65rem; font: inherit; font-size: 0.88rem;
+    border: 1px solid rgba(0,0,0,0.18); border-radius: 6px;
+    background: rgba(255,255,255,0.6); color: inherit;
+  }
+  html.dark .contact-field input, html.dark .contact-field textarea {
+    background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15);
+  }
+  .contact-field textarea { min-height: 100px; resize: vertical; }
+  .contact-field input:focus, .contact-field textarea:focus {
+    outline: none; border-color: var(--red);
+  }
+  .contact-honeypot { position: absolute; left: -9999px; top: -9999px; }
+  .contact-consent { display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.76rem; color: var(--ink-2); margin: 0.5rem 0 0.8rem; }
+  html.dark .contact-consent { color: rgba(255,255,255,0.65); }
+  .contact-consent input { margin-top: 0.15rem; }
+  .contact-submit {
+    width: 100%; padding: 0.6rem; background: var(--red); color: #fff;
+    border: 0; border-radius: 6px; font: inherit; font-size: 0.88rem; font-weight: 500;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .contact-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .contact-notice {
+    font-size: 0.76rem; padding: 0.55rem 0.7rem; border-radius: 6px;
+    background: rgba(251, 191, 36, 0.15); color: #92400e;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    margin-bottom: 0.8rem;
+  }
+  .contact-notice a { color: inherit; text-decoration: underline; }
+  html.dark .contact-notice { background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+  .contact-error { font-size: 0.78rem; color: #c53030; margin: 0.4rem 0; }
+  .contact-success { text-align: center; padding: 1.5rem 0; }
+  .contact-success .tick { width: 42px; height: 42px; border-radius: 50%; background: #10b981; color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.8rem; font-size: 1.3rem; }
+
+  /* Botó enrere: mateix estil que .modal-close però a l'esquerra */
+  .btn-modal-back {
+    position: absolute; top: 1rem; left: 1rem;
+    width: 34px; height: 34px;
+    border: 0; cursor: pointer;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.04);
+    display: none; align-items: center; justify-content: center;
+    color: var(--ink-2);
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-modal-back:hover { background: rgba(0,0,0,0.08); color: var(--ink); }
+  html.dark .btn-modal-back { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.65); }
+  html.dark .btn-modal-back:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .btn-modal-back.visible { display: inline-flex; }
+  /* Reserva espai a l'H2 quan el back és visible perquè no es trepitgi */
+  .overlay .modal:has(.btn-modal-back.visible) h2 { padding-left: 2.6rem; }
+</style>
+
+<div id="overlay-legal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="legal-title">
+  <div class="modal">
+    <button class="btn-modal-back" data-legal-back aria-label="Enrere"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="modal-close" data-legal-close aria-label="Tancar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    <h2 id="legal-title">Avís legal</h2>
+
+    <h3>Qui hi ha darrere</h3>
+    <p><strong>Denunciem</strong> (denunciem.cat) és un hub que reuneix canals de queixa, denúncia i pressió ciutadana a Catalunya.</p>
+    <p>Responsable: projecte Denunciem, impulsat per la societat civil. Es tracta d'un projecte independent, sense ànim de lucre, sense publicitat ni patrocinadors. No té personalitat jurídica pròpia ni realitza activitat econòmica.</p>
+
+    <h3>Contacte</h3>
+    <p>Per a qualsevol consulta, aportació o exercici de drets, pots fer servir el <button type="button" data-legal-openfrom="contact" style="background:none;border:0;padding:0;font:inherit;color:var(--red);cursor:pointer;text-decoration:underline">formulari de contacte</button>.</p>
+
+    <h3>Propietat intel·lectual</h3>
+    <p><strong>Codi i continguts originals:</strong> tots els drets reservats © 2026. La reutilització requereix permís previ.</p>
+    <p><strong>Les entitats i canals enllaçats</strong> pertanyen als seus respectius titulars i es mostren amb finalitat informativa. Aquest portal no té cap relació ni representació sobre elles.</p>
+
+    <h3>Responsabilitat</h3>
+    <p>La informació d'aquest portal té caràcter orientatiu. No garantim l'exactitud ni la vigència dels continguts ni el funcionament dels llocs enllaçats. L'ús dels canals es realitza sota la responsabilitat de l'usuari.</p>
+    <p>Aquest web <strong>no és una web oficial</strong> de cap administració pública ni associació.</p>
+
+    <h3>Legislació aplicable</h3>
+    <p>Aquest avís es regeix per la legislació espanyola i catalana aplicable (Llei 34/2002 LSSI-CE i normes concordants).</p>
+
+    <div class="modal-footer"><small>Catalunya · v1.0 · 2026</small></div>
+  </div>
+</div>
+
+<div id="overlay-privacy" class="overlay" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="modal">
+    <button class="btn-modal-back" data-legal-back aria-label="Enrere"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="modal-close" data-legal-close aria-label="Tancar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    <h2 id="privacy-title">Política de privacitat</h2>
+
+    <h3>Resum</h3>
+    <p>Denunciem no demana registre, no crea comptes d'usuari, no utilitza cookies de seguiment ni ven dades a ningú. La informació personal que processem és mínima i serveix només per fer funcionar el servei.</p>
+
+    <h3>Responsable</h3>
+    <p>Projecte Denunciem, impulsat per la societat civil.</p>
+
+    <h3>Quines dades tractem</h3>
+    <ul>
+      <li><strong>Analítica (Vercel Analytics):</strong> sistema sense cookies amb hash temporal de la IP que rota diàriament. No permet identificar usuaris.</li>
+      <li><strong>Logs del servidor (Vercel):</strong> IP i petició, per motius tècnics i de seguretat, conservats segons política de Vercel.</li>
+      <li><strong>Emmagatzematge local:</strong> preferències al teu dispositiu (localStorage). No surten del teu navegador.</li>
+      <li><strong>Formulari de contacte:</strong> si ens escrius, processem nom (opcional), email i missatge per respondre't. Enviament via Resend.</li>
+    </ul>
+
+    <h3>Base legal</h3>
+    <p>Interès legítim (art. 6.1.f RGPD) per al funcionament i seguretat del servei. Consentiment (art. 6.1.a) al formulari de contacte.</p>
+
+    <h3>Cessió a tercers</h3>
+    <p>No venem ni cedim dades. Utilitzem Vercel Inc. (hosting) i Resend (enviament de formularis), tots dos als EUA sota el marc EU-US Data Privacy Framework.</p>
+
+    <h3>Els teus drets</h3>
+    <p>Pots exercir els drets d'accés, rectificació, supressió, oposició, portabilitat i limitació a través del <button type="button" data-legal-openfrom="contact" style="background:none;border:0;padding:0;font:inherit;color:var(--red);cursor:pointer;text-decoration:underline">formulari de contacte</button>. També pots reclamar davant l'<a href="https://apdcat.gencat.cat" target="_blank" rel="noopener noreferrer" style="color:var(--red)">Autoritat Catalana de Protecció de Dades</a>.</p>
+
+    <div class="modal-footer"><small>Catalunya · v1.0 · 2026</small></div>
+  </div>
+</div>
+
+<div id="overlay-contact" class="overlay" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+  <div class="modal">
+    <button class="btn-modal-back" data-legal-back aria-label="Enrere"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="modal-close" data-legal-close aria-label="Tancar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    <h2 id="contact-title">Contacte</h2>
+    <div id="contact-body"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var LEGAL_CONFIG = {
+    projectLabel: 'Denunciem',
+    devMode: true,
+    contributionsUrl: 'https://xiuxiuejar.com/espai/drets',
+    accent: 'var(--red)',
+  };
+
+  var overlays = {
+    legal:   document.getElementById('overlay-legal'),
+    privacy: document.getElementById('overlay-privacy'),
+    contact: document.getElementById('overlay-contact'),
+  };
+  var stack = [];
+
+  function render() {
+    Object.keys(overlays).forEach(function (k) {
+      var el = overlays[k]; if (!el) return;
+      var top = stack[stack.length - 1];
+      el.classList.toggle('open', top === k);
+      var back = el.querySelector('[data-legal-back]');
+      if (back) back.classList.toggle('visible', stack.length > 1 && top === k);
+    });
+    document.body.style.overflow = stack.length ? 'hidden' : '';
+    if (stack[stack.length - 1] === 'contact') renderContactBody();
+  }
+
+  function open(key) {
+    if (!overlays[key]) return;
+    if (stack[stack.length - 1] === key) return;
+    stack.push(key); render();
+  }
+  function back() { stack.pop(); render(); }
+  function closeAll() { stack = []; render(); }
+
+  // Event delegation: cobreix botons afegits dinàmicament (llista-footer, etc.)
+  document.addEventListener('click', function (e) {
+    var openEl = e.target.closest && e.target.closest('[data-legal-open]');
+    if (openEl) { open(openEl.getAttribute('data-legal-open')); return; }
+    var fromEl = e.target.closest && e.target.closest('[data-legal-openfrom]');
+    if (fromEl) { open(fromEl.getAttribute('data-legal-openfrom')); return; }
+    var closeEl = e.target.closest && e.target.closest('[data-legal-close]');
+    if (closeEl) { closeAll(); return; }
+    var backEl = e.target.closest && e.target.closest('[data-legal-back]');
+    if (backEl) { back(); return; }
+  });
+  Object.keys(overlays).forEach(function (k) {
+    var el = overlays[k]; if (!el) return;
+    el.addEventListener('click', function (e) { if (e.target === el) closeAll(); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && stack.length) closeAll();
+  });
+
+  var contactState = 'idle', contactMsg = '';
+  var contactValues = { name: '', email: '', subject: '', message: '', consent: false, website: '' };
+
+  function renderContactBody() {
+    var body = document.getElementById('contact-body'); if (!body) return;
+    if (contactState === 'ok') {
+      body.innerHTML = '<div class="contact-success"><div class="tick">✓</div><h3 style="margin:0 0 0.4rem">Missatge enviat</h3><p style="font-size:0.82rem;color:var(--ink-3)">Gràcies! Et respondrem tan aviat com puguem.</p></div>';
+      return;
+    }
+    var notice = LEGAL_CONFIG.devMode
+      ? '<div class="contact-notice"><strong>Formulari en fase de desenvolupament.</strong> Aquest canal encara no és operatiu. Mentrestant, escriu-nos a <a href="' + LEGAL_CONFIG.contributionsUrl + '" target="_blank" rel="noopener noreferrer">' + LEGAL_CONFIG.contributionsUrl.replace(/^https?:\/\//, '') + '</a>.</div>'
+      : '';
+    body.innerHTML =
+      notice +
+      '<p style="font-size:0.85rem;color:var(--ink-2);margin:0 0 0.9rem">Ens pots escriure per consultes, correccions, aportacions o per exercir els drets RGPD. Responem des d\'un correu genèric del projecte.</p>' +
+      '<form id="contact-form" autocomplete="off">' +
+        '<div class="contact-field"><label>Nom (opcional)</label><input type="text" name="name" maxlength="120" value="' + esc(contactValues.name) + '"></div>' +
+        '<div class="contact-field"><label>Email *</label><input type="email" name="email" required maxlength="200" value="' + esc(contactValues.email) + '"></div>' +
+        '<div class="contact-field"><label>Assumpte</label><input type="text" name="subject" maxlength="200" value="' + esc(contactValues.subject) + '"></div>' +
+        '<div class="contact-field"><label>Missatge *</label><textarea name="message" required minlength="10" maxlength="5000">' + esc(contactValues.message) + '</textarea></div>' +
+        '<div class="contact-honeypot"><label>No omplis: <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
+        '<label class="contact-consent"><input type="checkbox" name="consent" required' + (contactValues.consent ? ' checked' : '') + '><span>He llegit i accepto la <button type="button" data-legal-openfrom="privacy" style="background:none;border:0;padding:0;font:inherit;color:var(--red);cursor:pointer;text-decoration:underline">política de privacitat</button>. Les dades s\'utilitzen exclusivament per respondre la consulta.</span></label>' +
+        (contactState === 'error' ? '<div class="contact-error">' + esc(contactMsg) + '</div>' : '') +
+        '<button type="submit" class="contact-submit"' + (contactState === 'sending' ? ' disabled' : '') + '>' + (contactState === 'sending' ? 'Enviant…' : 'Enviar missatge') + '</button>' +
+      '</form>';
+    body.querySelectorAll('[data-legal-openfrom]').forEach(function (b) {
+      b.addEventListener('click', function () { open(b.getAttribute('data-legal-openfrom')); });
+    });
+    var form = body.querySelector('#contact-form');
+    if (form) form.addEventListener('submit', onSubmit);
+  }
+
+  function esc(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    if (contactState === 'sending') return;
+    var f = e.target;
+    contactValues = {
+      name: f.name.value, email: f.email.value, subject: f.subject.value,
+      message: f.message.value, consent: f.consent.checked, website: f.website.value,
+    };
+    contactState = 'sending'; contactMsg = ''; renderContactBody();
+    fetch('/api/contact', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.assign({}, contactValues, { project: LEGAL_CONFIG.projectLabel })),
+    })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      .then(function (res) {
+        if (res.ok) contactState = 'ok';
+        else { contactState = 'error'; contactMsg = (res.data && res.data.error) || "No s'ha pogut enviar el missatge."; }
+        renderContactBody();
+      })
+      .catch(function () {
+        contactState = 'error'; contactMsg = 'Error de connexió. Torna-ho a provar.'; renderContactBody();
+      });
+  }
+})();
+</script>
+
 </body>
 </html>
