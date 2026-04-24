@@ -22,7 +22,9 @@
 
   <!-- Mòduls shared (sense sync.sh per ara — copiat manualment de C:\Projectes\_shared) -->
   <link rel="stylesheet" href="./shared/css/category-group.css">
+  <link rel="stylesheet" href="./shared/css/search.css">
   <script src="./shared/js/sw-register.js" defer></script>
+  <script src="./shared/js/search.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -2251,9 +2253,9 @@
   }
   function entMatchesQuery(ent, q) {
     if (!q || q.length < 2) return true;
-    const lc = q.toLowerCase();
+    const lc = window.SharedSearch.norm(q);     // cerca sense accents
     return [ent.nom, ent.ambit, ent.descripcio_breu, ent.sigles]
-      .some(f => (f || '').toLowerCase().replace(/\n/g,' ').includes(lc));
+      .some(f => window.SharedSearch.norm(f).replace(/\n/g,' ').includes(lc));
   }
 
   function renderLlista() {
@@ -2391,6 +2393,7 @@
     // ── Wire del cercador ──
     const searchEl = document.getElementById('llista-search-input');
     if (searchEl) {
+      if (window.SharedSearch) window.SharedSearch.attachClear(searchEl);
       searchEl.addEventListener('input', () => {
         searchQuery = searchEl.value;
         renderLlista();
