@@ -19,6 +19,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Mòdul shared (sense sync.sh per ara — copiat manualment de C:\Projectes\_shared) -->
+  <link rel="stylesheet" href="./shared/css/category-group.css">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -601,13 +605,7 @@
     }
     .llista-intro .hint-grid svg { width: 13px; height: 13px; }
     html.dark .llista-intro .hint-grid { background: rgba(37,99,235,0.20); color: #93c5fd; }
-    .llista-view .entitat-grup {
-      margin-top: 0.4rem;
-      padding: 0.5rem 0.2rem 0.3rem;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      border-bottom: none;
-    }
-    .llista-view .entitat-grup:first-child { border-top: none; }
+    /* alçada per entrada → default del shared/css/category-group.css (= Transitem) */
 
     /* ── Cercador de la llista ── */
     .llista-search {
@@ -884,54 +882,7 @@
     }
     #btn-entesos:hover { background: var(--red); color: #fff; }
 
-    /* ── Entitats (llista agrupada) ── */
-    details.entitat-grup {
-      border-top: 1px solid rgba(0,0,0,0.08);
-      padding: 0.15rem 0;
-    }
-    details.entitat-grup:first-child { border-top: none; }
-    details.entitat-grup > summary {
-      list-style: none;
-      cursor: pointer;
-      display: flex; align-items: center; gap: 8px;
-      padding: 0.75rem 2px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    details.entitat-grup > summary::-webkit-details-marker { display: none; }
-    details.entitat-grup > summary::after {
-      content: '';
-      width: 9px; height: 9px;
-      border-right: 2px solid var(--ink-3);
-      border-bottom: 2px solid var(--ink-3);
-      transform: rotate(45deg);
-      transition: transform 0.18s;
-      margin-left: auto;
-      margin-right: 6px;
-      flex-shrink: 0;
-    }
-    details.entitat-grup[open] > summary::after { transform: rotate(-135deg); margin-top: 4px; }
-    .entitat-grup-head {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--grupcolor);
-    }
-    .entitat-grup-head .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-    .entitat-grup-count {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--ink-3);
-      letter-spacing: 0.02em;
-    }
-    .entitat-grup-desc {
-      font-size: 0.8rem;
-      color: var(--ink-3);
-      line-height: 1.5;
-      margin: 0.1rem 0 0.4rem 15px;
-    }
-    html.dark details.entitat-grup { border-top-color: rgba(255,255,255,0.06); }
+    /* ── Categories (llista agrupada) → shared/css/category-group.css */
     .entitat-item {
       display: flex; align-items: flex-start; gap: 0.85rem;
       padding: 0.75rem 0.5rem;
@@ -2347,19 +2298,21 @@
       if (!llista.length) return;
       totalVisible += llista.length;
       const grup = document.createElement('details');
-      grup.className = 'entitat-grup';
+      grup.className = 'category-group';
       grup.style.setProperty('--grupcolor', meta.color);
       // Obrir automàticament si l'usuari ve d'Ajuda'm amb filtres, o si hi ha una cerca activa
       grup.open = anyFilterActive || activeSearch;
       grup.innerHTML = `
         <summary>
-          <span class="entitat-grup-head">
-            <span class="dot"></span>
-            <span>${meta.nom}</span>
-          </span>
-          <span class="entitat-grup-count">${llista.length} ${llista.length === 1 ? 'entitat' : 'entitats'}</span>
+          <div class="category-group-row">
+            <span class="category-group-head">
+              <span class="dot"></span>
+              <span>${meta.nom}</span>
+            </span>
+            <span class="category-group-count">${llista.length} ${llista.length === 1 ? 'entitat' : 'entitats'}</span>
+          </div>
+          ${meta.descripcio ? `<div class="category-group-desc">${meta.descripcio}</div>` : ''}
         </summary>
-        <div class="entitat-grup-desc">${meta.descripcio}</div>
       `;
       llista.forEach(ent => {
         const it = document.createElement('div');
