@@ -2,10 +2,12 @@
  * Vercel Function sense dependències: envia el formulari de contacte a Resend
  * via fetch directe (sense SDK).
  *
- * Variables d'entorn necessàries:
+ * Variables d'entorn necessàries (per projecte, a Vercel dashboard):
  *   - RESEND_API_KEY  (https://resend.com/api-keys)
  *   - CONTACT_TO      email personal on arriben les consultes
- *   - CONTACT_FROM    remitent verificat a Resend (ex: "Ciutadata <no-reply@denunciem.cat>")
+ *   - CONTACT_FROM    remitent verificat a Resend (ex: "Denunciem <no-reply@denunciem.cat>")
+ *
+ * El camp `project` del body identifica l'origen al subject del mail.
  */
 
 const MAX_MSG = 5000;
