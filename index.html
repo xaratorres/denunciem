@@ -20,8 +20,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 
-  <!-- Mòdul shared (sense sync.sh per ara — copiat manualment de C:\Projectes\_shared) -->
+  <!-- Mòduls shared (sense sync.sh per ara — copiat manualment de C:\Projectes\_shared) -->
   <link rel="stylesheet" href="./shared/css/category-group.css">
+  <script src="./shared/js/sw-register.js" defer></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -2496,12 +2497,7 @@
     }
   });
 
-  // ─── SW ───────────────────────────────────────────
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
-    });
-  }
+  // ─── SW register → shared/js/sw-register.js (afegit a la <head>)
   </script>
 
 <!-- ─────────────── LEGAL KIT (minimalista) ─────────────── -->
