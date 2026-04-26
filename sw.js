@@ -4,7 +4,7 @@
 importScripts('./shared/js/sw-template.js');
 
 buildSW({
-  cacheName: 'denunciem-v13',
+  cacheName: 'denunciem-v14',
 
   // Fitxers que canvien sovint → network-first amb timeout 2.5s + cache:'reload'
   core: [

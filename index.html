@@ -29,6 +29,11 @@
   <script src="./shared/js/sw-register.js" defer></script>
   <script src="./shared/js/search.js"></script>
   <script src="./shared/js/category-group.js"></script>
+  <!-- Cada càrrega nova → vista llista (encara que la sessió anterior fos grid). -->
+  <script src="./shared/js/start-home.js"></script>
+  <script>SharedStartHome && SharedStartHome.forceStartView({ key: 'denunciem-vista', homeValue: 'llista' });</script>
+  <!-- Brand clicable: títol → tornar a inici. -->
+  <script src="./shared/js/brand-home.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1413,6 +1418,10 @@
     if (btn) btn.setAttribute('aria-label', v === 'grid' ? 'Veure com a llista' : 'Veure com a graella');
     if (btn) btn.setAttribute('title', v === 'grid' ? 'Veure com a llista' : 'Veure com a graella');
     window.dispatchEvent(new CustomEvent('vista-change', { detail: v }));
+  }
+  // Brand de la topbar com a "tornar a inici" (patró web habitual).
+  if (window.SharedBrandHome) {
+    SharedBrandHome.attach({ selector: '.brand', onClick: () => setVista('llista') });
   }
   // Icones inline (es fan servir al toggle i a la nav)
   const ICON_VIEW_GRID = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`;
