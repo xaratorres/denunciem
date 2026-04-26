@@ -25,6 +25,7 @@
 
   <!-- Mòduls shared (sincronitzats des de C:\Projectes\_shared via ./sync.sh) -->
   <link rel="stylesheet" href="./shared/css/category-group.css">
+  <link rel="stylesheet" href="./shared/css/onboarding-changelog.css">
   <link rel="stylesheet" href="./shared/css/search.css">
   <script src="./shared/js/sw-register.js" defer></script>
   <script src="./shared/js/search.js"></script>
@@ -34,6 +35,10 @@
   <script>SharedStartHome && SharedStartHome.forceStartView({ key: 'denunciem-vista', homeValue: 'llista' });</script>
   <!-- Brand clicable: títol → tornar a inici. -->
   <script src="./shared/js/brand-home.js"></script>
+  <!-- Onboarding versionat amb mode 'changelog' (Focus pattern). changelog.js
+       abans d'onboarding.js perquè aquest pugui consultar SharedChangelog. -->
+  <script src="./shared/js/changelog.js" defer></script>
+  <script src="./shared/js/onboarding.js" defer></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1925,18 +1930,22 @@
   splash.addEventListener('click', dismissSplash);
   setTimeout(dismissSplash, 2600);
 
-  // ─── ONBOARDING ────────────────────────────────────
-  const ONBOARDING_KEY = 'denunciem-onboarded-v2';
+  // ─── ONBOARDING (delegat a SharedOnboarding) ──────
+  // SharedOnboarding ja gestiona: open/close, version-gating, markSeen al
+  // tancament i mode 'changelog' que mostra els bullets de novetats a
+  // usuaris recurrents. La configuració viu a app.config.js (onboarding +
+  // changelog). El handler local antic queda com a no-op per compatibilitat.
   const obOverlay = $('overlay-onboarding');
   const obBtn = $('btn-entesos');
 
   function maybeStartOnboarding() {
-    if (localStorage.getItem(ONBOARDING_KEY) === '1') return;
-    setTimeout(() => obOverlay.classList.add('open'), 600);
+    if (window.SharedOnboarding) {
+      setTimeout(() => SharedOnboarding.maybeStart(), 600);
+    }
   }
   obBtn.addEventListener('click', () => {
+    if (window.SharedOnboarding) SharedOnboarding.markSeen();
     obOverlay.classList.remove('open');
-    localStorage.setItem(ONBOARDING_KEY, '1');
   });
 
   // ─── OVERLAYS genèrics ────────────────────────────
@@ -2434,10 +2443,15 @@
   $('btn-sobre').addEventListener('click', () => $('overlay-sobre').classList.add('open'));
   $('btn-config').addEventListener('click', () => $('overlay-config').classList.add('open'));
 
-  // Tutorial re-show
+  // Tutorial re-show — mode 'reopen' de SharedOnboarding (botó X enlloc
+  // del "Entesos") fallback a obrir manualment l'overlay si SharedOnboarding
+  // encara no està disponible.
   $('btn-reveure-tutorial').addEventListener('click', () => {
     $('overlay-config').classList.remove('open');
-    setTimeout(() => obOverlay.classList.add('open'), 200);
+    setTimeout(() => {
+      if (window.SharedOnboarding) SharedOnboarding.show('reopen');
+      else obOverlay.classList.add('open');
+    }, 200);
   });
 
   // Install
