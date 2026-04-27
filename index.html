@@ -219,6 +219,12 @@
       .nav-btn { padding: 6px 10px; letter-spacing: 0.05em; font-size: 0.68rem; }
       .nav-btn.icon { padding: 6px 8px; }
     }
+    /* iPhones petits (SE, mini) o navegadors amb barra UI ampla:
+       amaguem el text d'Ajuda'm perquè els icones de la dreta no quedin retallats */
+    @media (max-width: 380px) {
+      #btn-ajudam .nav-label { display: none; }
+      #btn-ajudam { padding: 6px 8px; }
+    }
 
     /* ── Títol + comptador centrat a la nav (només vista grid) ── */
     .nav-title {
