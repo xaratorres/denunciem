@@ -33,7 +33,7 @@ window.APP_CONFIG = {
     // body buit: respectem el HTML inline a #onboarding-text del index.html
     // (té enllaços a xiuxiuejar.com que no encaixen amb el patró segments).
     body: [],
-    buttonLabel: 'Entesos'
+    buttonLabel: 'Entès'
   },
 
   // Llegit per shared/js/changelog.js. Ordenat de més nou a més antic.
