@@ -4,7 +4,7 @@
 importScripts('./shared/js/sw-template.js');
 
 buildSW({
-  cacheName: 'denunciem-v16',
+  cacheName: 'denunciem-v17',
 
   // Fitxers que canvien sovint → network-first amb timeout 2.5s + cache:'reload'
   core: [
@@ -19,6 +19,8 @@ buildSW({
     './favicon.svg',
     './imatges/icon-192.png',
     './imatges/icon-512.png',
-    './imatges/icon-maskable-512.png'
+    './imatges/icon-maskable-512.png',
+    './imatges/fonts/inter-300.woff2',
+    './imatges/fonts/inter-800.woff2'
   ]
 });

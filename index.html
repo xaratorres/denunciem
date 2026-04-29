@@ -16,9 +16,34 @@
   <!-- Vercel Web Analytics (gratis al pla Hobby) -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Auto-hostegem les variants Inter del splash (300 + 800) per
+       evitar el FOUT del title "Denunci+em". Les altres pesades
+       segueixen via Google Fonts amb display=swap.
+       Vegeu el patró a _shared_nexe/templates/font-loading.md -->
+  <link rel="preload" href="imatges/fonts/inter-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="imatges/fonts/inter-800.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: block;
+      src: url('imatges/fonts/inter-300.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 800;
+      font-display: block;
+      src: url('imatges/fonts/inter-800.woff2') format('woff2');
+    }
+  </style>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <!-- Inter 300 + 800 ja són locals. Google Fonts només serveix les
+       altres pesades d'Inter + JetBrains Mono. -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 
   <!-- Config del projecte (llegit pels mòduls shared que la consumeixin) -->
   <script src="./app.config.js"></script>
