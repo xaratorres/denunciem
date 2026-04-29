@@ -28,6 +28,13 @@ html, body {
   text-size-adjust: 100%;
 }
 
+/* Reserve scrollbar gutter permanently. Without this, the page content
+   shifts a few pixels horizontally when the splash dismisses (splash
+   has overflow:hidden → no scrollbar; page → scrollbar appears). With
+   stable, the gutter is always reserved, eliminating the shift.
+   Browser support: 92%+ globally (Chrome 94, Firefox 97, Safari 16). */
+html { scrollbar-gutter: stable; }
+
 a {
   color: inherit;
   text-decoration: none;
