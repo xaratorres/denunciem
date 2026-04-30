@@ -45,19 +45,26 @@ html {
   scrollbar-gutter: stable;
 }
 
-/* Auto-hiding overlay scrollbar (iOS / macOS style):
-   thumb is invisible at rest, fades in while scrolling, fades out
-   shortly after. The .is-scrolling class is toggled by
-   shared/js/scroll-autohide.js. The track is always transparent —
-   only the thumb is ever seen. */
+/* Auto-fading scrollbar — thumb invisible at rest, fades in while
+   scrolling, fades out shortly after. The .is-scrolling class is
+   toggled by shared/js/scroll-autohide.js.
+
+   Important: NO transition on the <html> element — that was creating
+   a wider repaint each scroll event and being perceived as a tiny
+   page movement. The transition lives only on the thumb itself
+   (::-webkit-scrollbar-thumb), which is a localised paint. Times
+   are also short (80 ms in / 250 ms out) so the colour change
+   registers as 'just appearing' rather than 'animating in'.
+
+   The track and the thumb box are always present — only the rgba
+   alpha animates. Combined with overflow-y:scroll + scrollbar-gutter:
+   stable above, the structure never changes. */
 html {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0) transparent;
-  transition: scrollbar-color .6s ease;
 }
 html.is-scrolling {
-  scrollbar-color: rgba(0, 0, 0, .38) transparent;
-  transition: scrollbar-color .12s ease;
+  scrollbar-color: rgba(0, 0, 0, .42) transparent;
 }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -85,15 +92,15 @@ html.is-scrolling {
   border-radius: 5px;
   border: 2px solid transparent;
   background-clip: content-box;
-  transition: background-color .6s ease;
+  transition: background-color 250ms ease-out;
 }
 html.is-scrolling ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, .42);
-  transition: background-color .12s ease;
+  transition: background-color 80ms ease-out;
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, .65) !important;
-  transition: background-color .1s ease;
+  transition: background-color 80ms ease-out;
 }
 
 a {

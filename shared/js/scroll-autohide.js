@@ -19,7 +19,7 @@
     if (timer) clearTimeout(timer);
     timer = setTimeout(function () {
       root.classList.remove('is-scrolling');
-    }, 900);
+    }, 700);
   }
 
   function bind() {
