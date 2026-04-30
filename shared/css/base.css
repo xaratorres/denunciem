@@ -33,7 +33,17 @@ html, body {
    has overflow:hidden → no scrollbar; page → scrollbar appears). With
    stable, the gutter is always reserved, eliminating the shift.
    Browser support: 92%+ globally (Chrome 94, Firefox 97, Safari 16). */
-html { scrollbar-gutter: stable; }
+html {
+  /* overflow-y: scroll locks a scroll context on the html element so
+     `scrollbar-gutter: stable` always reserves the gutter — even
+     during splash overflow:hidden transitions and on short pages
+     that briefly fit the viewport. Without this, the gutter can
+     vanish for a frame and reappear, producing a 1-2 px horizontal
+     shift. Combined with the auto-hiding thumb CSS below the
+     reserved space stays visually empty until the user scrolls. */
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
 
 /* Auto-hiding overlay scrollbar (iOS / macOS style):
    thumb is invisible at rest, fades in while scrolling, fades out
