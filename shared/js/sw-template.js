@@ -29,6 +29,12 @@
  *   assets           array d'URLs cache-first (default: [])
  *   networkTimeoutMs timeout per network-first (default: 2500)
  *   navigateFallback URL fallback per navigate quan offline (default: './index.html')
+ *   volatilePaths    array de RegExp per pathnames d'assets que es regeneren
+ *                    sense canviar de URL (ex: [/\/img\/seals\//]). Per
+ *                    aquests, el cache-first runtime fa fetch amb
+ *                    cache:'reload' per saltar l'HTTP cache del navegador.
+ *                    Default: [] (alternativa preferida: versionar l'URL
+ *                    amb ?v=N quan regeneres).
  */
 self.buildSW = function (cfg) {
   if (!cfg || !cfg.cacheName) {
@@ -39,6 +45,7 @@ self.buildSW = function (cfg) {
   const ASSETS = Array.isArray(cfg.assets) ? cfg.assets : [];
   const NETWORK_TIMEOUT_MS = typeof cfg.networkTimeoutMs === 'number' ? cfg.networkTimeoutMs : 2500;
   const NAV_FALLBACK = cfg.navigateFallback || './index.html';
+  const VOLATILE_PATHS = Array.isArray(cfg.volatilePaths) ? cfg.volatilePaths : [];
 
   // Pre-computem els paths absoluts del CORE per `isCoreRequest` ràpid.
   // Convenció: './foo' viu a /foo. './' equival a / i /index.html.
@@ -67,7 +74,13 @@ self.buildSW = function (cfg) {
         .then(c => Promise.all(
           // c.add() individual amb .catch() perquè un fitxer caigut no
           // avorti tot el cache (vs addAll que sí ho fa).
-          [...CORE, ...ASSETS].map(u => c.add(u).catch(() => {}))
+          // cache: 'reload' bypassa l'HTTP cache del navegador: si un
+          // recurs s'ha regenerat sense canviar de nom, sense això
+          // l'install precachejaria la versió cachejada antiga i un
+          // bump de cacheName no recuperaria la situació.
+          [...CORE, ...ASSETS].map(u =>
+            c.add(new Request(u, { cache: 'reload' })).catch(() => {})
+          )
         ))
         .then(() => self.skipWaiting())
     );
@@ -131,9 +144,11 @@ self.buildSW = function (cfg) {
     }
 
     // CACHE-FIRST per assets estables (stale-while-revalidate)
+    const isVolatile = VOLATILE_PATHS.some(re => re.test(url.pathname));
+    const fetchReq = isVolatile ? new Request(e.request, { cache: 'reload' }) : e.request;
     e.respondWith(
       caches.match(e.request).then(cached => {
-        const network = fetch(e.request).then(res => {
+        const network = fetch(fetchReq).then(res => {
           if (res.ok) {
             const clone = res.clone();
             caches.open(CACHE).then(c => c.put(e.request, clone));
