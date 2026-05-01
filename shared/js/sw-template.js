@@ -143,9 +143,14 @@ self.buildSW = function (cfg) {
       return;
     }
 
-    // CACHE-FIRST per assets estables (stale-while-revalidate)
-    const isVolatile = VOLATILE_PATHS.some(re => re.test(url.pathname));
-    const fetchReq = isVolatile ? new Request(e.request, { cache: 'reload' }) : e.request;
+    // CACHE-FIRST per assets estables (stale-while-revalidate). Sempre
+    // fem la network fetch amb cache: 'reload' per saltar l'HTTP cache
+    // del navegador — sense això, una max-age llarga al CDN feia que
+    // la "fresh fetch" del SW ens retornés els mateixos bytes antics
+    // que ja teníem cachejats, fent el SWR completament inútil. La
+    // VOLATILE_PATHS opció es queda per compatibilitat (ara és redundant).
+    void VOLATILE_PATHS;
+    const fetchReq = new Request(e.request, { cache: 'reload' });
     e.respondWith(
       caches.match(e.request).then(cached => {
         const network = fetch(fetchReq).then(res => {
