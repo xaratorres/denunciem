@@ -87,6 +87,7 @@
   <link rel="stylesheet" href="./shared/css/category-group.css">
   <link rel="stylesheet" href="./shared/css/onboarding-changelog.css">
   <link rel="stylesheet" href="./shared/css/search.css">
+  <script src="./shared/js/legal-kit.js" defer></script>
   <script src="./shared/js/sw-register.js" defer></script>
   <script src="./shared/js/scroll-autohide.js" defer></script>
   <script src="./shared/js/search.js"></script>
@@ -2340,7 +2341,7 @@
       <footer class="llista-footer">
         <strong>Eina en fase de revisió.</strong> Si detectes algun error o vols fer una aportació, escriu a <a href="https://xiuxiuejar.com/espai/drets" target="_blank" rel="noopener noreferrer">xiuxiuejar.com/espai/drets</a>.
         <div class="legal-links">
-          <button type="button" data-legal-open="legal">Avís legal</button><span>·</span><button type="button" data-legal-open="privacy">Política de privacitat</button><span>·</span><button type="button" data-legal-open="contact">Contacte</button>
+          <button type="button" data-legal-open="legal">Avís legal</button><span>·</span><button type="button" data-legal-open="privacy">Política de privacitat</button><span>·</span><a href="mailto:contacte@denunciem.cat" style="color:inherit">Contacte</a>
         </div>
       </footer>
     `;
@@ -2563,81 +2564,59 @@
   // ─── SW register → shared/js/sw-register.js (afegit a la <head>)
   </script>
 
-<!-- ─────────────── LEGAL KIT (minimalista) ─────────────── -->
+<!-- ─────────────── LEGAL KIT (NDF Level 1 — Avís legal + Privacitat + Cookies) ─────────────── -->
 <style>
   .legal-links {
-    margin-top: 0.35rem;
+    margin-top: 0.4rem;
     font-size: 0.72rem;
     color: rgba(0,0,0,0.42);
     letter-spacing: 0.01em;
   }
-  .legal-links button {
+  .legal-links button, .legal-links a {
     background: none; border: 0; padding: 0;
     font: inherit; color: inherit; cursor: pointer;
+    text-decoration: none;
     transition: color 0.15s;
   }
-  .legal-links button:hover { color: var(--red); }
+  .legal-links button:hover, .legal-links a:hover { color: var(--red, #c5331f); }
   .legal-links span { margin: 0 0.45rem; opacity: 0.5; }
   html.dark .legal-links { color: rgba(255,255,255,0.38); }
-  html.dark .legal-links button:hover { color: #ef4444; }
 
   #overlay-legal:not(.open),
   #overlay-privacy:not(.open),
-  #overlay-contact:not(.open) { display: none !important; }
+  #overlay-cookies:not(.open) { display: none !important; }
 
   #overlay-legal .modal h3,
-  #overlay-privacy .modal h3 { font-size: 0.98rem; font-weight: 600; margin: 1rem 0 0.35rem; color: var(--ink); }
+  #overlay-privacy .modal h3,
+  #overlay-cookies .modal h3 { font-size: 0.98rem; font-weight: 600; margin: 1rem 0 0.35rem; color: var(--ink); }
   #overlay-legal .modal p,
-  #overlay-privacy .modal p { margin: 0.3rem 0; line-height: 1.55; color: var(--ink-2); font-size: 0.88rem; }
+  #overlay-privacy .modal p,
+  #overlay-cookies .modal p { margin: 0.3rem 0; line-height: 1.55; color: var(--ink-2); font-size: 0.88rem; }
   #overlay-legal .modal ul,
-  #overlay-privacy .modal ul { margin: 0.2rem 0 0.4rem 1.1rem; padding: 0; font-size: 0.85rem; color: var(--ink-2); }
+  #overlay-privacy .modal ul,
+  #overlay-cookies .modal ul,
+  #overlay-legal .modal ol,
+  #overlay-privacy .modal ol,
+  #overlay-cookies .modal ol { margin: 0.2rem 0 0.4rem 1.1rem; padding: 0; font-size: 0.85rem; color: var(--ink-2); }
+  #overlay-legal .modal code,
+  #overlay-privacy .modal code,
+  #overlay-cookies .modal code { font-size: 0.78rem; padding: 1px 5px; background: rgba(0,0,0,0.05); border-radius: 4px; }
   html.dark #overlay-legal .modal h3,
-  html.dark #overlay-privacy .modal h3 { color: #f5f5f5; }
+  html.dark #overlay-privacy .modal h3,
+  html.dark #overlay-cookies .modal h3 { color: #f5f5f5; }
   html.dark #overlay-legal .modal p,
   html.dark #overlay-privacy .modal p,
+  html.dark #overlay-cookies .modal p,
   html.dark #overlay-legal .modal ul,
-  html.dark #overlay-privacy .modal ul { color: rgba(255,255,255,0.72); }
+  html.dark #overlay-privacy .modal ul,
+  html.dark #overlay-cookies .modal ul,
+  html.dark #overlay-legal .modal ol,
+  html.dark #overlay-privacy .modal ol,
+  html.dark #overlay-cookies .modal ol { color: rgba(255,255,255,0.72); }
+  html.dark #overlay-legal .modal code,
+  html.dark #overlay-privacy .modal code,
+  html.dark #overlay-cookies .modal code { background: rgba(255,255,255,0.08); }
 
-  #overlay-contact .modal { width: min(500px, 94vw); }
-  .contact-field { display: block; margin-bottom: 0.75rem; }
-  .contact-field label { display: block; font-size: 0.72rem; font-weight: 500; margin-bottom: 0.25rem; color: var(--ink-2); }
-  html.dark .contact-field label { color: rgba(255,255,255,0.72); }
-  .contact-field input, .contact-field textarea {
-    width: 100%; box-sizing: border-box;
-    padding: 0.5rem 0.65rem; font: inherit; font-size: 0.88rem;
-    border: 1px solid rgba(0,0,0,0.18); border-radius: 6px;
-    background: rgba(255,255,255,0.6); color: inherit;
-  }
-  html.dark .contact-field input, html.dark .contact-field textarea {
-    background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15);
-  }
-  .contact-field textarea { min-height: 100px; resize: vertical; }
-  .contact-field input:focus, .contact-field textarea:focus {
-    outline: none; border-color: var(--red);
-  }
-  .contact-honeypot { position: absolute; left: -9999px; top: -9999px; }
-  .contact-consent { display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.76rem; color: var(--ink-2); margin: 0.5rem 0 0.8rem; }
-  html.dark .contact-consent { color: rgba(255,255,255,0.65); }
-  .contact-consent input { margin-top: 0.15rem; }
-  .contact-submit {
-    width: 100%; padding: 0.6rem; background: var(--red); color: #fff;
-    border: 0; border-radius: 6px; font: inherit; font-size: 0.88rem; font-weight: 500;
-    cursor: pointer; transition: opacity 0.15s;
-  }
-  .contact-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-  .contact-notice {
-    font-size: 0.76rem; padding: 0.55rem 0.7rem; border-radius: 6px;
-    background: rgba(251, 191, 36, 0.15); color: #92400e;
-    border: 1px solid rgba(251, 191, 36, 0.35);
-    margin-bottom: 0.8rem;
-  }
-  .contact-notice a { color: inherit; text-decoration: underline; }
-  html.dark .contact-notice { background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
-  .contact-error { font-size: 0.78rem; color: #c53030; margin: 0.4rem 0; }
-  .contact-success { text-align: center; padding: 1.5rem 0; }
-  .contact-success .tick { width: 42px; height: 42px; border-radius: 50%; background: #10b981; color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.8rem; font-size: 1.3rem; }
-
-  /* Botó enrere: mateix estil que .modal-close però a l'esquerra */
   .btn-modal-back {
     position: absolute; top: 1rem; left: 1rem;
     width: 34px; height: 34px;
@@ -2652,7 +2631,6 @@
   html.dark .btn-modal-back { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.65); }
   html.dark .btn-modal-back:hover { background: rgba(255,255,255,0.1); color: #fff; }
   .btn-modal-back.visible { display: inline-flex; }
-  /* Reserva espai a l'H2 quan el back és visible perquè no es trepitgi */
   .overlay .modal:has(.btn-modal-back.visible) h2 { padding-left: 2.6rem; }
 </style>
 
@@ -2663,24 +2641,24 @@
     <h2 id="legal-title">Avís legal</h2>
 
     <h3>Qui hi ha darrere</h3>
-    <p><strong>Denunciem</strong> (denunciem.cat) és un hub que reuneix canals de queixa, denúncia i pressió ciutadana a Catalunya.</p>
-    <p>Responsable: projecte Denunciem, impulsat per la societat civil. Es tracta d'un projecte independent, sense ànim de lucre, sense publicitat ni patrocinadors. No té personalitat jurídica pròpia ni realitza activitat econòmica.</p>
+    <p><strong>Denunciem.cat</strong> (denunciem.cat) és un directori dels canals de queixa, denúncia i pressió a Catalunya.</p>
+    <p>Responsable: l'equip de <strong>Denunciem.cat</strong>, projecte independent sense ànim de lucre. Sense publicitat, sense patrocinadors, sense activitat econòmica i sense personalitat jurídica pròpia.</p>
 
     <h3>Contacte</h3>
-    <p>Per a qualsevol consulta, aportació o exercici de drets, pots fer servir el <button type="button" data-legal-openfrom="contact" style="background:none;border:0;padding:0;font:inherit;color:var(--red);cursor:pointer;text-decoration:underline">formulari de contacte</button>.</p>
+    <p>Per a consultes, correccions o exercici de drets, escriu a <a href="mailto:contacte@denunciem.cat" style="color:var(--red, #c5331f)">contacte@denunciem.cat</a>.</p>
+
+    <h3>Compromís de privacitat</h3>
+    <p><strong>Denunciem.cat</strong> aplica l'estàndard <strong>No Data Found — Nivell 1</strong>: sense recopilació de dades personals, processament local quan és possible, sense perfilat ni cessions a tercers, analítica agregada i anònima. Més informació a <a href="https://nodatafound.cat" target="_blank" rel="noopener noreferrer" style="color:var(--red, #c5331f)">nodatafound.cat</a>.</p>
 
     <h3>Propietat intel·lectual</h3>
     <p><strong>Codi i continguts originals:</strong> tots els drets reservats © 2026. La reutilització requereix permís previ.</p>
-    <p><strong>Les entitats i canals enllaçats</strong> pertanyen als seus respectius titulars i es mostren amb finalitat informativa. Aquest portal no té cap relació ni representació sobre elles.</p>
+    <p><strong>Les entitats enllaçades</strong> pertanyen als seus respectius titulars i es mostren amb finalitat informativa. Aquest portal no té cap relació ni representació sobre elles.</p>
 
     <h3>Responsabilitat</h3>
-    <p>La informació d'aquest portal té caràcter orientatiu. No garantim l'exactitud ni la vigència dels continguts ni el funcionament dels llocs enllaçats. L'ús dels canals es realitza sota la responsabilitat de l'usuari.</p>
-    <p>Aquest web <strong>no és una web oficial</strong> de cap administració pública ni associació.</p>
+    <p>La informació es presenta de bona fe. <strong>Denunciem.cat</strong> no garanteix l'exactitud ni la vigència dels continguts ni el funcionament dels llocs enllaçats. Aquest web <strong>no és una web oficial</strong> de cap administració pública.</p>
 
     <h3>Legislació aplicable</h3>
     <p>Aquest avís es regeix per la legislació espanyola i catalana aplicable (Llei 34/2002 LSSI-CE i normes concordants).</p>
-
-    <div class="modal-footer"><small>Catalunya · v1.0 · 2026</small></div>
   </div>
 </div>
 
@@ -2691,159 +2669,68 @@
     <h2 id="privacy-title">Política de privacitat</h2>
 
     <h3>Resum</h3>
-    <p>Denunciem no demana registre, no crea comptes d'usuari, no utilitza cookies de seguiment ni ven dades a ningú. La informació personal que processem és mínima i serveix només per fer funcionar el servei.</p>
+    <p><strong>Denunciem.cat</strong> aplica el seu propi estàndard <strong>No Data Found — Nivell 1</strong>: no recopilem dades personals dels qui visiten el lloc. No demanem registre, no creem comptes d'usuari, no fem servir cookies de seguiment ni venem dades a ningú.</p>
 
-    <h3>Responsable</h3>
-    <p>Projecte Denunciem, impulsat per la societat civil.</p>
+    <h3>Què recollim i per què</h3>
+    <ol>
+      <li><strong>Logs tècnics del servidor (Vercel):</strong> l'allotjament a Vercel Inc. (EUA) registra automàticament adreça IP truncada, capçaleres HTTP i marca temporal de cada petició, exclusivament per a seguretat i prevenció d'abús. Conservació segons política de Vercel. Base legal: interès legítim (art. 6.1.f RGPD).</li>
+      <li><strong>Vercel Web Analytics:</strong> sistema d'analítica agregada que <strong>no fa servir cookies</strong>, no crea identificadors persistents i no construeix perfils. Empremta tècnica anonimitzada (hash IP+User-Agent que rota cada 24h).</li>
+      <li><strong>Emmagatzematge local (localStorage):</strong> per recordar preferències d'interfície (idioma, mode visual, tutorials vistos...). Aquestes dades <em>no surten</em> del teu navegador. Detall complet a la <strong>Política de cookies</strong>.</li>
+      <li><strong>Correu electrònic:</strong> si ens escrius a <a href="mailto:contacte@denunciem.cat" style="color:var(--red, #c5331f)">contacte@denunciem.cat</a>, processem el teu email i el missatge únicament per respondre. No conservem aquesta informació més enllà del necessari per gestionar la teva consulta. El servei de correu és Google Gmail, amb la seva pròpia política de privacitat.</li>
+    </ol>
 
-    <h3>Quines dades tractem</h3>
+    <h3>Què NO recollim</h3>
     <ul>
-      <li><strong>Analítica (Vercel Analytics):</strong> sistema sense cookies amb hash temporal de la IP que rota diàriament. No permet identificar usuaris.</li>
-      <li><strong>Logs del servidor (Vercel):</strong> IP i petició, per motius tècnics i de seguretat, conservats segons política de Vercel.</li>
-      <li><strong>Emmagatzematge local (localStorage):</strong> per recordar les teves preferències d'interfície (mode visual, vista preferida, si has vist el tutorial inicial...) fem servir l'emmagatzematge local del teu navegador. Aquestes dades <strong>no surten mai</strong> del teu dispositiu, no s'envien a cap servidor i no permeten identificar-te. Pots esborrar-les des de la configuració del navegador en qualsevol moment. Aquest ús està <strong>exempt del requisit de consentiment</strong> segons la guia de l'AEPD (apartat "personalització d'interfície", Art. 22.2 LSSI-CE).</li>
-      <li><strong>Formulari de contacte:</strong> si ens escrius, processem nom (opcional), email i missatge per respondre't. Enviament via Resend.</li>
+      <li>Cap formulari, registre o autenticació al lloc</li>
+      <li>Cap cookie pròpia ni de tercers</li>
+      <li>Cap dada que permeti identificar individus</li>
+      <li>Cap eina de tracking, fingerprinting persistent o publicitat</li>
     </ul>
 
-    <h3>Base legal</h3>
-    <p>Interès legítim (art. 6.1.f RGPD) per al funcionament i seguretat del servei. Consentiment (art. 6.1.a) al formulari de contacte.</p>
-
-    <h3>Cessió a tercers</h3>
-    <p>No venem ni cedim dades. Utilitzem Vercel Inc. (hosting) i Resend (enviament de formularis), tots dos als EUA sota el marc EU-US Data Privacy Framework.</p>
+    <h3>Transferències internacionals</h3>
+    <p>L'allotjament és a <strong>Vercel Inc. (Estats Units)</strong>. Les transferències estan emparades pel <strong>EU–U.S. Data Privacy Framework</strong> (Decisió d'adequació UE de 10 de juliol de 2023), del qual Vercel és participant certificat.</p>
 
     <h3>Els teus drets</h3>
-    <p>Pots exercir els drets d'accés, rectificació, supressió, oposició, portabilitat i limitació a través del <button type="button" data-legal-openfrom="contact" style="background:none;border:0;padding:0;font:inherit;color:var(--red);cursor:pointer;text-decoration:underline">formulari de contacte</button>. També pots reclamar davant l'<a href="https://apdcat.gencat.cat" target="_blank" rel="noopener noreferrer" style="color:var(--red)">Autoritat Catalana de Protecció de Dades</a>.</p>
+    <p>Pots exercir els drets d'<strong>accés, rectificació, supressió, oposició, limitació i portabilitat</strong> escrivint a <a href="mailto:contacte@denunciem.cat" style="color:var(--red, #c5331f)">contacte@denunciem.cat</a>. També pots reclamar davant l'<a href="https://apdcat.gencat.cat" target="_blank" rel="noopener noreferrer" style="color:var(--red, #c5331f)">Autoritat Catalana de Protecció de Dades</a> o l'<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer" style="color:var(--red, #c5331f)">Agència Espanyola de Protecció de Dades</a>.</p>
 
-    <div class="modal-footer"><small>Catalunya · v1.0 · 2026</small></div>
+    <h3>Modificacions</h3>
+    <p>Si modifiquem aquesta política, actualitzarem la data al peu. Si els canvis són substancials, ho indicarem de manera visible al web.</p>
+
+    <div class="modal-footer"><small>Països Catalans · 2026</small></div>
   </div>
 </div>
 
-<div id="overlay-contact" class="overlay" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+<div id="overlay-cookies" class="overlay" role="dialog" aria-modal="true" aria-labelledby="cookies-title">
   <div class="modal">
     <button class="btn-modal-back" data-legal-back aria-label="Enrere"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg></button>
     <button class="modal-close" data-legal-close aria-label="Tancar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-    <h2 id="contact-title">Contacte</h2>
-    <div id="contact-body"></div>
+    <h2 id="cookies-title">Política de cookies</h2>
+
+    <h3>Sense cookies de tracking</h3>
+    <p><strong>Denunciem.cat no utilitza cookies</strong> pròpies ni de tercers per al rastreig.</p>
+
+    <h3>Emmagatzematge local (localStorage)</h3>
+    <p>Per recordar les teves preferències d'interfície fem servir l'emmagatzematge local del teu navegador. Concretament:</p>
+    <ul>
+      <li><code>denunciem-onboarding</code> — estat del tutorial inicial vist</li>
+      <li><code>denunciem-dark</code> — preferència de mode fosc</li>
+    </ul>
+    <p>Aquestes dades:</p>
+    <ul>
+      <li><strong>No surten</strong> del teu dispositiu</li>
+      <li><strong>No s'envien</strong> a cap servidor</li>
+      <li><strong>No permeten identificar-te</strong></li>
+      <li>Pots <strong>esborrar-les en qualsevol moment</strong> des de la configuració del teu navegador (Esborra dades de navegació)</li>
+    </ul>
+    <p>Aquest ús està <strong>exempt del requisit de consentiment</strong> segons l'AEPD (Art. 22.2 LSSI-CE — "personalització d'interfície").</p>
+
+    <h3>Telemetria agregada</h3>
+    <p>El sistema d'analítica que fem servir és <strong>Vercel Web Analytics</strong>, que no fa servir cookies — utilitza una empremta tècnica anonimitzada de durada inferior a 24 hores per a estadístiques agregades.</p>
+    <p>Com que no s'instal·la cap cookie de tracking ni de tercers, no és necessari un banner de consentiment.</p>
   </div>
 </div>
 
-<script>
-(function () {
-  var LEGAL_CONFIG = {
-    projectLabel: 'Denunciem',
-    devMode: false,
-    contributionsUrl: 'https://xiuxiuejar.com/espai/drets',
-    accent: 'var(--red)',
-  };
-
-  var overlays = {
-    legal:   document.getElementById('overlay-legal'),
-    privacy: document.getElementById('overlay-privacy'),
-    contact: document.getElementById('overlay-contact'),
-  };
-  var stack = [];
-
-  function render() {
-    Object.keys(overlays).forEach(function (k) {
-      var el = overlays[k]; if (!el) return;
-      var top = stack[stack.length - 1];
-      el.classList.toggle('open', top === k);
-      var back = el.querySelector('[data-legal-back]');
-      if (back) back.classList.toggle('visible', stack.length > 1 && top === k);
-    });
-    document.body.style.overflow = stack.length ? 'hidden' : '';
-    if (stack[stack.length - 1] === 'contact') renderContactBody();
-  }
-
-  function open(key) {
-    if (!overlays[key]) return;
-    if (stack[stack.length - 1] === key) return;
-    stack.push(key); render();
-  }
-  function back() { stack.pop(); render(); }
-  function closeAll() { stack = []; render(); }
-
-  // Event delegation: cobreix botons afegits dinàmicament (llista-footer, etc.)
-  document.addEventListener('click', function (e) {
-    var openEl = e.target.closest && e.target.closest('[data-legal-open]');
-    if (openEl) { open(openEl.getAttribute('data-legal-open')); return; }
-    var fromEl = e.target.closest && e.target.closest('[data-legal-openfrom]');
-    if (fromEl) { open(fromEl.getAttribute('data-legal-openfrom')); return; }
-    var closeEl = e.target.closest && e.target.closest('[data-legal-close]');
-    if (closeEl) { closeAll(); return; }
-    var backEl = e.target.closest && e.target.closest('[data-legal-back]');
-    if (backEl) { back(); return; }
-  });
-  Object.keys(overlays).forEach(function (k) {
-    var el = overlays[k]; if (!el) return;
-    el.addEventListener('click', function (e) { if (e.target === el) closeAll(); });
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && stack.length) closeAll();
-  });
-
-  var contactState = 'idle', contactMsg = '';
-  var contactValues = { name: '', email: '', subject: '', message: '', consent: false, website: '' };
-
-  function renderContactBody() {
-    var body = document.getElementById('contact-body'); if (!body) return;
-    if (contactState === 'ok') {
-      body.innerHTML = '<div class="contact-success"><div class="tick">✓</div><h3 style="margin:0 0 0.4rem">Missatge enviat</h3><p style="font-size:0.82rem;color:var(--ink-3)">Gràcies! Et respondrem tan aviat com puguem.</p></div>';
-      return;
-    }
-    var notice = LEGAL_CONFIG.devMode
-      ? '<div class="contact-notice"><strong>Formulari en fase de desenvolupament.</strong> Aquest canal encara no és operatiu. Mentrestant, escriu-nos a <a href="mailto:rerumscriptor@gmail.com">rerumscriptor@gmail.com</a>.</div>'
-      : '';
-    body.innerHTML =
-      notice +
-      '<p style="font-size:0.85rem;color:var(--ink-2);margin:0 0 0.9rem">Ens pots escriure per consultes, correccions, aportacions o per exercir els drets RGPD. Responem des d\'un correu genèric del projecte.</p>' +
-      '<form id="contact-form" autocomplete="off">' +
-        '<div class="contact-field"><label>Nom (opcional)</label><input type="text" name="name" maxlength="120" value="' + esc(contactValues.name) + '"></div>' +
-        '<div class="contact-field"><label>Email *</label><input type="email" name="email" required maxlength="200" value="' + esc(contactValues.email) + '"></div>' +
-        '<div class="contact-field"><label>Assumpte</label><input type="text" name="subject" maxlength="200" value="' + esc(contactValues.subject) + '"></div>' +
-        '<div class="contact-field"><label>Missatge *</label><textarea name="message" required minlength="10" maxlength="5000">' + esc(contactValues.message) + '</textarea></div>' +
-        '<div class="contact-honeypot"><label>No omplis: <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
-        '<label class="contact-consent"><input type="checkbox" name="consent" required' + (contactValues.consent ? ' checked' : '') + '><span>He llegit i accepto la <button type="button" data-legal-openfrom="privacy" style="background:none;border:0;padding:0;font:inherit;color:var(--red);cursor:pointer;text-decoration:underline">política de privacitat</button>. Les dades s\'utilitzen exclusivament per respondre la consulta.</span></label>' +
-        (contactState === 'error' ? '<div class="contact-error">' + esc(contactMsg) + '</div>' : '') +
-        '<button type="submit" class="contact-submit"' + (contactState === 'sending' ? ' disabled' : '') + '>' + (contactState === 'sending' ? 'Enviant…' : 'Enviar missatge') + '</button>' +
-      '</form>';
-    body.querySelectorAll('[data-legal-openfrom]').forEach(function (b) {
-      b.addEventListener('click', function () { open(b.getAttribute('data-legal-openfrom')); });
-    });
-    var form = body.querySelector('#contact-form');
-    if (form) form.addEventListener('submit', onSubmit);
-  }
-
-  function esc(s) {
-    return String(s || '')
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-    if (contactState === 'sending') return;
-    var f = e.target;
-    contactValues = {
-      name: f.name.value, email: f.email.value, subject: f.subject.value,
-      message: f.message.value, consent: f.consent.checked, website: f.website.value,
-    };
-    contactState = 'sending'; contactMsg = ''; renderContactBody();
-    fetch('/api/contact', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.assign({}, contactValues, { project: LEGAL_CONFIG.projectLabel })),
-    })
-      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
-      .then(function (res) {
-        if (res.ok) contactState = 'ok';
-        else { contactState = 'error'; contactMsg = (res.data && res.data.error) || "No s'ha pogut enviar el missatge."; }
-        renderContactBody();
-      })
-      .catch(function () {
-        contactState = 'error'; contactMsg = 'Error de connexió. Torna-ho a provar.'; renderContactBody();
-      });
-  }
-})();
-</script>
+<!-- Legal Kit JS → shared/js/legal-kit.js -->
 
 </body>
 </html>
