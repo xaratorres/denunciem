@@ -2341,7 +2341,7 @@
       <footer class="llista-footer">
         <strong>Eina en fase de revisió.</strong> Si detectes algun error o vols fer una aportació, escriu a <a href="https://xiuxiuejar.com/espai/drets" target="_blank" rel="noopener noreferrer">xiuxiuejar.com/espai/drets</a>.
         <div class="legal-links">
-          <button type="button" data-legal-open="legal">Avís legal</button><span>·</span><button type="button" data-legal-open="privacy">Política de privacitat</button><span>·</span><a href="mailto:contacte@denunciem.cat" style="color:inherit">Contacte</a>
+          <button type="button" data-legal-open="legal">Avís legal</button><span>·</span><button type="button" data-legal-open="privacy">Política de privacitat</button><span>·</span><button type="button" data-legal-open="cookies">Cookies</button><span>·</span><a href="mailto:contacte@denunciem.cat" style="color:inherit">Contacte</a>
         </div>
       </footer>
     `;
@@ -2585,6 +2585,12 @@
   #overlay-legal:not(.open),
   #overlay-privacy:not(.open),
   #overlay-cookies:not(.open) { display: none !important; }
+
+  /* Sense això, en arribar al final del scroll del modal a mòbil el
+     navegador "salta" a moure la pàgina de fons. */
+  #overlay-legal .modal[class*="modal"],
+  #overlay-privacy .modal[class*="modal"],
+  #overlay-cookies .modal[class*="modal"] { overscroll-behavior: contain; }
 
   #overlay-legal .modal h3,
   #overlay-privacy .modal h3,
