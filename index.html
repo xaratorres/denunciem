@@ -795,21 +795,28 @@
         column-gap: 48px;
         align-items: start;
       }
+      /* L'intro fill el row track (= la columna més alta) i el contingut viu en
+         un wrapper intern amb position:sticky. Així el wrapper s'enganxa
+         exactament dins l'àrea de l'intro, i quan el row 1 acaba, deixa
+         d'enganxar-se de manera natural — sense importar si el contingut
+         intern és més curt o més llarg que la columna de la dreta. */
       body.vista-llista #llista .llista-intro {
+        align-self: stretch;
+        padding: 0;
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+      body.vista-llista #llista .llista-intro-inner {
         position: sticky;
         top: 0;
         padding: 0.2rem 0 1rem;
-        border-bottom: none;
-        margin-bottom: 0;
-        align-self: start;
         background: var(--bg);
-        z-index: 3;
       }
       body.vista-llista #llista .llista-intro h1 { font-size: 2rem; }
       body.vista-llista #llista .llista-rightcol { grid-column: 2; }
       body.vista-llista #llista .llista-rightcol .llista-sec-title { margin: 0 0 0.6rem; }
       body.vista-llista #llista > .llista-footer {
-        grid-column: 2;
+        grid-column: 1 / -1;
         margin-top: 1rem;
       }
     }
@@ -2388,10 +2395,12 @@
   function renderLlista() {
     const LLISTA_INTRO_HTML = `
       <header class="llista-intro">
-        <h1>Els teus drets, a <span class="em">un clic</span>.</h1>
-        <p>Directori d'<strong>entitats i canals</strong> que tens a disposició a la <strong>nació</strong> per fer valer els teus drets. Estan agrupats per tipus de via: administratiu, legal, pressió social…</p>
-        <p>Toca una entitat per veure què fa, quan usar-la, i les dades de contacte. Si no saps per on començar, obre <span class="hint-ajudam">Ajuda'm</span> i respon les preguntes.</p>
-        <p>Si vols l'experiència visual, activa la <span class="hint-grid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> galeria</span> des del botó de la barra.</p>
+        <div class="llista-intro-inner">
+          <h1>Els teus drets, a <span class="em">un clic</span>.</h1>
+          <p>Directori d'<strong>entitats i canals</strong> que tens a disposició a la <strong>nació</strong> per fer valer els teus drets. Estan agrupats per tipus de via: administratiu, legal, pressió social…</p>
+          <p>Toca una entitat per veure què fa, quan usar-la, i les dades de contacte. Si no saps per on començar, obre <span class="hint-ajudam">Ajuda'm</span> i respon les preguntes.</p>
+          <p>Si vols l'experiència visual, activa la <span class="hint-grid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> galeria</span> des del botó de la barra.</p>
+        </div>
       </header>
       <h2 class="llista-sec-title">Canals de denúncia <span class="llista-count" id="llista-count">${ENTITATS_V.length}<svg class="x-clear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></h2>
       <div class="llista-search">
