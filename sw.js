@@ -1,12 +1,12 @@
-// Denunciem.cat — Service Worker
-// Versió: bumpa-la a cada release amb canvis trencadors a CORE/ASSETS.
-// Lògica completa a /shared/js/sw-template.js (importScripts).
+﻿// Denunciem.cat â€” Service Worker
+// VersiÃ³: bumpa-la a cada release amb canvis trencadors a CORE/ASSETS.
+// LÃ²gica completa a /shared/js/sw-template.js (importScripts).
 importScripts('./shared/js/sw-template.js');
 
 buildSW({
-  cacheName: 'denunciem-v17',
+  cacheName: 'denunciem-v18',
 
-  // Fitxers que canvien sovint → network-first amb timeout 2.5s + cache:'reload'
+  // Fitxers que canvien sovint â†’ network-first amb timeout 2.5s + cache:'reload'
   core: [
     './',
     './index.html',
@@ -14,7 +14,7 @@ buildSW({
     './entitats.js'
   ],
 
-  // Fitxers estables → cache-first
+  // Fitxers estables â†’ cache-first
   assets: [
     './favicon.svg',
     './imatges/icon-192.png',

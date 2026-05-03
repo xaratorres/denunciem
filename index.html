@@ -802,6 +802,8 @@
         border-bottom: none;
         margin-bottom: 0;
         align-self: start;
+        background: var(--bg);
+        z-index: 1;
       }
       body.vista-llista #llista .llista-intro h1 { font-size: 2rem; }
       body.vista-llista #llista .llista-rightcol { grid-column: 2; }
@@ -809,6 +811,9 @@
       body.vista-llista #llista > .llista-footer {
         grid-column: 1 / -1;
         margin-top: 1rem;
+        position: relative;
+        z-index: 2;
+        background: var(--bg);
       }
     }
 
