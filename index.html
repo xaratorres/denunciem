@@ -29,20 +29,37 @@
   <meta name="twitter:description" content="Hub de canals de queixa, denúncia i pressió a Catalunya.">
   <meta name="twitter:image" content="https://denunciem.cat/imatges/og-image.jpg">
 
-  <!-- Structured data (Schema.org) -->
+  <!-- Structured data (Schema.org): WebSite + Organization + ItemList -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Denunciem.cat",
-    "alternateName": "Fes valer els teus drets",
-    "url": "https://denunciem.cat/",
-    "description": "Hub de canals de queixa, denúncia i pressió a Catalunya.",
-    "inLanguage": "ca",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Denunciem.cat"
-    }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://denunciem.cat/#website",
+        "url": "https://denunciem.cat/",
+        "name": "Denunciem.cat",
+        "alternateName": "Fes valer els teus drets",
+        "description": "Directori dels canals de queixa, denúncia i pressió a Catalunya.",
+        "inLanguage": "ca",
+        "publisher": { "@id": "https://denunciem.cat/#org" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://denunciem.cat/#org",
+        "name": "Denunciem.cat",
+        "url": "https://denunciem.cat/",
+        "logo": "https://denunciem.cat/imatges/icon-512.png",
+        "description": "Projecte independent sense ànim de lucre que reuneix canals de queixa, denúncia i pressió ciutadana a Catalunya."
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://denunciem.cat/#channels",
+        "name": "Canals de queixa, denúncia i pressió a Catalunya",
+        "description": "Llista d'administracions públiques, organismes independents i col·lectius on adreçar reclamacions, denúncies o accions de pressió a Catalunya.",
+        "inLanguage": "ca"
+      }
+    ]
   }
   </script>
 
